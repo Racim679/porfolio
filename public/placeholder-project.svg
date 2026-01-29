@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="240" viewBox="0 0 400 240" fill="none">
+  <rect width="400" height="240" fill="url(#g)" rx="16"/>
+  <path d="M160 100h80v40h-80v-40zm-20 60l40-50 30 40 25-30 35 40H120z" fill="rgba(255,255,255,0.4)" stroke="rgba(255,255,255,0.6)" stroke-width="2"/>
+  <circle cx="175" cy="115" r="12" fill="rgba(255,255,255,0.5)"/>
+  <text x="200" y="195" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-family="system-ui,sans-serif" font-size="14" font-weight="500">Image non disponible</text>
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="400" y2="240" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#94a3b8"/>
+      <stop offset="1" stop-color="#64748b"/>
+    </linearGradient>
+  </defs>
+</svg>

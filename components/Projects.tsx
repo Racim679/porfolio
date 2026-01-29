@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
@@ -151,9 +151,22 @@ function mapFromSupabase(row: ProjectWithRelations): Project {
   };
 }
 
+const MAX_IMAGE_RETRIES = 2; // 1 chargement initial + 2 retries = 3 tentatives
+const RETRY_DELAY_MS = 1500;
+
 export default function Projects({ projects: initialProjects = defaultProjects }: ProjectsProps) {
   const [projects, setProjects] = useState<Project[]>(initialProjects);
   const [failedImageIds, setFailedImageIds] = useState<Set<number>>(new Set());
+  const [imageRetryKey, setImageRetryKey] = useState<Record<number, number>>({});
+  const retryTimeoutsRef = useRef<Record<number, ReturnType<typeof setTimeout>>>({});
+
+  // Nettoyer les timeouts de retry au démontage
+  useEffect(() => {
+    return () => {
+      Object.values(retryTimeoutsRef.current).forEach(clearTimeout);
+      retryTimeoutsRef.current = {};
+    };
+  }, []);
 
   useEffect(() => {
     // Récupération des projets depuis Supabase si disponible
@@ -294,7 +307,7 @@ export default function Projects({ projects: initialProjects = defaultProjects }
                   }}
                 />
                 
-                {/* Image principale */}
+                {/* Image principale — retry automatique si échec (jusqu'à 3 tentatives) */}
                 {showImage ? (
                   <div className="relative mb-8 flex items-center justify-center overflow-visible">
                     <motion.div
@@ -310,18 +323,48 @@ export default function Projects({ projects: initialProjects = defaultProjects }
                       transition={{ duration: 0.3 }}
                     >
                       <img
-                        src={mainImage!.url}
+                        key={`img-${project.id}-${imageRetryKey[project.id] ?? 0}`}
+                        src={
+                          mainImage!.url +
+                          (imageRetryKey[project.id]
+                            ? `${mainImage!.url.includes('?') ? '&' : '?'}retry=${imageRetryKey[project.id]}`
+                            : '')
+                        }
                         alt={mainImage!.alt || project.title}
                         className="max-w-full h-auto rounded-2xl shadow-2xl"
                         style={{ borderRadius: '16px' }}
                         onError={() => {
+                          const retries = imageRetryKey[project.id] ?? 0;
+                          if (retries >= MAX_IMAGE_RETRIES) {
+                            setFailedImageIds((prev) => new Set(prev).add(project.id));
+                            console.warn(
+                              '[Projects] Image échouée après',
+                              MAX_IMAGE_RETRIES + 1,
+                              'tentatives:',
+                              mainImage!.url,
+                              '| Projet:',
+                              project.title,
+                              '— Vérifiez que le fichier existe (ex: public/projects/) ou que l’URL Supabase est valide.'
+                            );
+                            return;
+                          }
+                          if (retryTimeoutsRef.current[project.id] != null) {
+                            clearTimeout(retryTimeoutsRef.current[project.id]);
+                          }
                           setFailedImageIds((prev) => new Set(prev).add(project.id));
-                          console.error(
-                            'Erreur de chargement image:',
-                            mainImage!.url,
-                            '| Projet:',
-                            project.title
-                          );
+                          const timeoutId = setTimeout(() => {
+                            setFailedImageIds((prev) => {
+                              const next = new Set(prev);
+                              next.delete(project.id);
+                              return next;
+                            });
+                            setImageRetryKey((prev) => ({
+                              ...prev,
+                              [project.id]: retries + 1,
+                            }));
+                            delete retryTimeoutsRef.current[project.id];
+                          }, RETRY_DELAY_MS);
+                          retryTimeoutsRef.current[project.id] = timeoutId;
                         }}
                       />
                     </motion.div>
@@ -329,17 +372,18 @@ export default function Projects({ projects: initialProjects = defaultProjects }
                 ) : (
                   <div className="relative mb-8 flex items-center justify-center overflow-visible">
                     <motion.div
-                      className="relative rounded-2xl shadow-2xl bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center p-8"
+                      className="relative"
                       style={{
                         transform: `rotate(${index % 2 === 0 ? -4 : 4}deg)`,
                         transformOrigin: 'center',
-                        borderRadius: '16px'
                       }}
                     >
-                      <div className="text-center">
-                        <p className="text-gray-500 text-sm mb-2 font-medium">Image non disponible</p>
-                        <p className="text-gray-400 text-xs">{project.title}</p>
-                      </div>
+                      <img
+                        src="/placeholder-project.svg"
+                        alt={`Image non disponible — ${project.title}`}
+                        className="max-w-full h-auto rounded-2xl shadow-2xl w-full min-h-[200px] object-cover"
+                        style={{ borderRadius: '16px' }}
+                      />
                     </motion.div>
                   </div>
                 )}
