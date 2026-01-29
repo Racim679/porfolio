@@ -13,7 +13,7 @@ export default function Footer() {
             Mail
           </a>
           <a
-            href="https://www.linkedin.com/in/racim-smail-11680a389/"
+            href="https://www.linkedin.com/in/racim-si-smail-11680a389/"
             target="_blank"
             rel="noopener noreferrer"
             className="text-gray-500 hover:text-gray-700 transition-colors text-sm sm:text-base sm:px-8 lg:px-12"

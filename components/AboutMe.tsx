@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import Image from 'next/image';
 
@@ -34,10 +34,10 @@ export default function AboutMe({
               About me
             </h2>
             <div
-              className="space-y-6 text-gray-900 text-base sm:text-lg leading-relaxed"
+              className="space-y-6 text-gray-900 text-sm sm:text-base leading-relaxed"
               style={{ fontFamily: 'var(--font-inter), Inter, sans-serif' }}
             >
-              <p className="font-semibold text-lg sm:text-xl text-black">
+              <p className="font-semibold text-lg sm:text-xl text-black" style={{ fontFamily: 'var(--font-canela-deck)' }}>
                 {tagline}
               </p>
               <p>
