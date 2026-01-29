@@ -44,7 +44,18 @@ export default function AboutMe({
                 {paragraph1}
               </p>
               <p>
-                {paragraph2}
+                {(() => {
+                  const highlight = 'Je recherche une alternance';
+                  const i = paragraph2.indexOf(highlight);
+                  if (i === -1) return paragraph2;
+                  return (
+                    <>
+                      {paragraph2.slice(0, i)}
+                      <span className="text-blue-600">{highlight}</span>
+                      {paragraph2.slice(i + highlight.length)}
+                    </>
+                  );
+                })()}
               </p>
             </div>
           </div>
