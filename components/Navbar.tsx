@@ -52,12 +52,6 @@ export default function Navbar() {
   });
 
 
-  const handleCVClick = () => {
-    // You can add a link to your CV here
-    // For now, it's a placeholder
-    console.log('CV clicked');
-  };
-
   return (
     <motion.header
       initial={{ y: 0 }}
@@ -100,14 +94,15 @@ export default function Navbar() {
             </a>
           </div>
 
-          {/* CV Button */}
-          <button
-            onClick={handleCVClick}
+          {/* CV Button — télécharge le PDF depuis /public */}
+          <a
+            href="/cv%20(7).pdf"
+            download="CV_Racim_Si_Smail.pdf"
             className="flex items-center gap-2 px-8 py-3 text-base font-medium text-white bg-blue-600 rounded-full hover:bg-blue-700 hover:rotate-[4deg] transition-all duration-300 ease-out shadow-sm"
           >
             <FileText className="w-5 h-5" />
             Mon CV
-          </button>
+          </a>
         </div>
       </nav>
     </motion.header>

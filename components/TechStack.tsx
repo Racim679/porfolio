@@ -1,5 +1,6 @@
 'use client';
 
+import { useMemo } from 'react';
 import LogoLoop from './LogoLoop';
 
 interface TechItem {
@@ -22,37 +23,42 @@ const defaultTechItems: TechItem[] = [
   { name: 'ClaudeCode', mastery: 75 },
 ];
 
-// Simple logo components using text/icons
-const TechLogo = ({ name }: { name: string }) => {
-  const logoMap: Record<string, string> = {
-    'PostgreSQL': '🐘',
-    'Python': '🐍',
-    'C++': '⚙️',
-    'JS/JSON': '📜',
-    'Figma': '🎨',
-    'n8n': '🔗',
-    'Supabase': '⚡',
-    'ClaudeCode': '🤖',
+export default function TechStack({ techItems = defaultTechItems }: TechStackProps) {
+  // Mapping des logos avec leurs chemins
+  const logoPathMap: Record<string, string> = {
+    'PostgreSQL': '/postgresql-database-logo-application-software-computer-software-mysql-logo-thumbnail.png',
+    'Python': '/python-logo-transparent-15.png',
+    'JS/JSON': '/logo-javascript-icon-256.png',
+    'Supabase': '/supabase-logo-png_seeklogo-435677.png',
+    'Figma': '/figma.png',
+    'Framer': '/framer.png',
   };
 
-  return (
-    <div className="flex items-center justify-center w-16 h-16 text-3xl">
-      {logoMap[name] || name.charAt(0)}
-    </div>
-  );
-};
-
-export default function TechStack({ techItems = defaultTechItems }: TechStackProps) {
-  // Create logo items for LogoLoop
-  const logoItems = [
-    { node: <TechLogo name="Python" />, title: 'Python' },
-    { node: <TechLogo name="C++" />, title: 'C++' },
-    { node: <TechLogo name="JS/JSON" />, title: 'JavaScript' },
-    { node: <TechLogo name="PostgreSQL" />, title: 'PostgreSQL' },
-    { node: <TechLogo name="Supabase" />, title: 'Supabase' },
-    { node: <TechLogo name="Figma" />, title: 'Figma' },
-    { node: <TechLogo name="ClaudeCode" />, title: 'MCP' },
-  ];
+  // Create logo items for LogoLoop - séquence fixe et ordonnée
+  // Ordre défini explicitement pour garantir la cohérence
+  const logoItems = useMemo(() => {
+    // Ordre fixe défini explicitement - correspond à l'ordre attendu
+    const fixedOrder = ['PostgreSQL', 'Python', 'JS/JSON', 'Supabase', 'Figma', 'Framer'];
+    
+    // Vérifier que tous les logos existent dans le mapping
+    const items = fixedOrder
+      .filter(techName => {
+        const exists = logoPathMap[techName] !== undefined;
+        if (!exists) {
+          console.warn(`Logo manquant pour: ${techName}`);
+        }
+        return exists;
+      })
+      .map(techName => ({
+        src: logoPathMap[techName],
+        alt: techName,
+        title: techName,
+        width: 60,
+        height: 60
+      }));
+    
+    return items;
+  }, []);
 
   return (
     <section id="tech-stack" className="py-20 bg-gray-50">
@@ -85,18 +91,18 @@ export default function TechStack({ techItems = defaultTechItems }: TechStackPro
           ))}
         </div>
 
-        {/* LogoLoop Section */}
+        {/* LogoLoop Section - conteneur isolé pour éviter que le contenu déborde dans la loop */}
         <div className="mt-16">
           <h3 className="text-2xl font-semibold text-center text-blue-600 mb-8">
             Technologies
           </h3>
-          <div className="h-24">
+          <div className="h-24 flex items-center overflow-hidden w-full" style={{ contain: 'layout paint' }}>
             <LogoLoop
               logos={logoItems}
               speed={100}
               direction="left"
               logoHeight={60}
-              gap={60}
+              gap={150}
               hoverSpeed={0}
               scaleOnHover
               fadeOut

@@ -1,7 +1,7 @@
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import Projects from '@/components/Projects';
-import TechStack from '@/components/TechStack';
+import AboutMe from '@/components/AboutMe';
 import Footer from '@/components/Footer';
 
 export default function Home() {
@@ -11,10 +11,10 @@ export default function Home() {
       <main>
         <Hero 
           profileImage="/photo_racim.png"
-          description="Si Smail Racim, Étudiant Ingénieur. Je ne fais pas que coder, je conçois des solutions. Fort d'une maîtrise technique concrète (IA/Automation), je souhaite désormais appliquer cette rigueur opérationnelle au domaine des mathématiques appliquées."
+          description="Si Smail Racim, Étudiant Ingénieur. Je ne fais pas que coder, je conçois des solutions. Fort d'une maîtrise technique concrète (IA/Automation), je souhaite désormais appliquer cette rigueur opérationnelle au domaine de l'Informatique et Ingénierie Mathématique."
         />
         <Projects />
-        <TechStack />
+        <AboutMe />
         <Footer />
       </main>
     </div>

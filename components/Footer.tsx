@@ -1,44 +1,34 @@
 'use client';
 
-import { Mail, Linkedin, MessageCircle } from 'lucide-react';
-
 export default function Footer() {
   return (
     <footer id="contact" className="py-12 bg-white border-t border-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-8">
-          {/* Mail */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-y-6 sm:gap-y-0">
           <a
             href="mailto:contact@example.com"
-            className="flex items-center gap-2 text-blue-600 hover:text-blue-700 transition-colors text-sm sm:text-base"
+            className="text-gray-500 hover:text-gray-700 transition-colors text-sm sm:text-base sm:px-8 lg:px-12"
             aria-label="Email"
           >
-            <Mail className="w-5 h-5" />
-            <span>Mail</span>
+            Mail
           </a>
-
-          {/* LinkedIn */}
           <a
             href="https://linkedin.com/in/yourprofile"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 text-blue-600 hover:text-blue-700 transition-colors text-sm sm:text-base"
+            className="text-gray-500 hover:text-gray-700 transition-colors text-sm sm:text-base sm:px-8 lg:px-12"
             aria-label="LinkedIn"
           >
-            <Linkedin className="w-5 h-5" />
-            <span>LinkedIn</span>
+            LinkedIn
           </a>
-
-          {/* WhatsApp+ */}
           <a
             href="https://wa.me/yournumber"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 text-blue-600 hover:text-blue-700 transition-colors text-sm sm:text-base"
+            className="text-gray-500 hover:text-gray-700 transition-colors text-sm sm:text-base sm:px-8 lg:px-12"
             aria-label="WhatsApp"
           >
-            <MessageCircle className="w-5 h-5" />
-            <span>WhatsApp+</span>
+            WhatsApp
           </a>
         </div>
       </div>

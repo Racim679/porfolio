@@ -153,6 +153,7 @@ function mapFromSupabase(row: ProjectWithRelations): Project {
 
 export default function Projects({ projects: initialProjects = defaultProjects }: ProjectsProps) {
   const [projects, setProjects] = useState<Project[]>(initialProjects);
+  const [failedImageIds, setFailedImageIds] = useState<Set<number>>(new Set());
 
   useEffect(() => {
     // Récupération des projets depuis Supabase si disponible
@@ -266,16 +267,8 @@ export default function Projects({ projects: initialProjects = defaultProjects }
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
           {projects.map((project, index) => {
             const mainImage = getMainImage(project);
-            
-            // Debug temporaire
-            if (index === 0) {
-              console.log('Premier projet:', {
-                title: project.title,
-                mainImage: project.mainImage,
-                images: project.images,
-                mainImageResult: mainImage
-              });
-            }
+            const imageFailed = failedImageIds.has(project.id);
+            const showImage = mainImage?.url && !imageFailed;
 
             return (
               <motion.div
@@ -302,7 +295,7 @@ export default function Projects({ projects: initialProjects = defaultProjects }
                 />
                 
                 {/* Image principale */}
-                {mainImage && mainImage.url ? (
+                {showImage ? (
                   <div className="relative mb-8 flex items-center justify-center overflow-visible">
                     <motion.div
                       className="relative"
@@ -317,22 +310,18 @@ export default function Projects({ projects: initialProjects = defaultProjects }
                       transition={{ duration: 0.3 }}
                     >
                       <img
-                        src={mainImage.url}
-                        alt={mainImage.alt || project.title}
+                        src={mainImage!.url}
+                        alt={mainImage!.alt || project.title}
                         className="max-w-full h-auto rounded-2xl shadow-2xl"
                         style={{ borderRadius: '16px' }}
-                        onError={(e) => {
-                          console.error('❌ Erreur de chargement image:', {
-                            url: mainImage.url,
-                            project: project.title
-                          });
-                          const target = e.target as HTMLImageElement;
-                          target.style.display = 'none';
-                        }}
-                        onLoad={() => {
-                          if (index === 0) {
-                            console.log('✅ Image chargée avec succès:', mainImage.url);
-                          }
+                        onError={() => {
+                          setFailedImageIds((prev) => new Set(prev).add(project.id));
+                          console.error(
+                            'Erreur de chargement image:',
+                            mainImage!.url,
+                            '| Projet:',
+                            project.title
+                          );
                         }}
                       />
                     </motion.div>

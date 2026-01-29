@@ -2,6 +2,7 @@
   position: relative;
   overflow: hidden;
   width: 100%;
+  isolation: isolate;
 }
 
 .logoloop--vertical {
@@ -10,11 +11,11 @@
 
 .logoloop__track {
   display: flex;
-  will-change: transform;
-}
-
-.logoloop--horizontal .logoloop__track {
   flex-direction: row;
+  flex-wrap: nowrap;
+  will-change: transform;
+  position: relative;
+  gap: var(--logoloop-gap, 32px);
 }
 
 .logoloop--vertical .logoloop__track {
@@ -23,28 +24,29 @@
 
 .logoloop__list {
   display: flex;
+  flex-direction: row;
+  flex-shrink: 0;
+  flex-wrap: nowrap;
   list-style: none;
   margin: 0;
   padding: 0;
-  gap: var(--logoloop-gap, 32px);
-}
-
-.logoloop--horizontal .logoloop__list {
-  flex-direction: row;
+  gap: var(--logoloop-gap, 32px) !important;
   align-items: center;
+  min-width: max-content;
 }
 
 .logoloop--vertical .logoloop__list {
   flex-direction: column;
-  align-items: center;
 }
 
 .logoloop__item {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: var(--logoloop-logoHeight, 28px);
   flex-shrink: 0;
+  height: var(--logoloop-logoHeight, 28px);
+  margin: 0;
+  padding: 0;
 }
 
 .logoloop__link {
@@ -72,8 +74,13 @@
 .logoloop__item img {
   height: var(--logoloop-logoHeight, 28px);
   width: auto;
+  max-height: var(--logoloop-logoHeight, 28px);
+  max-width: 100%;
   object-fit: contain;
   display: block;
+  margin: 0;
+  padding: 0;
+  flex-shrink: 0;
 }
 
 .logoloop--fade {
