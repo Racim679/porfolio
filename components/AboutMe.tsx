@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import Image from 'next/image';
 
@@ -10,9 +10,9 @@ interface AboutMeProps {
 }
 
 const defaultContent = {
-  tagline: "Je conçois et construis des solutions numériques qui transforment les idées en réalité.",
-  paragraph1: "Étudiant ingénieur en 2e année de prépa, je travaille sur des projets concrets : plateformes web, automatisations (n8n), applications et solutions sur mesure. Je prends en charge tout le cycle, de la conception au déploiement, pour des résultats à la fois soignés et opérationnels.",
-  paragraph2: "Porté par la curiosité et l’envie de bien faire, je m’investis dans des solutions sur mesure pour les startups et les entreprises. Maîtrise technique (IA, automation, dev full-stack) et rigueur au service de résultats mesurables. Une idée à concrétiser ? Parlons-en.",
+  tagline: "En formation, je me construis en pratiquant : web, automatisation, applications.",
+  paragraph1: "Étudiant en 2e année de prépa, je m’exerce sur des projets perso (sites web, n8n, petits outils) pour apprendre. Je découvre le cycle conception–déploiement en le faisant.",
+  paragraph2: "Curieux et motivé, je veux continuer à m’éduquer pendant mon cycle ingénieur et surtout en alternance : apprendre sur le terrain, en entreprise, en faisant. Je recherche une alternance pour grandir en pratique à vos côtés.",
 };
 
 export default function AboutMe({

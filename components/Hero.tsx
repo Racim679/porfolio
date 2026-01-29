@@ -507,7 +507,7 @@ function TrailSegment({ segmentPath, startIdx, progress, duration }: TrailSegmen
 
 // Ordre au hover : 1 gants (gauche), 2 riz (droite)
 const HEAD_HOVER_IMAGES = [
-  { src: '/gants-bleu.png', alt: 'Gants', id: 'gants', label: 'MMA / Grappling fan.' },
+  { src: '/gants-bleu.png', alt: 'Gants', id: 'gants', label: 'fighting sports fan.' },
   { src: '/riz.png', alt: 'Riz', id: 'riz', label: 'Riz.' },
 ] as const;
 

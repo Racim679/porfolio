@@ -28,6 +28,10 @@ const canelaDeck = localFont({
 export const metadata: Metadata = {
   title: "Portfolio",
   description: "Portfolio professionnel",
+  icons: {
+    icon: "/logo.png",
+    apple: "/logo.png",
+  },
 };
 
 export default function RootLayout({
