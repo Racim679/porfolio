@@ -69,10 +69,10 @@ def resample_uniform(points, num_output):
 def main():
     import sys
     points = parse_plane_path_from_file()
-    # Reechantillonner avec plus de points et densite uniforme (ex: 360)
-    num_output = 360
+    # Reechantillonner avec plus de points et densite uniforme (500 = plus fluide)
+    num_output = 500
     uniform = resample_uniform(points, num_output)
-    out_path = "scripts/plane_path_360.txt"
+    out_path = "scripts/plane_path_500.txt"
     with open(out_path, "w", encoding="utf-8") as f:
         f.write("const planePath = [\n")
         for x, y in uniform:

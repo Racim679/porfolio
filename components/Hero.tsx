@@ -10,7 +10,7 @@ interface HeroProps {
   description?: string;
 }
 
-// Trajectoire rééchantillonnée, tronquée à la sortie droite, points à tangente parasite supprimés — 259 points
+// Trajectoire rééchantillonnée, tronquée à la sortie droite, points à tangente parasite supprimés — 267 points
 const planePath = [
   { x: 0.09, y: 48.24 },
   { x: 0.87, y: 48.33 },
@@ -141,12 +141,20 @@ const planePath = [
   { x: 31.21, y: 69.01 },
   { x: 31.83, y: 68.53 },
   { x: 32.45, y: 68.05 },
+  { x: 32.71, y: 67.84 },
   { x: 33.07, y: 67.56 },
+  { x: 33.37, y: 67.31 },
   { x: 33.68, y: 67.07 },
+  { x: 34.0, y: 66.81 },
   { x: 34.29, y: 66.58 },
+  { x: 34.61, y: 66.33 },
   { x: 34.91, y: 66.1 },
+  { x: 35.22, y: 65.86 },
   { x: 35.53, y: 65.62 },
-  { x: 36.16, y: 65.14 },
+  { x: 35.84, y: 65.38 },
+  { x: 36.08, y: 65.19 },
+  { x: 36.3, y: 65.02 },
+  { x: 36.51, y: 64.87 },
   { x: 36.79, y: 64.68 },
   { x: 37.44, y: 64.24 },
   { x: 38.1, y: 63.81 },
