@@ -23,6 +23,7 @@ interface AuditButtonProps {
     link?: string
     onClick?: () => void
     style?: CSSProperties
+    className?: string
 }
 
 export default function AuditButton({
@@ -45,6 +46,7 @@ export default function AuditButton({
     link,
     onClick,
     style,
+    className,
 }: AuditButtonProps) {
     const [isHovered, setIsHovered] = useState(false)
     const isResponsive = style?.width === "100%" || style?.height === "100%"
@@ -77,6 +79,7 @@ export default function AuditButton({
 
     return (
         <motion.button
+            className={className}
             onClick={handleClick}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}

@@ -167,7 +167,7 @@ export default function Projects({ projects: initialProjects = defaultProjects }
 
   cardCursorRef.current = cardCursor;
 
-  // Suivi du cercle avec latence ~300ms (lerp vers la position du curseur)
+  // Suivi du cercle avec latence ~500ms (lerp vers la position du curseur)
   useEffect(() => {
     if (!cardCursor) {
       setDisplayCursor(null);
@@ -180,7 +180,7 @@ export default function Projects({ projects: initialProjects = defaultProjects }
     displayPosRef.current = { x: cardCursor.x, y: cardCursor.y };
     setDisplayCursor({ cardId: cardCursor.cardId, x: cardCursor.x, y: cardCursor.y });
 
-    const LERP = 0.12;
+    const LERP = 0.08;
     const tick = () => {
       const target = cardCursorRef.current;
       if (target === null) {
@@ -360,7 +360,7 @@ export default function Projects({ projects: initialProjects = defaultProjects }
                   }}
                 />
 
-                {/* Cercle "Voir" au survol — suit le curseur avec latence ~300ms */}
+                {/* Cercle "Voir" au survol — suit le curseur avec latence ~500ms */}
                 {displayCursor?.cardId === project.id && (
                   <div
                     className="absolute pointer-events-none z-20 w-28 h-28 sm:w-32 sm:h-32 rounded-full bg-white shadow-xl flex items-center justify-center -translate-x-1/2 -translate-y-1/2"

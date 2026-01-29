@@ -677,6 +677,7 @@ export default function Hero({
               height={50}
               fontSize={16}
               link="#contact"
+              className="cursor-cta"
             />
           </div>
 

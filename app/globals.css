@@ -115,6 +115,14 @@
   --sidebar-ring: oklch(0.553 0.013 58.071);
 }
 
+/* Curseur CTA (Mon CV, Contacte Moi) — rond blanc bord bleu, lisible sur fond clair ou bleu */
+.cursor-cta {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Ccircle cx='14' cy='14' r='11' fill='white' stroke='%232563eb' stroke-width='2.5'/%3E%3C/svg%3E") 14 14, grab;
+}
+.cursor-cta:active {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Ccircle cx='14' cy='14' r='10' fill='white' stroke='%231d4ed8' stroke-width='2.5'/%3E%3C/svg%3E") 14 14, grabbing;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

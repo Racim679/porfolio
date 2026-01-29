@@ -26,8 +26,8 @@ const canelaDeck = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Portfolio",
-  description: "Portfolio professionnel",
+  title: "Racim Si Smail – Developpeur | Etudiant",
+  description: "Entrepreneur, Développeur, Brand designer | J'aide les entreprises à développer leur activité et à optimiser leurs processus en créant des solutions digitales fluides.",
   icons: {
     icon: "/logo.png",
     apple: "/logo.png",
