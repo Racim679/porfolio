@@ -837,7 +837,7 @@ export default function Hero({
         progress={planeProgress}
       />
       {/* Content */}
-      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
+      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-12 sm:pt-20 sm:pb-20 text-center">
         {/* Profile Image with Overlapping Button + images derrière la tête */}
         <div className="relative mb-8 flex flex-col items-center overflow-visible">
           {/* Wrapper même taille que la tête pour ne pas déplacer le bouton — overflow-visible pour les images qui dépassent */}
@@ -1020,12 +1020,8 @@ export default function Hero({
       {/* Animated Arrow - renvoie vers la section projets */}
       <a
         href="#projects"
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 cursor-pointer hover:opacity-80 transition-opacity"
+        className="absolute bottom-12 left-1/2 -translate-x-1/2 z-10 cursor-pointer hover:opacity-80 transition-opacity md:bottom-8"
         aria-label="Voir les projets"
-        onClick={(e) => {
-          e.preventDefault();
-          document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
-        }}
       >
         <motion.div
           animate={{

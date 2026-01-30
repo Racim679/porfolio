@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion"
 import { type CSSProperties, useState } from "react"
+import { useLenis } from "lenis/react"
 
 interface AuditButtonProps {
     text: string
@@ -50,21 +51,23 @@ export default function AuditButton({
 }: AuditButtonProps) {
     const [isHovered, setIsHovered] = useState(false)
     const isResponsive = style?.width === "100%" || style?.height === "100%"
+    const lenis = useLenis()
 
     const handleClick = () => {
         console.log("Button clicked!")
 
         if (link && typeof window !== "undefined") {
-            // Si c'est une ancre (#section), scroll fluide
+            // Si c'est une ancre (#section), scroll fluide (Lenis ou fallback)
             if (link.startsWith("#")) {
                 const targetId = link.substring(1)
                 const targetElement = document.getElementById(targetId)
 
                 if (targetElement) {
-                    targetElement.scrollIntoView({
-                        behavior: "smooth",
-                        block: "start",
-                    })
+                    if (lenis) {
+                        lenis.scrollTo(link, { duration: 1.2 })
+                    } else {
+                        targetElement.scrollIntoView({ behavior: "smooth", block: "start" })
+                    }
                 }
             } else {
                 // Sinon, navigation normale

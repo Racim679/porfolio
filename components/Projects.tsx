@@ -161,9 +161,22 @@ export default function Projects({ projects: initialProjects = defaultProjects }
   const retryTimeoutsRef = useRef<Record<number, ReturnType<typeof setTimeout>>>({});
   const [cardCursor, setCardCursor] = useState<{ cardId: number; x: number; y: number } | null>(null);
   const [displayCursor, setDisplayCursor] = useState<{ cardId: number; x: number; y: number } | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
   const cardCursorRef = useRef<{ cardId: number; x: number; y: number } | null>(null);
   const displayPosRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
   const rafRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 639px)');
+    setIsMobile(mq.matches);
+    const handler = () => {
+      const mobile = mq.matches;
+      setIsMobile(mobile);
+      if (mobile) setCardCursor(null);
+    };
+    mq.addEventListener('change', handler);
+    return () => mq.removeEventListener('change', handler);
+  }, []);
 
   cardCursorRef.current = cardCursor;
 
@@ -334,13 +347,13 @@ export default function Projects({ projects: initialProjects = defaultProjects }
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-50px' }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="group relative rounded-3xl p-8 sm:p-12 overflow-hidden cursor-pointer"
+                className={`group relative rounded-3xl p-8 sm:p-12 overflow-hidden ${isMobile ? 'cursor-default' : 'cursor-pointer'}`}
                 style={{
                   background: index % 2 === 0
                     ? 'linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(147, 197, 253, 0.1) 100%)'
                     : 'linear-gradient(135deg, rgba(236, 72, 153, 0.15) 0%, rgba(147, 197, 253, 0.1) 100%)'
                 }}
-                onMouseMove={(e) => {
+                onMouseMove={isMobile ? undefined : (e) => {
                   const rect = e.currentTarget.getBoundingClientRect();
                   setCardCursor({
                     cardId: project.id,
@@ -348,7 +361,7 @@ export default function Projects({ projects: initialProjects = defaultProjects }
                     y: e.clientY - rect.top,
                   });
                 }}
-                onMouseLeave={() => setCardCursor(null)}
+                onMouseLeave={isMobile ? undefined : () => setCardCursor(null)}
               >
                 {/* Background blur effect pour la profondeur */}
                 <div 
@@ -360,8 +373,8 @@ export default function Projects({ projects: initialProjects = defaultProjects }
                   }}
                 />
 
-                {/* Cercle "Voir" au survol — suit le curseur avec latence ~500ms */}
-                {displayCursor?.cardId === project.id && (
+                {/* Cercle "Voir" au survol — suit le curseur avec latence ~500ms (désactivé sur mobile) */}
+                {!isMobile && displayCursor?.cardId === project.id && (
                   <div
                     className="absolute pointer-events-none z-20 w-28 h-28 sm:w-32 sm:h-32 rounded-full bg-white shadow-xl flex items-center justify-center -translate-x-1/2 -translate-y-1/2"
                     style={{

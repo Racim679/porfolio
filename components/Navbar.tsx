@@ -94,10 +94,11 @@ export default function Navbar() {
             </a>
           </div>
 
-          {/* CV Button — télécharge le PDF depuis /public */}
+          {/* CV Button — ouvre /cv dans un nouvel onglet pour lire puis télécharger si souhaité */}
           <a
-            href="/cv%20(7).pdf"
-            download="Cv-Si-Smail-Racim.pdf"
+            href="/cv"
+            target="_blank"
+            rel="noopener noreferrer"
             className="cursor-cta flex items-center gap-2 px-8 py-3 text-base font-medium text-white bg-blue-600 rounded-full hover:bg-blue-700 hover:rotate-[4deg] transition-all duration-300 ease-out shadow-sm"
           >
             <FileText className="w-5 h-5" />
