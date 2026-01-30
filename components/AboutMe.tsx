@@ -1,8 +1,10 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import BlurText from './BlurText';
 import SplitText from './SplitText';
+import AuditButton from './AuditButton';
 
 interface AboutMeProps {
   photo?: string;
@@ -23,6 +25,15 @@ export default function AboutMe({
   paragraph1 = defaultContent.paragraph1,
   paragraph2 = defaultContent.paragraph2,
 }: AboutMeProps) {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 639px)');
+    setIsMobile(mq.matches);
+    const handler = () => setIsMobile(mq.matches);
+    mq.addEventListener('change', handler);
+    return () => mq.removeEventListener('change', handler);
+  }, []);
+
   return (
     <section id="about" className="py-20 sm:py-28 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -67,6 +78,16 @@ export default function AboutMe({
                   );
                 })()}
               </p>
+            </div>
+            <div className="mt-6">
+              <AuditButton
+                text="Contacte Moi"
+                width={isMobile ? 160 : 200}
+                height={isMobile ? 44 : 50}
+                fontSize={isMobile ? 14 : 16}
+                link="#contact"
+                className="cursor-cta"
+              />
             </div>
           </div>
           <div className="lg:col-span-6 flex justify-center lg:justify-end">

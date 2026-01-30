@@ -781,10 +781,12 @@ function TrailSegment({ segmentPath, startIdx, progress, duration }: TrailSegmen
   );
 }
 
-// Ordre au hover : 1 gants (gauche), 2 riz (droite)
+// Ordre au hover : 1 riz (droite), 2 gants (gauche), 3 bouteille (droite), 4 haltères (gauche)
 const HEAD_HOVER_IMAGES = [
-  { src: '/gants-bleu.png', alt: 'Gants', id: 'gants', label: 'fighting sports fan.' },
-  { src: '/riz.png', alt: 'Riz', id: 'riz', label: 'Riz.' },
+  { src: '/riz.png', alt: 'Riz', id: 'riz', label: 'Riz.', labelClass: 'text-blue-600' },
+  { src: '/gants-bleu.png', alt: 'Gants', id: 'gants', label: 'fighting sports fan.', labelClass: 'text-blue-600' },
+  { src: '/bouteille_avec_masque.png', alt: 'Jeune plongeur', id: 'plongeur', label: 'Jeune plongeur', labelClass: 'text-blue-600' },
+  { src: '/halteres_yellow_only (1).png', alt: 'Haltères', id: 'halteres', label: 'Musculation.', labelClass: 'text-blue-600' },
 ] as const;
 
 export default function Hero({ 
@@ -797,7 +799,7 @@ export default function Hero({
   const [headHoverIndex, setHeadHoverIndex] = useState(0);
   const [isHeadHovered, setIsHeadHovered] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [mobileActiveIndex, setMobileActiveIndex] = useState<-1 | 0 | 1>(-1);
+  const [mobileActiveIndex, setMobileActiveIndex] = useState<-1 | 0 | 1 | 2 | 3>(-1);
 
   useEffect(() => {
     const mq = window.matchMedia('(max-width: 639px)');
@@ -858,31 +860,18 @@ export default function Hero({
                 ? mobileActiveIndex === index
                 : isHeadHovered && index === headHoverIndex;
               const configs = [
-                {
-                  wrapper: { left: '28%', top: '50%', transform: 'translate(-50%, -50%)' },
-                  animate: {
-                    rotate: isActive ? -21 : 0,
-                    x: isActive ? -76 : 0,
-                    scale: isActive ? 1.5 : 0.9,
-                  },
-                  labelOffset: { x: -36, y: -18 },
-                },
-                {
-                  wrapper: { right: '28%', top: '50%', transform: 'translate(50%, -50%)' },
-                  animate: {
-                    rotate: isActive ? 21 : 0,
-                    x: isActive ? 76 : 0,
-                    scale: isActive ? 1.5 : 0.9,
-                  },
-                  labelOffset: { x: 24, y: -12 },
-                },
+                { wrapper: { right: '28%', top: '50%', transform: 'translate(50%, -50%)' }, animate: { rotate: isActive ? 21 : 0, x: isActive ? 76 : 0, y: 0, scale: isActive ? 1.5 : 0.9 }, labelOffset: { x: 24, y: -12 } },
+                { wrapper: { left: '28%', top: '50%', transform: 'translate(-50%, -50%)' }, animate: { rotate: isActive ? -21 : 0, x: isActive ? -76 : 0, y: 0, scale: isActive ? 1.5 : 0.9 }, labelOffset: { x: -36, y: -18 } },
+                { wrapper: { right: '28%', top: '50%', transform: 'translate(50%, -50%)' }, animate: { rotate: isActive ? 21 : 0, x: isActive ? 76 : 0, y: 0, scale: isActive ? 1.5 : 0.9 }, labelOffset: { x: 24, y: -12 } },
+                { wrapper: { left: '28%', top: '50%', transform: 'translate(-50%, -50%)' }, animate: { rotate: isActive ? -21 : 0, x: isActive ? -76 : 0, y: 0, scale: isActive ? 1.5 : 0.9 }, labelOffset: { x: -36, y: -18 } },
               ];
               const cfg = configs[index];
               const lo = cfg.labelOffset ?? { x: 0, y: -28 };
+              const animY = typeof cfg.animate.y === 'number' ? cfg.animate.y : 0;
               const labelAnimate = {
                 ...cfg.animate,
                 x: (typeof cfg.animate.x === 'number' ? cfg.animate.x : 0) + lo.x,
-                y: lo.y,
+                y: animY + lo.y,
                 opacity: isActive ? 1 : 0,
               };
               return (
@@ -909,7 +898,7 @@ export default function Hero({
                   </motion.div>
                   {/* Texte avec la même translation/rotation que l'image, décalé au-dessus */}
                   <motion.div
-                    className="absolute left-1/2 bottom-full mb-0.5 -translate-x-1/2 whitespace-nowrap text-blue-600 text-[10px] sm:text-xs font-medium"
+                    className={`absolute left-1/2 bottom-full mb-0.5 -translate-x-1/2 whitespace-nowrap text-[10px] sm:text-xs font-medium ${img.labelClass ?? 'text-blue-600'}`}
                     style={{ fontFamily: 'var(--font-canela-deck)' }}
                     initial={false}
                     animate={labelAnimate}
@@ -934,7 +923,7 @@ export default function Hero({
               }}
               onClick={() => {
                 if (isMobile) {
-                  setMobileActiveIndex((i): -1 | 0 | 1 => (i === 1 ? -1 : (i + 1) as 0 | 1));
+                  setMobileActiveIndex((i): -1 | 0 | 1 | 2 | 3 => (i === 3 ? -1 : (i + 1) as 0 | 1 | 2 | 3));
                 }
               }}
               role={isMobile ? 'button' : undefined}
