@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import BlurText from './BlurText';
+import SplitText from './SplitText';
 
 interface AboutMeProps {
   photo?: string;
@@ -40,9 +41,15 @@ export default function AboutMe({
               className="space-y-6 text-gray-900 text-sm sm:text-base leading-relaxed"
               style={{ fontFamily: 'var(--font-inter), Inter, sans-serif' }}
             >
-              <p className="font-semibold text-lg sm:text-xl text-black" style={{ fontFamily: 'var(--font-canela-deck)' }}>
-                {tagline}
-              </p>
+              <SplitText
+                as="p"
+                text={tagline}
+                className="font-semibold text-lg sm:text-xl text-black"
+                style={{ fontFamily: 'var(--font-canela-deck)' }}
+                splitType="words"
+                delay={80}
+                duration={0.5}
+              />
               <p>
                 {paragraph1}
               </p>

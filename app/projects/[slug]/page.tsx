@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import { createSupabaseClient, ProjectWithRelations, addCacheBusting } from '@/lib/supabase';
 import ProjectImageCarousel from '@/components/ProjectImageCarousel';
 import Navbar from '@/components/Navbar';
+import SplitText from '@/components/SplitText';
 
 interface ProjectPageProps {
   params: Promise<{
@@ -108,12 +109,15 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     <main className="min-h-screen bg-white">
       <Navbar />
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16">
-        <h1
+        <SplitText
+          as="h1"
+          text={row.title}
           className="text-3xl sm:text-4xl font-normal text-blue-600 mb-6"
           style={{ fontFamily: 'var(--font-canela-deck)' }}
-        >
-          {row.title}
-        </h1>
+          splitType="words"
+          delay={60}
+          duration={0.5}
+        />
 
         <p
           className="text-sm sm:text-base md:text-lg text-gray-800 leading-relaxed mb-10 break-words"
