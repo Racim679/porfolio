@@ -847,7 +847,7 @@ export default function Hero({
         progress={planeProgress}
       />
       {/* Content */}
-      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-12 sm:pt-20 sm:pb-20 text-center">
+      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-10 sm:pt-20 sm:pb-20 text-center">
         {/* Profile Image with Overlapping Button + images derrière la tête */}
         <div className="relative mb-8 flex flex-col items-center overflow-visible">
           {/* Wrapper même taille que la tête pour ne pas déplacer le bouton — overflow-visible pour les images qui dépassent */}
@@ -1038,13 +1038,14 @@ export default function Hero({
         </div>
       </div>
 
-      {/* Animated Arrow - renvoie vers la section projets */}
+      {/* Animated Arrow - renvoie vers la section projets (petit rond bleu clair, même mouvement que la flèche) */}
       <a
         href="#projects"
-        className="absolute bottom-12 left-1/2 -translate-x-1/2 z-10 cursor-pointer hover:opacity-80 transition-opacity md:bottom-8"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 cursor-pointer md:bottom-8"
         aria-label="Voir les projets"
       >
         <motion.div
+          className="flex items-center justify-center w-7 h-7 rounded-full bg-blue-100/90 hover:bg-blue-200/90 transition-colors shadow-sm"
           animate={{
             y: [0, 8, 0],
           }}
@@ -1063,7 +1064,7 @@ export default function Hero({
           >
             <path
               d="M7 10L12 15L17 10"
-              stroke="rgba(37, 99, 235, 0.5)"
+              stroke="rgb(37, 99, 235)"
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
