@@ -60,8 +60,12 @@ export const createSupabaseClient = () => {
   return createClient(supabaseUrl, supabaseAnonKey);
 };
 
-// Client Supabase par défaut
-export const supabase = createSupabaseClient();
+// Client Supabase paresseux : créé au premier usage (évite d'échouer au build Vercel si env absentes)
+let _supabase: ReturnType<typeof createSupabaseClient> | null = null;
+export function getSupabase(): ReturnType<typeof createSupabaseClient> {
+  if (!_supabase) _supabase = createSupabaseClient();
+  return _supabase;
+}
 
 /**
  * Ajoute un paramètre de cache-busting à une URL d'image Supabase Storage

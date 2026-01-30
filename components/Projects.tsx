@@ -1,10 +1,12 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { supabase, ProjectWithRelations, addCacheBusting } from '@/lib/supabase';
+import { useRouter } from 'next/navigation';
+import { getSupabase, ProjectWithRelations, addCacheBusting } from '@/lib/supabase';
 import BlurText from './BlurText';
 
 interface ProjectImage {
@@ -163,6 +165,8 @@ export default function Projects({ projects: initialProjects = defaultProjects }
   const [cardCursor, setCardCursor] = useState<{ cardId: number; x: number; y: number } | null>(null);
   const [displayCursor, setDisplayCursor] = useState<{ cardId: number; x: number; y: number } | null>(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
+  const router = useRouter();
   const cardCursorRef = useRef<{ cardId: number; x: number; y: number } | null>(null);
   const displayPosRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
   const rafRef = useRef<number | null>(null);
@@ -175,6 +179,14 @@ export default function Projects({ projects: initialProjects = defaultProjects }
       setIsMobile(mobile);
       if (mobile) setCardCursor(null);
     };
+    mq.addEventListener('change', handler);
+    return () => mq.removeEventListener('change', handler);
+  }, []);
+
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 1024px)');
+    setIsDesktop(mq.matches);
+    const handler = () => setIsDesktop(mq.matches);
     mq.addEventListener('change', handler);
     return () => mq.removeEventListener('change', handler);
   }, []);
@@ -230,6 +242,7 @@ export default function Projects({ projects: initialProjects = defaultProjects }
     // Récupération des projets depuis Supabase si disponible
     const fetchProjects = async () => {
       try {
+        const supabase = getSupabase();
         const { data, error } = await supabase
           .from('projects')
           .select(
@@ -305,6 +318,7 @@ export default function Projects({ projects: initialProjects = defaultProjects }
   };
 
   return (
+    <>
     <section id="projects" className="pt-10 sm:pt-16 pb-24 bg-white">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Portfolio Button */}
@@ -360,14 +374,21 @@ export default function Projects({ projects: initialProjects = defaultProjects }
                     : 'linear-gradient(135deg, rgba(236, 72, 153, 0.15) 0%, rgba(147, 197, 253, 0.1) 100%)'
                 }}
                 onMouseMove={isMobile ? undefined : (e) => {
-                  const rect = e.currentTarget.getBoundingClientRect();
                   setCardCursor({
                     cardId: project.id,
-                    x: e.clientX - rect.left,
-                    y: e.clientY - rect.top,
+                    x: e.clientX,
+                    y: e.clientY,
                   });
                 }}
                 onMouseLeave={isMobile ? undefined : () => setCardCursor(null)}
+                onClick={() => {
+                  if (!isDesktop || !project.cmsLink) return;
+                  if (project.cmsLink.startsWith('http')) {
+                    window.location.href = project.cmsLink;
+                  } else {
+                    router.push(project.cmsLink);
+                  }
+                }}
               >
                 {/* Background blur effect pour la profondeur */}
                 <div 
@@ -379,21 +400,6 @@ export default function Projects({ projects: initialProjects = defaultProjects }
                   }}
                 />
 
-                {/* Cercle "Voir" au survol — suit le curseur avec latence ~500ms (désactivé sur mobile) */}
-                {!isMobile && displayCursor?.cardId === project.id && (
-                  <div
-                    className="absolute pointer-events-none z-20 w-28 h-28 sm:w-32 sm:h-32 rounded-full bg-white shadow-xl flex items-center justify-center -translate-x-1/2 -translate-y-1/2"
-                    style={{
-                      left: displayCursor.x,
-                      top: displayCursor.y,
-                      fontFamily: 'var(--font-inter), Inter, sans-serif',
-                    }}
-                    aria-hidden
-                  >
-                    <span className="text-black font-semibold text-base sm:text-lg">Voir</span>
-                  </div>
-                )}
-                
                 {/* Image principale — retry automatique si échec (jusqu'à 3 tentatives) */}
                 {showImage ? (
                   <div className="relative mb-8 flex items-center justify-center overflow-visible">
@@ -490,29 +496,31 @@ export default function Projects({ projects: initialProjects = defaultProjects }
                     Web Design and Development
                   </p>
                   
-                  {/* CTA Link */}
+                  {/* CTA Link — visible mobile/tablette uniquement, masqué sur PC */}
                   {project.cmsLink && (
-                    project.cmsLink.startsWith('http') ? (
-                      <a
-                        href={project.cmsLink}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium transition-colors group"
-                        style={{ fontFamily: 'var(--font-inter), Inter, sans-serif' }}
-                      >
-                        Voir le projet
-                        <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                      </a>
-                    ) : (
-                      <Link
-                        href={project.cmsLink}
-                        className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium transition-colors group"
-                        style={{ fontFamily: 'var(--font-inter), Inter, sans-serif' }}
-                      >
-                        Voir le projet
-                        <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                      </Link>
-                    )
+                    <div className="lg:hidden">
+                      {project.cmsLink.startsWith('http') ? (
+                        <a
+                          href={project.cmsLink}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium transition-colors group"
+                          style={{ fontFamily: 'var(--font-inter), Inter, sans-serif' }}
+                        >
+                          Voir le projet
+                          <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                        </a>
+                      ) : (
+                        <Link
+                          href={project.cmsLink}
+                          className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium transition-colors group"
+                          style={{ fontFamily: 'var(--font-inter), Inter, sans-serif' }}
+                        >
+                          Voir le projet
+                          <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                        </Link>
+                      )}
+                    </div>
                   )}
                 </div>
               </motion.div>
@@ -521,5 +529,29 @@ export default function Projects({ projects: initialProjects = defaultProjects }
         </div>
       </div>
     </section>
+    {/* Curseur "Voir" en portail (évite le crop par overflow-hidden des cards) */}
+    {typeof document !== 'undefined' && !isMobile && displayCursor && createPortal(
+      <div
+        className="fixed inset-0 pointer-events-none"
+        style={{ zIndex: 2147483647 }}
+        aria-hidden
+      >
+        <motion.div
+          className="absolute w-28 h-28 sm:w-32 sm:h-32 rounded-full bg-white shadow-xl flex items-center justify-center -translate-x-1/2 -translate-y-1/2"
+          style={{
+            left: displayCursor.x,
+            top: displayCursor.y,
+            fontFamily: 'var(--font-inter), Inter, sans-serif',
+          }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3 }}
+        >
+          <span className="text-black font-semibold text-base sm:text-lg">Voir</span>
+        </motion.div>
+      </div>,
+      document.body
+    )}
+    </>
   );
 }
