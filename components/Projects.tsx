@@ -244,8 +244,11 @@ export default function Projects({ projects: initialProjects = defaultProjects }
           .order('order_index', { ascending: true });
 
         if (error) {
-          console.error('Erreur Supabase:', error);
-          // On reste sur les projets par défaut en cas d'erreur
+          // Log en warn pour ne pas déclencher l'overlay d'erreur Next.js ; message lisible au lieu de {}
+          console.warn(
+            'Supabase: utilisation des projets par défaut.',
+            error?.message ?? error?.code ?? String(error)
+          );
           return;
         }
 

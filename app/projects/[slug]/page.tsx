@@ -70,8 +70,12 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   // Vérifier s'il y a une erreur ou aucun résultat
   if (error) {
     if (process.env.NODE_ENV === 'development') {
-      console.error('Erreur Supabase:', error);
-      console.error('Slug recherché:', slug);
+      console.warn(
+        'Supabase (page projet):',
+        error?.message ?? error?.code ?? String(error),
+        'slug:',
+        slug
+      );
     }
     notFound();
   }
