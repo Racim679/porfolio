@@ -3,6 +3,9 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef, useMemo, useState, useEffect } from 'react';
 
+/** Type attendu par useInView pour margin (évite l'erreur TS sur Vercel) */
+type ViewportMargin = NonNullable<Parameters<typeof useInView>[1]>['margin'];
+
 type AnimateBy = 'words' | 'letters';
 type Direction = 'top' | 'bottom';
 
@@ -45,7 +48,7 @@ export default function BlurText({
   as: Component = defaultProps.as,
 }: BlurTextProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, amount: threshold, margin: rootMargin });
+  const isInView = useInView(ref, { once: true, amount: threshold, margin: rootMargin as ViewportMargin });
   const [canAnimate, setCanAnimate] = useState(false);
 
   useEffect(() => {

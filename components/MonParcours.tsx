@@ -12,20 +12,20 @@ export interface ParcoursStep {
 
 const defaultSteps: ParcoursStep[] = [
   {
-    year: 'Seconde',
+    year: '2021–2022',
     title: 'CCNA Cisco & bureautique',
-    subtitle: 'Centre de formation',
+    subtitle: 'Seconde · Centre de formation',
     description: 'Formation CCNA en accélérée (hors certification officielle) pour découvrir les réseaux et plusieurs secteurs de l\'informatique. Formation complémentaire en bureautique : Excel, PowerPoint, etc. Une base qui m\'a ouvert des perspectives et une compréhension plus globale des enjeux en info.',
   },
   {
-    year: 'Un an avant le bac',
+    year: '2023',
     title: 'ML & IA – initiation',
     subtitle: 'Code 213, Alger',
     description: 'Formation introductive en Machine Learning et Intelligence Artificielle à l\'école de formation aux métiers du digital Code 213.',
     link: { url: 'https://code213.tech/', label: 'Code 213' },
   },
   {
-    year: 'Bac',
+    year: '2024',
     title: 'Baccalauréat',
     description: 'Parcours lycée, orientation vers les sciences et l\'ingénierie.',
   },
