@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { useLenis } from 'lenis/react';
 
 const GREETINGS = ['Hola !', '你好 !', 'Bonjour !', 'مرحبا', 'Hello !', 'Здравствуйте !'];
 const WORD_DURATION_MS = 300; // entre chaque mot
@@ -12,6 +13,7 @@ export default function IntroOverlay() {
   const [wordIndex, setWordIndex] = useState(0);
   const [isExiting, setIsExiting] = useState(false);
   const [isDone, setIsDone] = useState(false);
+  const lenis = useLenis();
 
   useEffect(() => {
     const advance = setInterval(() => {
@@ -40,17 +42,21 @@ export default function IntroOverlay() {
     return () => clearTimeout(doneTimer);
   }, [isExiting]);
 
-  // Bloquer le scroll pendant l'overlay
+  // Bloquer le scroll pendant l'overlay : Lenis gère le scroll, il faut lenis.stop()
   useEffect(() => {
+    if (!lenis) return;
     if (!isDone) {
+      lenis.stop();
       document.body.style.overflow = 'hidden';
     } else {
+      lenis.start();
       document.body.style.overflow = '';
     }
     return () => {
+      lenis.start();
       document.body.style.overflow = '';
     };
-  }, [isDone]);
+  }, [isDone, lenis]);
 
   if (isDone) return null;
 

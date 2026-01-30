@@ -47,8 +47,10 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${canelaDeck.variable} antialiased`}
       >
-        <IntroOverlay />
-        <LenisProvider>{children}</LenisProvider>
+        <LenisProvider>
+          <IntroOverlay />
+          {children}
+        </LenisProvider>
       </body>
     </html>
   );
