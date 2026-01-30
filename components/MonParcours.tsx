@@ -1,5 +1,7 @@
 'use client';
 
+import BlurText from './BlurText';
+
 export interface ParcoursStep {
   year: string;
   title: string;
@@ -43,12 +45,14 @@ export default function MonParcours({ steps = defaultSteps }: MonParcoursProps) 
   return (
     <section id="parcours" className="py-20 sm:py-28 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2
+        <BlurText
+          as="h2"
+          text="Mon parcours"
           className="text-4xl sm:text-5xl font-normal tracking-tight text-blue-600 mb-16 text-center"
           style={{ fontFamily: 'var(--font-canela-deck)' }}
-        >
-          Mon parcours
-        </h2>
+          animateBy="words"
+          delay={150}
+        />
 
         <div className="relative max-w-2xl mx-auto">
           {/* Ligne verticale */}

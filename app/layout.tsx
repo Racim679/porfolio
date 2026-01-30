@@ -4,6 +4,7 @@ import localFont from "next/font/local";
 import "lenis/dist/lenis.css";
 import "./globals.css";
 import LenisProvider from "@/components/LenisProvider";
+import IntroOverlay from "@/components/IntroOverlay";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -46,6 +47,7 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${canelaDeck.variable} antialiased`}
       >
+        <IntroOverlay />
         <LenisProvider>{children}</LenisProvider>
       </body>
     </html>

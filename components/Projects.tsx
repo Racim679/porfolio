@@ -5,6 +5,7 @@ import { ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { supabase, ProjectWithRelations, addCacheBusting } from '@/lib/supabase';
+import BlurText from './BlurText';
 
 interface ProjectImage {
   url: string;
@@ -326,12 +327,14 @@ export default function Projects({ projects: initialProjects = defaultProjects }
         </div>
 
         {/* Section Title */}
-        <h2 
+        <BlurText
+          as="h2"
+          text="Mes Projets"
           className="text-4xl sm:text-5xl font-normal text-center text-blue-600 mb-16"
           style={{ fontFamily: 'var(--font-canela-deck)' }}
-        >
-          Mes Projets
-        </h2>
+          animateBy="words"
+          delay={180}
+        />
 
         {/* Projects Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">

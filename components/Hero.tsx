@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import AuditButton from './AuditButton';
+import BlurText from './BlurText';
 import { motion, useMotionValue, useTransform, MotionValue } from 'framer-motion';
 import { useEffect, useState, useRef } from 'react';
 
@@ -557,6 +558,7 @@ const planeRotations = unwrapAngles(getPlaneRotations(planePath));
 
 const PLANE_DURATION = 14;
 const PLANE_REPEAT_DELAY = 2;
+const PLANE_START_DELAY_MS = 3000; // délai avant le premier passage de l'avion (aligné hero)
 const HOVER_MAX_DURATION_MS = 3000; // max 3s en ralenti, puis retour vitesse normale
 const HOVER_BLOCKED_DURATION_MS = 3000; // après ça, hover bloqué pendant 3s
 const SEGMENT_SIZE = 5; // Nombre de points par segment pour la traînée
@@ -586,6 +588,7 @@ function PlaneAlongPath({
   const lastTimeRef = useRef<number>(0);
   const phaseRef = useRef<'animating' | 'delaying'>('animating');
   const delayEndTimeRef = useRef(0);
+  const initialDelayEndRef = useRef(0);
 
   const left = useTransform(progress, keyframes, planePath.map((p) => `${p.x}%`));
   const top = useTransform(progress, keyframes, planePath.map((p) => `${p.y}%`));
@@ -594,10 +597,17 @@ function PlaneAlongPath({
   // Boucle manuelle : on ne relance jamais l'animation, on change juste la vitesse → plus de saut
   useEffect(() => {
     let rafId: number;
-    lastTimeRef.current = performance.now();
+    const startNow = performance.now();
+    lastTimeRef.current = startNow;
+    initialDelayEndRef.current = startNow + PLANE_START_DELAY_MS;
 
     const tick = () => {
       const now = performance.now();
+      if (now < initialDelayEndRef.current) {
+        lastTimeRef.current = now;
+        rafId = requestAnimationFrame(tick);
+        return;
+      }
       const deltaSec = (now - lastTimeRef.current) / 1000;
       lastTimeRef.current = now;
       const dur = durationRef.current;
@@ -876,10 +886,13 @@ export default function Hero({
                 opacity: isActive ? 1 : 0,
               };
               return (
-                <div
+                <motion.div
                   key={img.src}
                   className="absolute w-14 h-14 sm:w-16 sm:h-16 pointer-events-none"
                   style={{ ...cfg.wrapper, zIndex: 1 }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 4.1, duration: 0.4, ease: 'easeOut' }}
                 >
                   <motion.div
                     className="relative w-full h-full"
@@ -904,11 +917,14 @@ export default function Hero({
                   >
                     {img.label}
                   </motion.div>
-                </div>
+                </motion.div>
               );
             })}
-            <div
+            <motion.div
               className="relative w-[180px] h-[180px] sm:w-[220px] sm:h-[220px] rounded-full overflow-hidden border-4 border-gray-100 shadow-lg bg-white z-10 cursor-pointer touch-manipulation"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 2.4, duration: 0.8, ease: 'easeOut' }}
               onMouseEnter={() => !isMobile && setIsHeadHovered(true)}
               onMouseLeave={() => {
                 if (!isMobile) {
@@ -932,10 +948,10 @@ export default function Hero({
                 priority
                 style={{ objectPosition: 'center 35%', transform: 'scale(0.90)' }}
               />
-            </div>
+            </motion.div>
           </div>
 
-          {/* Overlapping Button — collé sous la tête, largeur fixe centrée */}
+          {/* Overlapping Button — collé sous la tête */}
           <div className="relative -mt-8 z-20 flex justify-center">
             <AuditButton
               text="Contacte Moi"
@@ -951,28 +967,33 @@ export default function Hero({
 
         {/* Headline and Description */}
         <div className="mt-8 sm:mt-12 max-w-2xl mx-auto px-1">
-          {/* Headline with Canela Deck */}
+          {/* Headline with Canela Deck — blur text on appear */}
           <h1 
             className="text-xl sm:text-2xl md:text-3xl font-normal text-black leading-tight mb-4 sm:mb-6"
             style={{ fontFamily: 'var(--font-canela-deck)' }}
           >
-            Si Smail Racim,{' '}
+            <BlurText as="span" text="Si Smail Racim," animateBy="words" delay={120} stepDuration={0.4} startDelayMs={2100} />
+            {' '}
             <span className="text-blue-600 relative inline-block">
-              Étudiant Ingénieur
-              {/* Soulignement ascendant - trait unique fluide */}
+              <BlurText as="span" text="Étudiant Ingénieur" animateBy="words" delay={120} stepDuration={0.4} startDelayMs={2100} />
+              {/* Soulignement ascendant - révélé droite → gauche après 1s */}
               <svg 
                 className="absolute bottom--1.2 left-0 w-full h-3"
                 viewBox="0 0 240 15" 
                 preserveAspectRatio="none"
                 style={{ overflow: 'visible' }}
               >
-                {/* Courbe convexe plus marquée */}
-                <path 
+                <motion.path 
                   d="M 5 13 C 60 10, 120 4, 235 7" 
                   stroke="#2563eb" 
                   strokeWidth="8" 
                   fill="none" 
                   strokeLinecap="round"
+                  pathLength={1}
+                  strokeDasharray={1}
+                  initial={{ strokeDashoffset: 1 }}
+                  animate={{ strokeDashoffset: 0 }}
+                  transition={{ delay: 2.8, duration: 1, ease: 'easeInOut' }}
                 />
               </svg>
             </span>
