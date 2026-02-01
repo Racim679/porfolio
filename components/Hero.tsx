@@ -849,9 +849,9 @@ export default function Hero({
         progress={planeProgress}
       />
       {/* Content */}
-      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-10 sm:pt-20 sm:pb-20 text-center">
+      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-1 pb-6 sm:pt-20 sm:pb-20 text-center">
         {/* Profile Image with Overlapping Button + images derrière la tête */}
-        <div className="relative mb-8 flex flex-col items-center overflow-visible">
+        <div className="relative mb-5 sm:mb-8 flex flex-col items-center overflow-visible">
           {/* Wrapper même taille que la tête pour ne pas déplacer le bouton — overflow-visible pour les images qui dépassent */}
           <div className="relative w-[180px] h-[180px] sm:w-[220px] sm:h-[220px] flex items-center justify-center overflow-visible">
             {/* Gants = milieu gauche, Riz = milieu droite — on ne voit qu'une petite portion */}
@@ -955,7 +955,7 @@ export default function Hero({
         </div>
 
         {/* Headline and Description */}
-        <div className="mt-8 sm:mt-12 max-w-2xl mx-auto px-1">
+        <div className="mt-4 sm:mt-12 max-w-2xl mx-auto px-1">
           {/* Headline with Canela Deck — blur text on appear */}
           <h1 
             className="text-xl sm:text-2xl md:text-3xl font-normal text-black leading-tight mb-4 sm:mb-6"
@@ -1030,7 +1030,7 @@ export default function Hero({
       {/* Animated Arrow - renvoie vers la section projets (petit rond bleu clair, même mouvement que la flèche) */}
       <a
         href="#projects"
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 cursor-pointer md:bottom-8"
+        className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 cursor-pointer sm:bottom-8"
         aria-label="Voir les projets"
       >
         <motion.div
