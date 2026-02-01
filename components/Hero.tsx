@@ -812,7 +812,7 @@ export default function Hero({
   // Créer des segments de traînée qui apparaissent progressivement
   // Chaque segment apparaît 0.5s après le passage de l'avion et disparaît en 0.5s
   return (
-    <section className="relative min-h-screen flex items-start sm:items-center justify-center bg-white overflow-hidden pt-2 sm:pt-0">
+    <section className="relative min-h-screen flex items-start sm:items-center justify-center bg-white overflow-hidden pt-6 sm:pt-0">
       {/* Traînée bleue hachurée derrière l'avion */}
       <div className="absolute inset-0 pointer-events-none z-0" aria-hidden>
         <svg 
@@ -849,7 +849,7 @@ export default function Hero({
         progress={planeProgress}
       />
       {/* Content */}
-      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-1 pb-6 sm:pt-20 sm:pb-20 text-center">
+      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-1 pb-2 sm:pt-20 sm:pb-20 text-center">
         {/* Profile Image with Overlapping Button + images derrière la tête */}
         <div className="relative mb-5 sm:mb-8 flex flex-col items-center overflow-visible">
           {/* Wrapper même taille que la tête pour ne pas déplacer le bouton — overflow-visible pour les images qui dépassent */}
@@ -1030,7 +1030,7 @@ export default function Hero({
       {/* Animated Arrow - renvoie vers la section projets (petit rond bleu clair, même mouvement que la flèche) */}
       <a
         href="#projects"
-        className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 cursor-pointer sm:bottom-8"
+        className="absolute bottom-1 left-1/2 -translate-x-1/2 z-10 cursor-pointer sm:bottom-8"
         aria-label="Voir les projets"
       >
         <motion.div
