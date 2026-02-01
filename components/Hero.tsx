@@ -812,7 +812,7 @@ export default function Hero({
   // Créer des segments de traînée qui apparaissent progressivement
   // Chaque segment apparaît 0.5s après le passage de l'avion et disparaît en 0.5s
   return (
-    <section className="relative min-h-screen flex items-center justify-center bg-white overflow-hidden">
+    <section className="relative min-h-screen flex items-start sm:items-center justify-center bg-white overflow-hidden pt-2 sm:pt-0">
       {/* Traînée bleue hachurée derrière l'avion */}
       <div className="absolute inset-0 pointer-events-none z-0" aria-hidden>
         <svg 
