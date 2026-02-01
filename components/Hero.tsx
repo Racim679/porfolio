@@ -812,7 +812,7 @@ export default function Hero({
   // Créer des segments de traînée qui apparaissent progressivement
   // Chaque segment apparaît 0.5s après le passage de l'avion et disparaît en 0.5s
   return (
-    <section className="relative min-h-screen flex items-start sm:items-center justify-center bg-white overflow-hidden pt-6 sm:pt-0">
+    <section className="relative min-h-screen flex items-start sm:items-center justify-center bg-white overflow-hidden pt-28 sm:pt-0">
       {/* Traînée bleue hachurée derrière l'avion */}
       <div className="absolute inset-0 pointer-events-none z-0" aria-hidden>
         <svg 
@@ -1030,7 +1030,7 @@ export default function Hero({
       {/* Animated Arrow - renvoie vers la section projets (petit rond bleu clair, même mouvement que la flèche) */}
       <a
         href="#projects"
-        className="absolute bottom-1 left-1/2 -translate-x-1/2 z-10 cursor-pointer sm:bottom-8"
+        className="absolute bottom-16 left-1/2 -translate-x-1/2 z-10 cursor-pointer sm:bottom-8"
         aria-label="Voir les projets"
       >
         <motion.div

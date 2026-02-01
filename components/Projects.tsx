@@ -319,7 +319,7 @@ export default function Projects({ projects: initialProjects = defaultProjects }
 
   return (
     <>
-    <section id="projects" className="pt-10 sm:pt-16 pb-24 bg-white">
+    <section id="projects" className="pt-10 sm:pt-16 pb-12 sm:pb-24 bg-white">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Portfolio Button */}
         <div className="flex justify-center mb-8">

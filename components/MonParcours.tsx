@@ -43,7 +43,7 @@ interface MonParcoursProps {
 
 export default function MonParcours({ steps = defaultSteps }: MonParcoursProps) {
   return (
-    <section id="parcours" className="py-20 sm:py-28 bg-white">
+    <section id="parcours" className="py-10 sm:py-28 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <BlurText
           as="h2"

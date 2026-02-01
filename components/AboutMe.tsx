@@ -35,7 +35,7 @@ export default function AboutMe({
   }, []);
 
   return (
-    <section id="about" className="py-20 sm:py-28 bg-white">
+    <section id="about" className="py-12 sm:py-28 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Texte à gauche, photo à droite — alignés en hauteur */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
