@@ -6,6 +6,8 @@ import { ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useTransition } from './TransitionContext';
+import TransitionLink from './TransitionLink';
 import { getSupabase, ProjectWithRelations, addCacheBusting } from '@/lib/supabase';
 import BlurText from './BlurText';
 
@@ -167,6 +169,8 @@ export default function Projects({ projects: initialProjects = defaultProjects }
   const [isMobile, setIsMobile] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
   const router = useRouter();
+  const ctx = useTransition();
+  const startTransitionTo = ctx?.startTransitionTo;
   const cardCursorRef = useRef<{ cardId: number; x: number; y: number } | null>(null);
   const displayPosRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
   const rafRef = useRef<number | null>(null);
@@ -385,6 +389,8 @@ export default function Projects({ projects: initialProjects = defaultProjects }
                   if (!isDesktop || !project.cmsLink) return;
                   if (project.cmsLink.startsWith('http')) {
                     window.location.href = project.cmsLink;
+                  } else if (startTransitionTo) {
+                    startTransitionTo(project.cmsLink);
                   } else {
                     router.push(project.cmsLink);
                   }
@@ -511,14 +517,14 @@ export default function Projects({ projects: initialProjects = defaultProjects }
                           <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                         </a>
                       ) : (
-                        <Link
+                        <TransitionLink
                           href={project.cmsLink}
                           className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium transition-colors group"
                           style={{ fontFamily: 'var(--font-inter), Inter, sans-serif' }}
                         >
                           Voir le projet
                           <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                        </Link>
+                        </TransitionLink>
                       )}
                     </div>
                   )}

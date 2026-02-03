@@ -128,12 +128,25 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Fond bleu pour l’effet wipe de la transition de page (type Framer) */
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+  background-color: #2563eb;
+}
+
+/* Bloquer le scroll pendant la transition */
+body.transitioning {
+  overflow: hidden;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground font-sans;
+    @apply text-foreground font-sans;
   }
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-canela-deck), serif;

@@ -5,6 +5,8 @@ import "lenis/dist/lenis.css";
 import "./globals.css";
 import LenisProvider from "@/components/LenisProvider";
 import IntroOverlay from "@/components/IntroOverlay";
+import { TransitionProvider } from "@/components/TransitionContext";
+import PageTransition from "@/components/PageTransition";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -46,10 +48,13 @@ export default function RootLayout({
     <html lang="fr">
       <body
         className={`${inter.variable} ${canelaDeck.variable} antialiased`}
+        style={{ margin: 0, backgroundColor: "#2563eb" }}
       >
         <LenisProvider>
           <IntroOverlay />
-          {children}
+          <TransitionProvider>
+            <PageTransition>{children}</PageTransition>
+          </TransitionProvider>
         </LenisProvider>
       </body>
     </html>
