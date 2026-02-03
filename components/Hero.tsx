@@ -693,7 +693,7 @@ function PlaneAlongPath({
     <div className="absolute inset-0 z-0">
       <motion.div
         ref={planeRef}
-        className="absolute w-10 h-10 sm:w-12 sm:h-12 -translate-x-1/2 -translate-y-1/2 cursor-pointer"
+        className="absolute w-6 h-6 sm:w-9 sm:h-9 lg:w-12 lg:h-12 -translate-x-1/2 -translate-y-1/2 cursor-pointer"
         style={{ left, top }}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}

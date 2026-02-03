@@ -16,7 +16,7 @@ export default function Footer() {
             </span>
           </a>
           <a
-            href="https://www.linkedin.com/in/racim-si-smail-11680a389/"
+            href="https://www.linkedin.com/in/racim-s"
             target="_blank"
             rel="noopener noreferrer"
             className="group inline-block text-gray-500 hover:text-sky-400 transition-colors text-sm sm:text-base sm:px-8 lg:px-12"
