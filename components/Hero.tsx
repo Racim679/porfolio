@@ -954,18 +954,17 @@ export default function Hero({
 
         </div>
 
-        {/* Headline and Description */}
-        <div className="mt-4 sm:mt-12 max-w-2xl mx-auto px-1">
-          {/* Headline with Canela Deck — blur text on appear */}
+        {/* Overlay vertical : titre → texte → flèche, espacement égal entre chaque (gap-hero = 1rem / 1.5rem) */}
+        <div className="mt-4 sm:mt-12 max-w-2xl mx-auto px-1 flex flex-col items-center gap-4 sm:gap-6 text-center">
+          {/* Titre — Si Smail Racim, Étudiant Ingénieur */}
           <h1 
-            className="text-xl sm:text-2xl md:text-3xl font-normal text-black leading-tight mb-4 sm:mb-6"
+            className="text-xl sm:text-2xl md:text-3xl font-normal text-black leading-tight"
             style={{ fontFamily: 'var(--font-canela-deck)' }}
           >
             <BlurText as="span" text="Si Smail Racim," animateBy="words" delay={120} stepDuration={0.4} startDelayMs={2100} />
             {' '}
             <span className="text-blue-600 relative inline-block">
               <BlurText as="span" text="Étudiant Ingénieur" animateBy="words" delay={120} stepDuration={0.4} startDelayMs={2100} />
-              {/* Soulignement ascendant - révélé droite → gauche après 1s */}
               <svg 
                 className="absolute bottom--1.2 left-0 w-full h-3"
                 viewBox="0 0 240 15" 
@@ -987,24 +986,20 @@ export default function Hero({
               </svg>
             </span>
           </h1>
-          
-          {/* Subtitle with Inter */}
+
+          {/* Bloc de texte */}
           <p 
             className="text-sm sm:text-base text-black leading-relaxed"
             style={{ fontFamily: 'var(--font-inter), Inter, sans-serif' }}
           >
             {(() => {
               const text = description;
-              // Extract the part after "Étudiant Ingénieur."
               const etudiantIndex = text.indexOf('Étudiant Ingénieur');
               const restOfText = etudiantIndex !== -1 
                 ? text.substring(etudiantIndex + 'Étudiant Ingénieur'.length + 1).trim()
                 : text;
-              
               const parts = [];
               let lastIndex = 0;
-              
-              // Find "Informatique et Ingénierie Mathématique"
               const highlightStr = 'Informatique et Ingénierie Mathématique';
               const mathIndex = restOfText.indexOf(highlightStr);
               if (mathIndex !== -1) {
@@ -1014,53 +1009,43 @@ export default function Hero({
                 parts.push(<span key="math" className="text-blue-600">{highlightStr}</span>);
                 lastIndex = mathIndex + highlightStr.length;
               }
-              
-              // Add remaining text
               if (lastIndex < restOfText.length) {
                 parts.push(restOfText.substring(lastIndex));
               }
-              
-              // If no highlights found, return original text
               return parts.length > 0 ? parts : restOfText;
             })()}
           </p>
+
+          {/* Flèche — même espacement au-dessus grâce au gap */}
+          <a
+            href="#projects"
+            className="z-10 cursor-pointer"
+            aria-label="Voir les projets"
+          >
+            <motion.div
+              className="flex items-center justify-center w-7 h-7 rounded-full bg-blue-100/90 hover:bg-blue-200/90 transition-colors shadow-sm"
+              animate={{ y: [0, 8, 0] }}
+              transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
+            >
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M7 10L12 15L17 10"
+                  stroke="rgb(37, 99, 235)"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </motion.div>
+          </a>
         </div>
       </div>
-
-      {/* Animated Arrow - renvoie vers la section projets (petit rond bleu clair, même mouvement que la flèche) */}
-      <a
-        href="#projects"
-        className="absolute bottom-16 left-1/2 -translate-x-1/2 z-10 cursor-pointer sm:bottom-8"
-        aria-label="Voir les projets"
-      >
-        <motion.div
-          className="flex items-center justify-center w-7 h-7 rounded-full bg-blue-100/90 hover:bg-blue-200/90 transition-colors shadow-sm"
-          animate={{
-            y: [0, 8, 0],
-          }}
-          transition={{
-            duration: 2.5,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        >
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M7 10L12 15L17 10"
-              stroke="rgb(37, 99, 235)"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </motion.div>
-      </a>
     </section>
   );
 }
