@@ -10,7 +10,7 @@ const TRANSITION_CONFIG = {
   enterDelay: 0.5,
 };
 
-type WipeMode = 'masking' | 'revealing';
+type WipeMode = 'masking' | 'waiting' | 'revealing';
 
 interface WipeOverlayProps {
   mode: WipeMode;
@@ -24,27 +24,28 @@ export default function WipeOverlay({
   onRevealingComplete,
 }: WipeOverlayProps) {
   const isMasking = mode === 'masking';
+  const isRevealing = mode === 'revealing';
+
+  const fullCover = 'inset(0% 0% 0% 0%)';
+  const initialClipPath = isMasking ? 'inset(100% 0% 0% 0%)' : fullCover;
+  const animateClipPath = isRevealing ? 'inset(0% 0% 100% 0%)' : fullCover;
 
   return (
     <motion.div
       key="wipe-overlay"
       className="pointer-events-none"
-      initial={{
-        clipPath: isMasking ? 'inset(100% 0% 0% 0%)' : 'inset(0% 0% 0% 0%)',
-      }}
-      animate={{
-        clipPath: isMasking ? 'inset(0% 0% 0% 0%)' : 'inset(0% 0% 100% 0%)',
-      }}
+      initial={{ clipPath: initialClipPath }}
+      animate={{ clipPath: animateClipPath }}
       transition={{
         clipPath: {
           duration: TRANSITION_CONFIG.duration,
           ease: TRANSITION_CONFIG.easing,
-          delay: isMasking ? 0 : TRANSITION_CONFIG.enterDelay,
+          delay: isMasking ? 0 : isRevealing ? TRANSITION_CONFIG.enterDelay : 0,
         },
       }}
       onAnimationComplete={() => {
         if (isMasking) onMaskingComplete();
-        else onRevealingComplete();
+        else if (isRevealing) onRevealingComplete();
       }}
       style={{
         position: 'fixed',
