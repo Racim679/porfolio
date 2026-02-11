@@ -558,7 +558,7 @@ const planeRotations = unwrapAngles(getPlaneRotations(planePath));
 
 const PLANE_DURATION = 14;
 const PLANE_REPEAT_DELAY = 2;
-const PLANE_START_DELAY_MS = 4500; // délai avant le premier passage de l'avion (aligné hero)
+const PLANE_START_DELAY_MS = 3500; // délai avant le premier passage de l'avion (aligné hero)
 const HOVER_MAX_DURATION_MS = 3000; // max 3s en ralenti, puis retour vitesse normale
 const HOVER_BLOCKED_DURATION_MS = 3000; // après ça, hover bloqué pendant 3s
 const SEGMENT_SIZE = 5; // Nombre de points par segment pour la traînée
