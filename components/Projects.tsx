@@ -6,6 +6,7 @@ import { ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useLenis } from 'lenis/react';
 import { useTransition } from './TransitionContext';
 import TransitionLink from './TransitionLink';
 import { getSupabase, ProjectWithRelations, addCacheBusting } from '@/lib/supabase';
@@ -169,6 +170,7 @@ export default function Projects({ projects: initialProjects = defaultProjects }
   const [isMobile, setIsMobile] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
   const router = useRouter();
+  const lenis = useLenis();
   const ctx = useTransition();
   const startTransitionTo = ctx?.startTransitionTo;
   const cardCursorRef = useRef<{ cardId: number; x: number; y: number } | null>(null);
@@ -390,7 +392,8 @@ export default function Projects({ projects: initialProjects = defaultProjects }
                   if (project.cmsLink.startsWith('http')) {
                     window.location.href = project.cmsLink;
                   } else if (startTransitionTo) {
-                    startTransitionTo(project.cmsLink);
+                    const scrollY = lenis != null ? lenis.scroll : (typeof window !== 'undefined' ? window.scrollY : 0);
+                    startTransitionTo(project.cmsLink, scrollY);
                   } else {
                     router.push(project.cmsLink);
                   }

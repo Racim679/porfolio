@@ -4,7 +4,8 @@ import { createContext, useContext, useState, useCallback, type ReactNode } from
 
 type TransitionContextValue = {
   pendingRoute: string | null;
-  startTransitionTo: (href: string) => void;
+  pendingScrollY: number;
+  startTransitionTo: (href: string, scrollY?: number) => void;
   clearPendingRoute: () => void;
 };
 
@@ -17,16 +18,20 @@ export function useTransition() {
 
 export function TransitionProvider({ children }: { children: ReactNode }) {
   const [pendingRoute, setPendingRoute] = useState<string | null>(null);
-  const startTransitionTo = useCallback((href: string) => {
+  const [pendingScrollY, setPendingScrollY] = useState(0);
+  const startTransitionTo = useCallback((href: string, scrollY?: number) => {
+    const y = scrollY ?? (typeof window !== 'undefined' ? window.scrollY : 0);
+    setPendingScrollY(y);
     setPendingRoute(href);
   }, []);
   const clearPendingRoute = useCallback(() => {
     setPendingRoute(null);
+    setPendingScrollY(0);
   }, []);
 
   return (
     <TransitionContext.Provider
-      value={{ pendingRoute, startTransitionTo, clearPendingRoute }}
+      value={{ pendingRoute, pendingScrollY, startTransitionTo, clearPendingRoute }}
     >
       {children}
     </TransitionContext.Provider>
