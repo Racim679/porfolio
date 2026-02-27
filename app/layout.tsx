@@ -46,8 +46,13 @@ const webPageJsonLd = {
   primaryImageOfPage: logoUrl,
 };
 
+const canonicalUrl = baseUrl.replace(/\/$/, "") + "/";
+
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
+  alternates: {
+    canonical: canonicalUrl,
+  },
   title: "Racim Si Smail – Developpeur | Etudiant",
   description: "Entrepreneur, Développeur, Brand designer | J'aide les entreprises à développer leur activité et à optimiser leurs processus en créant des solutions digitales fluides.",
   icons: {
@@ -58,20 +63,20 @@ export const metadata: Metadata = {
     title: "Racim Si Smail – Developpeur | Etudiant",
     description: "Entrepreneur, Développeur, Brand designer | J'aide les entreprises à développer leur activité et à optimiser leurs processus en créant des solutions digitales fluides.",
     type: "website",
-    images: ["/logo.png"],
+    images: [{ url: "/logo.png", width: 1200, height: 630, alt: "Racim Si Smail - Portfolio" }],
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: "Racim Si Smail – Developpeur | Etudiant",
     description: "Entrepreneur, Développeur, Brand designer | J'aide les entreprises à développer leur activité et à optimiser leurs processus en créant des solutions digitales fluides.",
-    images: ["/logo.png"],
+    images: [{ url: "/logo.png", width: 1200, height: 630, alt: "Racim Si Smail - Portfolio" }],
   },
   robots: {
-    index: false,
-    follow: false,
+    index: true,
+    follow: true,
     googleBot: {
-      index: false,
-      follow: false,
+      index: true,
+      follow: true,
     },
   },
 };
