@@ -7,6 +7,7 @@ import LenisProvider from "@/components/LenisProvider";
 import IntroOverlay from "@/components/IntroOverlay";
 import { TransitionProvider } from "@/components/TransitionContext";
 import PageTransition from "@/components/PageTransition";
+import { Analytics } from "@vercel/analytics/next";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -104,6 +105,7 @@ export default function RootLayout({
             <PageTransition>{children}</PageTransition>
           </TransitionProvider>
         </LenisProvider>
+        <Analytics />
       </body>
     </html>
   );
