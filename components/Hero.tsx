@@ -850,17 +850,6 @@ export default function Hero({
       />
       {/* Content */}
       <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-1 pb-2 sm:pt-20 sm:pb-20 text-center">
-        {/* Logo en première image (priorité SEO : Google utilise souvent la 1ère image pour la vignette) */}
-        <div className="flex justify-center mb-4">
-          <Image
-            src="/logo.png"
-            alt="Racim Si Smail - Portfolio"
-            width={160}
-            height={160}
-            priority
-            className="opacity-90"
-          />
-        </div>
         {/* Profile Image with Overlapping Button + images derrière la tête */}
         <div className="relative mb-5 sm:mb-8 flex flex-col items-center overflow-visible">
           {/* Wrapper même taille que la tête pour ne pas déplacer le bouton — overflow-visible pour les images qui dépassent */}
