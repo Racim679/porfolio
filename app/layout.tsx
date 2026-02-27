@@ -30,12 +30,29 @@ const canelaDeck = localFont({
   fallback: ['serif'],
 });
 
+const baseUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
+
 export const metadata: Metadata = {
+  metadataBase: new URL(baseUrl),
   title: "Racim Si Smail – Developpeur | Etudiant",
   description: "Entrepreneur, Développeur, Brand designer | J'aide les entreprises à développer leur activité et à optimiser leurs processus en créant des solutions digitales fluides.",
   icons: {
     icon: "/logo.png",
     apple: "/logo.png",
+  },
+  openGraph: {
+    title: "Racim Si Smail – Developpeur | Etudiant",
+    description: "Entrepreneur, Développeur, Brand designer | J'aide les entreprises à développer leur activité et à optimiser leurs processus en créant des solutions digitales fluides.",
+    type: "website",
+    images: ["/logo.png"],
+  },
+  twitter: {
+    card: "summary",
+    title: "Racim Si Smail – Developpeur | Etudiant",
+    description: "Entrepreneur, Développeur, Brand designer | J'aide les entreprises à développer leur activité et à optimiser leurs processus en créant des solutions digitales fluides.",
+    images: ["/logo.png"],
   },
   robots: {
     index: false,
