@@ -30,7 +30,7 @@ const defaultSteps: ParcoursStep[] = [
     description: 'Parcours lycée, orientation vers les sciences et l\'ingénierie.',
   },
   {
-    year: '2024 – aujourd\'hui',
+    year: 'aujourd\'hui',
     title: 'Prépa intégrée',
     subtitle: 'Polytech Paris-Saclay · Cycle ingénieur',
     description: 'Formation en informatique et ingénierie mathématique. Projets personnels (web, automatisation, IA) en parallèle.',
