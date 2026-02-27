@@ -34,6 +34,18 @@ const baseUrl =
   process.env.NEXT_PUBLIC_SITE_URL ||
   (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
 
+const logoUrl = `${baseUrl.replace(/\/$/, "")}/logo.png`;
+
+const webPageJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  name: "Racim Si Smail – Developpeur | Etudiant",
+  description: "Entrepreneur, Développeur, Brand designer. Solutions digitales fluides.",
+  url: baseUrl,
+  image: logoUrl,
+  primaryImageOfPage: logoUrl,
+};
+
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: "Racim Si Smail – Developpeur | Etudiant",
@@ -71,6 +83,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageJsonLd) }}
+        />
+      </head>
       <body
         className={`${inter.variable} ${canelaDeck.variable} antialiased`}
         style={{ margin: 0, backgroundColor: "#2563eb" }}

@@ -931,10 +931,10 @@ export default function Hero({
             >
               <Image
                 src={profileImage}
-                alt="Profile"
+                alt=""
                 fill
                 className="object-cover"
-                priority
+                fetchPriority="low"
                 style={{ objectPosition: 'center 35%', transform: 'scale(0.90)' }}
               />
             </motion.div>
