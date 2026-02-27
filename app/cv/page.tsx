@@ -4,7 +4,7 @@ import Link from 'next/link';
 import CvDownloadButton from '@/components/CvDownloadButton';
 import { useState, useEffect } from 'react';
 
-const CV_PDF = '/cv%20(7).pdf';
+const CV_PDF = '/cv%20.pdf';
 
 export default function CvPage() {
   const [isMobileOrIOS, setIsMobileOrIOS] = useState(false);

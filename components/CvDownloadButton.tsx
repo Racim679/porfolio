@@ -1,6 +1,6 @@
 'use client';
 
-const CV_PDF_URL = '/cv%20(7).pdf';
+const CV_PDF_URL = '/cv%20.pdf';
 const CV_DOWNLOAD_NAME = 'Cv-Si-Smail-Racim.pdf';
 
 export default function CvDownloadButton() {
