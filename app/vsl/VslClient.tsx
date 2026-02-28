@@ -1233,29 +1233,6 @@ export default function VslClient() {
           </div>
         </div>
 
-        {/* QUI SUIS-JE */}
-        <section className="vsl-identity-section vsl-fade">
-          <div className="vsl-identity-inner">
-            <Image src={photoRacim} alt="" width={96} height={96} className="vsl-identity-photo" />
-            <p className="vsl-identity-name">Si Smail Racim</p>
-            <p className="vsl-identity-bio">
-              Ingénieur &amp; freelance. J&apos;ai mis en place des systèmes d&apos;acquisition pour des indépendants et des petites structures. Je lance cette offre pour accompagner un petit nombre d&apos;indépendants avec la même rigueur.
-            </p>
-          </div>
-        </section>
-
-        {/* PRIMARY CTA */}
-        <div className="vsl-cta-block vsl-fade">
-          <AuditButton
-            text="Réserver mon appel gratuit de 20 min"
-            width={380}
-            height={58}
-            fontSize={16}
-            onClick={scrollToForm}
-          />
-          <p className="vsl-cta-subtext">En cliquant, tu remplis 4 questions rapides. On vérifie ensemble si ton profil et ton timing matchent avec l&apos;offre. Si oui, tu choisis ton créneau.</p>
-        </div>
-
         <hr className="vsl-divider" />
 
         {/* PAIN POINTS */}
