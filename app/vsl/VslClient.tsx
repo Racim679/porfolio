@@ -23,14 +23,14 @@ const css = `
   .vsl-root *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   .vsl-root {
-    --black: #0a0a0a;
-    --white: #f5f2ec;
-    --gold: #c9a84c;
-    --gold-light: #e8c96a;
-    --red: #d63b2f;
-    --grey: #1a1a1a;
-    --grey-mid: #2a2a2a;
-    --text-muted: #888;
+    --black: #ffffff;
+    --white: #0f172a;
+    --gold: #2563eb;
+    --gold-light: #3b82f6;
+    --red: #2563eb;
+    --grey: #f1f5f9;
+    --grey-mid: #e2e8f0;
+    --text-muted: #64748b;
     background: var(--black);
     color: var(--white);
     font-family: var(--font-dm-sans), sans-serif;
@@ -42,8 +42,7 @@ const css = `
 
   /* ─── TOPBAR ─── */
   .vsl-topbar {
-    background: var(--gold);
-    color: var(--black);
+    background: var(--gold); color: #fff;
     text-align: center;
     padding: 10px 20px;
     font-size: 13px;
@@ -91,7 +90,7 @@ const css = `
     margin: 24px auto 0;
     padding: 0 20px;
     font-size: 17px;
-    color: #bbb;
+    color: var(--text-muted);
     line-height: 1.7;
   }
 
@@ -105,7 +104,7 @@ const css = `
   .vsl-video-promise {
     text-align: center;
     font-size: 15px;
-    color: #aaa;
+    color: var(--text-muted);
     line-height: 1.7;
     max-width: 640px;
     margin: 0 auto 24px;
@@ -123,7 +122,7 @@ const css = `
   .vsl-video-wrapper {
     position: relative;
     background: var(--grey);
-    border: 1px solid #2a2a2a;
+    border: 1px solid var(--grey-mid);
     border-radius: 4px;
     overflow: hidden;
     aspect-ratio: 16/9;
@@ -145,7 +144,7 @@ const css = `
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, #111 0%, #1a1a1a 100%);
+    background: linear-gradient(135deg, #dbeafe 0%, #eff6ff 100%);
   }
 
   .vsl-video-placeholder {
@@ -168,7 +167,7 @@ const css = `
 
   .vsl-play-btn:hover { transform: scale(1.1); background: var(--gold-light); }
 
-  .vsl-play-btn svg { width: 28px; fill: #0a0a0a; margin-left: 4px; }
+  .vsl-play-btn svg { width: 28px; fill: #fff; margin-left: 4px; }
 
   .vsl-video-placeholder p {
     font-size: 14px;
@@ -238,7 +237,7 @@ const css = `
     transition: left 0.4s;
   }
 
-  .vsl-cta-btn:hover { transform: translateY(-2px); background: #c03020; }
+  .vsl-cta-btn:hover { transform: translateY(-2px); background: #1d4ed8; }
   .vsl-cta-btn:hover::after { left: 150%; }
 
   .vsl-cta-subtext {
@@ -289,7 +288,7 @@ const css = `
   /* ─── DIVIDER ─── */
   .vsl-divider {
     border: none;
-    border-top: 1px solid #1e1e1e;
+    border-top: 1px solid var(--grey-mid);
     max-width: 900px;
     margin: 0 auto;
   }
@@ -322,8 +321,8 @@ const css = `
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 1px;
-    background: #1a1a1a;
-    border: 1px solid #1a1a1a;
+    background: var(--grey-mid);
+    border: 1px solid var(--grey-mid);
   }
 
   .vsl-pain-item {
@@ -392,7 +391,7 @@ const css = `
   .vsl-step-num span {
     font-family: var(--font-bebas-neue), sans-serif;
     font-size: 52px;
-    color: #1e1e1e;
+    color: var(--grey-mid);
     line-height: 1;
     display: block;
     transition: color 0.3s;
@@ -406,7 +405,7 @@ const css = `
     top: 60px;
     bottom: 0;
     width: 1px;
-    background: #1e1e1e;
+    background: var(--grey-mid);
   }
 
   .vsl-step:last-child .vsl-step-line { display: none; }
@@ -427,7 +426,7 @@ const css = `
   /* ─── INCLUDED ─── */
   .vsl-included-section {
     background: var(--grey);
-    border-top: 1px solid #1e1e1e;
+    border-top: 1px solid var(--grey-mid);
     border-bottom: 1px solid #1e1e1e;
     padding: 70px 20px;
   }
@@ -451,10 +450,10 @@ const css = `
   }
 
   .vsl-included-card {
-    border: 1px solid #2a2a2a;
+    border: 1px solid var(--grey-mid);
     padding: 28px;
     border-radius: 2px;
-    background: var(--black);
+    background: #fff;
     position: relative;
     overflow: hidden;
   }
@@ -501,7 +500,7 @@ const css = `
     border: 1px solid var(--gold);
     padding: 48px 40px;
     position: relative;
-    background: #0d0d0d;
+    background: #fff;
   }
 
   .vsl-founder-box::before {
@@ -510,8 +509,7 @@ const css = `
     top: -12px;
     left: 50%;
     transform: translateX(-50%);
-    background: var(--gold);
-    color: var(--black);
+    background: var(--gold); color: #fff;
     font-size: 10px;
     font-weight: 700;
     letter-spacing: 0.2em;
@@ -528,7 +526,7 @@ const css = `
 
   .vsl-founder-box p {
     font-size: 15px;
-    color: #aaa;
+    color: var(--text-muted);
     margin-bottom: 30px;
     line-height: 1.7;
   }
@@ -537,8 +535,8 @@ const css = `
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    background: #1a1a1a;
-    border: 1px solid #2a2a2a;
+    background: var(--grey);
+    border: 1px solid var(--grey-mid);
     padding: 12px 24px;
     margin-bottom: 32px;
     font-size: 14px;
@@ -565,7 +563,7 @@ const css = `
   .vsl-guarantee {
     margin-top: 30px;
     padding-top: 30px;
-    border-top: 1px solid #1e1e1e;
+    border-top: 1px solid var(--grey-mid);
     font-size: 13px;
     color: var(--text-muted);
     line-height: 1.7;
@@ -648,7 +646,7 @@ const css = `
   }
 
   .vsl-faq-item {
-    border-bottom: 1px solid #1a1a1a;
+    border-bottom: 1px solid var(--grey-mid);
     padding: 20px 0;
     cursor: pointer;
   }
@@ -665,7 +663,7 @@ const css = `
 
   .vsl-faq-toggle {
     width: 24px; height: 24px;
-    border: 1px solid #333;
+    border: 1px solid var(--grey-mid);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -694,7 +692,7 @@ const css = `
   /* ─── FINAL CTA ─── */
   .vsl-final-cta {
     background: var(--grey);
-    border-top: 1px solid #1e1e1e;
+    border-top: 1px solid var(--grey-mid);
     text-align: center;
     padding: 80px 20px;
   }
@@ -714,7 +712,7 @@ const css = `
 
   .vsl-final-cta p {
     font-size: 16px;
-    color: #aaa;
+    color: var(--text-muted);
     margin-bottom: 36px;
     max-width: 500px;
     margin-left: auto;
@@ -1049,9 +1047,9 @@ const css = `
   .vsl-footer {
     padding: 30px 20px;
     text-align: center;
-    border-top: 1px solid #111;
+    border-top: 1px solid var(--grey-mid);
     font-size: 12px;
-    color: #444;
+    color: var(--text-muted);
   }
 
   /* ─── FADE-IN ─── */
@@ -1070,8 +1068,8 @@ const css = `
     right: 0;
     z-index: 50;
     padding: 14px 20px;
-    background: var(--black);
-    border-top: 1px solid #2a2a2a;
+    background: #fff;
+    border-top: 1px solid var(--grey-mid);
     display: none;
     justify-content: center;
     align-items: center;
@@ -1613,3 +1611,4 @@ export default function VslClient() {
     </>
   );
 }
+
