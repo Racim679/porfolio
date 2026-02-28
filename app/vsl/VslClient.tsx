@@ -1227,11 +1227,10 @@ export default function VslClient() {
         <div className="vsl-cta-block vsl-fade">
           <AuditButton
             text="Reserver mon appel strategique"
-            width={320}
             height={54}
             fontSize={13}
             onClick={scrollToForm}
-            style={{ maxWidth: '100%' }}
+            style={{ width: '100%', maxWidth: 360 }}
           />
           <p className="vsl-cta-subtext">En cliquant, tu remplis 4 questions rapides. On verifie ensemble si ton profil et ton timing matchent avec l&apos;offre. Si oui, tu choisis ton creneau.</p>
         </div>
@@ -1483,11 +1482,11 @@ export default function VslClient() {
             </div>
             <div style={{ marginTop: 24 }}>
               <AuditButton
-                text="Reserver mon appel gratuit"
-                width={300}
+                text="Reserver mon appel strategique"
                 height={54}
-                fontSize={15}
+                fontSize={13}
                 onClick={scrollToForm}
+                style={{ width: '100%', maxWidth: 360 }}
               />
             </div>
             <div className="vsl-guarantee">
@@ -1552,17 +1551,17 @@ export default function VslClient() {
 
         {/* FOOTER */}
         <footer className="vsl-footer">
-          © 2026 ? Mentions legales · Politique de confidentialite
+          ? 2026 ? Mentions legales ? Politique de confidentialite
         </footer>
 
         {/* STICKY CTA (mobile, after 300px scroll) */}
         <div className={`vsl-sticky-cta ${stickyCtaVisible ? 'visible' : ''}`} aria-hidden="true">
           <AuditButton
-            text="Reserver mon appel gratuit"
+            text="Reserver mon appel strategique"
             height={48}
-            fontSize={15}
+            fontSize={13}
             onClick={scrollToForm}
-            style={{ width: '100%', maxWidth: 320 }}
+            style={{ width: '100%', maxWidth: 360 }}
           />
         </div>
 
