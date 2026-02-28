@@ -1225,13 +1225,14 @@ export default function VslClient() {
         </div>
 
         <div className="vsl-cta-block vsl-fade">
-          <AuditButton
-            text="Reserver mon appel strategique"
-            height={56}
-            fontSize={13}
-            onClick={scrollToForm}
-            style={{ width: '100%', maxWidth: 360 }}
-          />
+          <div style={{ width: '100%', maxWidth: 360, height: 56 }}>
+            <AuditButton
+              text="Reserver mon appel strategique"
+              fontSize={13}
+              onClick={scrollToForm}
+              style={{ width: '100%', height: '100%' }}
+            />
+          </div>
           <p className="vsl-cta-subtext">En cliquant, tu remplis 4 questions rapides. On verifie ensemble si ton profil et ton timing matchent avec l&apos;offre. Si oui, tu choisis ton creneau.</p>
         </div>
 
@@ -1480,13 +1481,12 @@ export default function VslClient() {
               <div className="vsl-spots-dot" />
               <span>5 places disponibles ce mois-ci</span>
             </div>
-            <div style={{ marginTop: 24 }}>
+            <div style={{ marginTop: 24, width: '100%', maxWidth: 360, height: 56 }}>
               <AuditButton
                 text="Reserver mon appel strategique"
-                height={56}
                 fontSize={13}
                 onClick={scrollToForm}
-                style={{ width: '100%', maxWidth: 360 }}
+                style={{ width: '100%', height: '100%' }}
               />
             </div>
             <div className="vsl-guarantee">
@@ -1556,13 +1556,14 @@ export default function VslClient() {
 
         {/* STICKY CTA (mobile, after 300px scroll) */}
         <div className={`vsl-sticky-cta ${stickyCtaVisible ? 'visible' : ''}`} aria-hidden="true">
-          <AuditButton
-            text="Reserver mon appel strategique"
-            height={56}
-            fontSize={13}
-            onClick={scrollToForm}
-            style={{ width: '100%', maxWidth: 360 }}
-          />
+          <div style={{ width: '100%', maxWidth: 360, height: 56 }}>
+            <AuditButton
+              text="Reserver mon appel strategique"
+              fontSize={13}
+              onClick={scrollToForm}
+              style={{ width: '100%', height: '100%' }}
+            />
+          </div>
         </div>
 
       </div>
