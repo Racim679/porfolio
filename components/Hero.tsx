@@ -1,13 +1,16 @@
 'use client';
 
 import Image from 'next/image';
+import photoRacim from '../assets/photo_racim.png';
 import AuditButton from './AuditButton';
 import BlurText from './BlurText';
 import { motion, useMotionValue, useTransform, MotionValue } from 'framer-motion';
 import { useEffect, useState, useRef } from 'react';
 
+import type { StaticImageData } from 'next/image';
+
 interface HeroProps {
-  profileImage?: string;
+  profileImage?: string | StaticImageData;
   description?: string;
 }
 
@@ -790,7 +793,7 @@ const HEAD_HOVER_IMAGES = [
 ] as const;
 
 export default function Hero({ 
-  profileImage = '/photo_racim.png', 
+  profileImage = photoRacim, 
   description = 'Si Smail Racim, Étudiant Ingénieur. Je ne fais pas que coder, je conçois des solutions. Fort d\'une maîtrise technique concrète (IA/Automation), je souhaite désormais appliquer cette rigueur opérationnelle au domaine de l\'Informatique et Ingénierie Mathématique.' 
 }: HeroProps) {
   const planeProgress = useMotionValue(0);
