@@ -1225,7 +1225,7 @@ export default function VslClient() {
 
         <div className="vsl-cta-block vsl-fade">
           <AuditButton
-            text="Réserver mon appel gratuit de 20 min"
+            text="Réserver mon appel strat�gique de 20 min"
             width={380}
             height={58}
             fontSize={16}
@@ -1481,7 +1481,7 @@ export default function VslClient() {
             </div>
             <div style={{ marginTop: 24 }}>
               <AuditButton
-                text="Réserver mon appel gratuit"
+                text="Réserver mon appel strat�gique"
                 width={300}
                 height={54}
                 fontSize={15}
@@ -1556,7 +1556,7 @@ export default function VslClient() {
         {/* STICKY CTA (mobile, after 300px scroll) */}
         <div className={`vsl-sticky-cta ${stickyCtaVisible ? 'visible' : ''}`} aria-hidden="true">
           <AuditButton
-            text="Réserver mon appel gratuit"
+            text="Réserver mon appel strat�gique"
             height={48}
             fontSize={15}
             onClick={scrollToForm}
