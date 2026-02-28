@@ -1,8 +1,21 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 import photoRacim from '../../assets/photo_racim.png';
+
+const CALENDLY_URL = 'https://calendly.com/buffedbean/30min';
+const N8N_WEBHOOK = 'https://n8n.srv933307.hstgr.cloud/webhook/77ccd585-25f2-4fa5-bdee-6313eaa90d4f';
+
+const DISCOVERY_ITEMS = [
+  { emoji: '📍', short: 'Analyser ton activité en profondeur', full: 'Analyser ton activité en profondeur → Identifier comment tu génères de la valeur, tes flux de travail actuels et tes leviers de croissance.' },
+  { emoji: '🤖', short: 'Détecter les opportunités d\'automatisation', full: 'Détecter les opportunités d\'automatisation et d\'optimisation → Repérer les tâches répétitives, les processus manuels ou les pertes de temps que l\'IA peut fluidifier.' },
+  { emoji: '📊', short: 'Faire le point sur ta stratégie d\'acquisition', full: 'Faire le point sur ta stratégie d\'acquisition et d\'opération → Comprendre comment tu attires, convertis et gères tes clients — et comment l\'automatisation peut accélérer chaque étape.' },
+  { emoji: '⚙️', short: 'Te donner un plan d\'action clair', full: 'Te donner un plan d\'action clair et personnalisé → Un plan concret pour intégrer l\'IA dans ton business, gagner en productivité, réduire la friction et scaler plus vite.' },
+];
+
+const SECTOR_OPTIONS = ['Immobilier', 'Coaching / Formation', 'Services B2B', 'Bâtiment / Artisanat', 'Restauration', 'Bien être / Santé', 'Autre'];
 
 const css = `
   .vsl-root *,
@@ -728,6 +741,310 @@ const css = `
 
   .vsl-trust-item::before { content: '🔒'; font-size: 13px; }
 
+  /* ─── FORM SECTION ─── */
+  .vsl-form-section {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 70px 20px;
+  }
+
+  .vsl-form-inner {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  }
+
+  @media (min-width: 1024px) {
+    .vsl-form-inner { flex-direction: row; }
+  }
+
+  .vsl-form-panel {
+    flex: 1;
+    padding: 40px 30px;
+    background: #fff;
+    color: #1a1a2e;
+  }
+
+  @media (min-width: 1024px) {
+    .vsl-form-panel { padding: 50px; }
+  }
+
+  .vsl-form-title {
+    font-size: clamp(22px, 3vw, 32px);
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: #1a1a2e;
+    line-height: 1.2;
+    font-family: Georgia, serif;
+  }
+
+  .vsl-form-subtitle {
+    color: #5B8BC1;
+    font-size: 15px;
+    margin-bottom: 20px;
+    font-weight: 500;
+  }
+
+  .vsl-form-info-box {
+    background: linear-gradient(135deg, #f0f7ff 0%, #e6f2ff 100%);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 24px;
+    border: 1px solid rgba(91, 139, 193, 0.1);
+  }
+
+  .vsl-form-info-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    color: #4a5568;
+    font-size: 14px;
+    margin-bottom: 12px;
+    line-height: 1.6;
+  }
+
+  .vsl-form-info-item:last-child { margin-bottom: 0; }
+
+  .vsl-form-info-emoji { font-size: 18px; flex-shrink: 0; }
+
+  .vsl-form-label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #2d3748;
+  }
+
+  .vsl-form-input,
+  .vsl-form-textarea {
+    width: 100%;
+    padding: 14px 18px;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    font-family: inherit;
+    color: #1a1a2e;
+    background: #fff;
+    margin-bottom: 20px;
+  }
+
+  .vsl-form-input:focus,
+  .vsl-form-textarea:focus {
+    border-color: #5B8BC1;
+    box-shadow: 0 0 0 3px rgba(91, 139, 193, 0.12);
+  }
+
+  .vsl-form-textarea { min-height: 110px; resize: vertical; }
+  .vsl-form-textarea.short { min-height: 90px; }
+
+  .vsl-form-sector-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  @media (min-width: 480px) {
+    .vsl-form-sector-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  .vsl-form-sector-label {
+    display: flex;
+    align-items: center;
+    padding: 12px 14px;
+    background: #f7fafc;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 14px;
+    font-weight: 500;
+    color: #2d3748;
+    user-select: none;
+  }
+
+  .vsl-form-sector-label input {
+    width: 18px;
+    height: 18px;
+    margin-right: 10px;
+    cursor: pointer;
+    accent-color: #5B8BC1;
+  }
+
+  .vsl-form-sector-label.checked {
+    background: linear-gradient(135deg, #5B8BC1 0%, #4a7aa8 100%);
+    border-color: #5B8BC1;
+    color: #fff;
+  }
+
+  .vsl-form-radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 28px;
+  }
+
+  @media (min-width: 480px) {
+    .vsl-form-radio-group { flex-direction: row; }
+  }
+
+  .vsl-form-radio-label {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 20px;
+    background: #f7fafc;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 14px;
+    font-weight: 500;
+    color: #2d3748;
+    user-select: none;
+  }
+
+  .vsl-form-radio-label input { display: none; }
+
+  .vsl-form-radio-label.checked {
+    background: linear-gradient(135deg, #5B8BC1 0%, #4a7aa8 100%);
+    border-color: #5B8BC1;
+    color: #fff;
+  }
+
+  .vsl-form-submit {
+    width: 100%;
+    padding: 18px;
+    background: linear-gradient(135deg, #5B8BC1 0%, #4a7aa8 100%);
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    box-shadow: 0 10px 30px rgba(91, 139, 193, 0.35);
+    transition: opacity 0.2s;
+  }
+
+  .vsl-form-submit:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+
+  .vsl-form-teaser {
+    flex: 1;
+    background: linear-gradient(135deg, #5B8BC1 0%, #3d6fa0 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 24px;
+    min-height: 300px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .vsl-form-teaser-blur {
+    position: absolute;
+    inset: 0;
+    filter: blur(10px);
+    opacity: 0.3;
+    pointer-events: none;
+  }
+
+  .vsl-form-teaser-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    max-width: 320px;
+  }
+
+  .vsl-form-teaser-icon {
+    width: 64px;
+    height: 64px;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(20px);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    border: 2px solid rgba(255,255,255,0.3);
+    font-size: 30px;
+  }
+
+  .vsl-form-teaser h3 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 12px;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  }
+
+  .vsl-form-teaser p {
+    font-size: 15px;
+    color: rgba(255,255,255,0.9);
+    line-height: 1.6;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+
+  .vsl-form-success {
+    width: 100%;
+    padding: 60px 40px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .vsl-form-success-icon {
+    width: 90px;
+    height: 90px;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 28px;
+    font-size: 44px;
+    color: #fff;
+    box-shadow: 0 20px 50px rgba(16, 185, 129, 0.3);
+  }
+
+  .vsl-form-success h2 {
+    font-size: 36px;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin-bottom: 16px;
+    font-family: Georgia, serif;
+  }
+
+  .vsl-form-success p {
+    font-size: 17px;
+    color: #4a5568;
+    line-height: 1.7;
+    max-width: 440px;
+    margin-bottom: 28px;
+  }
+
+  .vsl-form-success-email {
+    padding: 16px 28px;
+    background: linear-gradient(135deg, #f0f7ff 0%, #e6f2ff 100%);
+    border-radius: 12px;
+    border: 2px solid rgba(91,139,193,0.2);
+    font-size: 15px;
+    color: #5B8BC1;
+    font-weight: 600;
+  }
+
   /* ─── FOOTER ─── */
   .vsl-footer {
     padding: 30px 20px;
@@ -795,6 +1112,69 @@ const videoEmbedUrl = process.env.NEXT_PUBLIC_VSL_VIDEO_URL;
 
 export default function VslClient() {
   const [stickyCtaVisible, setStickyCtaVisible] = useState(false);
+  const formRef = useRef<HTMLElement>(null);
+
+  // Form state
+  const [formData, setFormData] = useState({ name: '', email: '', description: '', sector: [] as string[], revenue: '', available: '' });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showAdditionalFields, setShowAdditionalFields] = useState(false);
+  const [isFormSubmitted, setIsFormSubmitted] = useState(false);
+  const [countdown, setCountdown] = useState(3);
+  const [isMobile, setIsMobile] = useState(false);
+
+  const isNameValid = formData.name.trim().length > 0;
+  const isEmailValid = formData.email.trim().length > 0 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email);
+
+  useEffect(() => {
+    setShowAdditionalFields(isNameValid && isEmailValid);
+  }, [isNameValid, isEmailValid]);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  useEffect(() => {
+    if (!isFormSubmitted || typeof window === 'undefined') return;
+    const url = new URL(CALENDLY_URL);
+    url.searchParams.set('name', formData.name);
+    url.searchParams.set('email', formData.email);
+    url.searchParams.set('a1', formData.description);
+    const t = setInterval(() => {
+      setCountdown((prev) => {
+        if (prev <= 1) { clearInterval(t); window.location.href = url.toString(); return 0; }
+        return prev - 1;
+      });
+    }, 1000);
+    return () => clearInterval(t);
+  }, [isFormSubmitted, formData.name, formData.email, formData.description]);
+
+  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const toggleSector = (opt: string) => {
+    setFormData((prev) => ({ ...prev, sector: prev.sector.includes(opt) ? prev.sector.filter((s) => s !== opt) : [...prev.sector, opt] }));
+  };
+
+  const handleFormSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    try {
+      const res = await fetch(N8N_WEBHOOK, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) });
+      if (res.ok) setIsFormSubmitted(true);
+      else alert('Une erreur est survenue. Veuillez réessayer.');
+    } catch { alert('Une erreur est survenue. Veuillez réessayer.'); }
+    finally { setIsSubmitting(false); }
+  };
+
+  const scrollToForm = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    formRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -888,7 +1268,7 @@ export default function VslClient() {
 
         {/* PRIMARY CTA */}
         <div className="vsl-cta-block vsl-fade">
-          <a href="/vsl/apply" className="vsl-cta-btn">→ Réserver mon appel gratuit de 20 min</a>
+          <a href="#form" onClick={scrollToForm} className="vsl-cta-btn">→ Réserver mon appel gratuit de 20 min</a>
           <p className="vsl-cta-subtext">En cliquant, tu remplis 4 questions rapides. On vérifie ensemble si ton profil et ton timing matchent avec l&apos;offre. Si oui, tu choisis ton créneau.</p>
         </div>
 
@@ -1037,7 +1417,7 @@ export default function VslClient() {
               <div className="vsl-spots-dot" />
               <span>5 places disponibles ce mois-ci</span>
             </div>
-            <a href="/vsl/apply" className="vsl-cta-btn vsl-founder-cta">→ Réserver mon appel gratuit</a>
+            <a href="#form" onClick={scrollToForm} className="vsl-cta-btn vsl-founder-cta">→ Réserver mon appel gratuit</a>
             <div className="vsl-guarantee">
               <strong>Garantie 30 jours.</strong> Si tu n&apos;as pas reçu au moins 5 leads qualifiés dans les 30 jours suivant le lancement du système, je te rembourse intégralement. Aucune question posée.
             </div>
@@ -1098,19 +1478,124 @@ export default function VslClient() {
           ))}
         </section>
 
-        {/* FINAL CTA */}
-        <section className="vsl-final-cta">
-          <h2 className="vsl-fade">
-            Prêt à avoir un pipeline<br /><em>qui tourne en automatique ?</em>
-          </h2>
-          <p className="vsl-fade">
-            Un appel de 20 minutes. On analyse ta situation, ton offre, ton marché. Et on te montre exactement comment le système s&apos;appliquerait à ton activité.
-          </p>
-          <a href="/vsl/apply" className="vsl-cta-btn vsl-fade">→ Réserver mon appel stratégique gratuit</a>
-          <div className="vsl-trust-row vsl-fade">
-            <span className="vsl-trust-item">Aucun engagement</span>
-            <span className="vsl-trust-item">Garantie 30 jours</span>
-            <span className="vsl-trust-item">5 places restantes</span>
+        {/* FORMULAIRE DE RÉSERVATION */}
+        <section id="form" ref={formRef} className="vsl-form-section">
+          <div className="vsl-form-inner" style={{ flexDirection: isMobile ? 'column' : 'row' }}>
+            {!isFormSubmitted ? (
+              <>
+                {/* Panneau formulaire */}
+                <motion.div
+                  className="vsl-form-panel"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <h2 className="vsl-form-title">Renseignement pour l&apos;appel de découverte</h2>
+                  <p className="vsl-form-subtitle">Durant cet appel, nous allons :</p>
+                  <div className="vsl-form-info-box">
+                    {DISCOVERY_ITEMS.map((item, i) => (
+                      <motion.p
+                        key={i}
+                        className="vsl-form-info-item"
+                        initial={{ opacity: 0, y: 8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: i * 0.08 }}
+                      >
+                        <span className="vsl-form-info-emoji">{item.emoji}</span>
+                        <span>{isMobile ? item.short : item.full}</span>
+                      </motion.p>
+                    ))}
+                  </div>
+                  <p style={{ color: '#4a5568', fontSize: 14, fontStyle: 'italic', marginBottom: 24 }}>
+                    Permettez nous de vous poser quelques questions pour mieux comprendre vos besoins.
+                  </p>
+
+                  <form onSubmit={handleFormSubmit}>
+                    <label className="vsl-form-label">Nom *</label>
+                    <input className="vsl-form-input" type="text" name="name" value={formData.name} onChange={handleFormChange} required />
+
+                    <label className="vsl-form-label">Adresse électronique *</label>
+                    <input className="vsl-form-input" type="email" name="email" value={formData.email} onChange={handleFormChange} placeholder="adresse@place.holder" required />
+
+                    {showAdditionalFields && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        transition={{ duration: 0.4, ease: 'easeOut' }}
+                      >
+                        <label className="vsl-form-label">Décrivez au mieux ce que vous attendez de nous *</label>
+                        <textarea className="vsl-form-textarea" name="description" value={formData.description} onChange={handleFormChange} required />
+
+                        <label className="vsl-form-label">Quel est votre secteur d&apos;activité ? *</label>
+                        <div className="vsl-form-sector-grid">
+                          {SECTOR_OPTIONS.map((opt) => (
+                            <label key={opt} className={`vsl-form-sector-label ${formData.sector.includes(opt) ? 'checked' : ''}`}>
+                              <input type="checkbox" checked={formData.sector.includes(opt)} onChange={() => toggleSector(opt)} />
+                              {opt}
+                            </label>
+                          ))}
+                        </div>
+
+                        <label className="vsl-form-label">Quel est ton chiffre d&apos;affaires ? *</label>
+                        <textarea className="vsl-form-textarea short" name="revenue" value={formData.revenue} onChange={handleFormChange} placeholder="Décrivez votre CA..." required />
+
+                        <label className="vsl-form-label">Es-tu sûr à 100% d&apos;être disponible à l&apos;heure que tu as choisie ? *</label>
+                        <div className="vsl-form-radio-group">
+                          {['Oui je serai présent', 'Non je ne suis pas sûr'].map((opt) => (
+                            <label key={opt} className={`vsl-form-radio-label ${formData.available === opt ? 'checked' : ''}`}>
+                              <input type="radio" name="available" value={opt} checked={formData.available === opt} onChange={handleFormChange} required />
+                              {opt}
+                            </label>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+
+                    <motion.button
+                      type="submit"
+                      className="vsl-form-submit"
+                      disabled={isSubmitting}
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      {isSubmitting ? 'Envoi en cours...' : 'Continuer →'}
+                    </motion.button>
+                  </form>
+                </motion.div>
+
+                {/* Panneau Calendly flou */}
+                <div className="vsl-form-teaser">
+                  <motion.div
+                    className="vsl-form-teaser-content"
+                    initial={{ scale: 0.9, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
+                  >
+                    <div className="vsl-form-teaser-icon">📅</div>
+                    <h3>Votre créneau vous attend</h3>
+                    <p>Merci de remplir le formulaire avant de choisir votre créneau horaire.</p>
+                  </motion.div>
+                </div>
+              </>
+            ) : (
+              /* Succès */
+              <motion.div
+                className="vsl-form-success"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5 }}
+              >
+                <div className="vsl-form-success-icon">✓</div>
+                <h2>Parfait !</h2>
+                <p>
+                  Vos informations ont été enregistrées avec succès.<br /><br />
+                  <strong style={{ color: '#5B8BC1', fontSize: 20 }}>
+                    Redirection dans {countdown} seconde{countdown > 1 ? 's' : ''}...
+                  </strong>
+                </p>
+                <div className="vsl-form-success-email">📧 {formData.email}</div>
+              </motion.div>
+            )}
           </div>
         </section>
 
@@ -1121,7 +1606,7 @@ export default function VslClient() {
 
         {/* STICKY CTA (mobile, after 300px scroll) */}
         <div className={`vsl-sticky-cta ${stickyCtaVisible ? 'visible' : ''}`} aria-hidden="true">
-          <a href="/vsl/apply" className="vsl-cta-btn">→ Réserver mon appel gratuit</a>
+          <a href="#form" onClick={scrollToForm} className="vsl-cta-btn">→ Réserver mon appel gratuit</a>
         </div>
 
       </div>

@@ -3,8 +3,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
-const CALENDLY_URL = 'https://calendly.com/buffedbean/30min';
-const CALENDLY_REDIRECT = process.env.NEXT_PUBLIC_VSL_CALENDLY_URL || CALENDLY_URL;
+const CALENDLY_URL = process.env.NEXT_PUBLIC_VSL_CALENDLY_URL || 'https://calendly.com/buffedbean/30min';
 const N8N_WEBHOOK = 'https://n8n.srv933307.hstgr.cloud/webhook/77ccd585-25f2-4fa5-bdee-6313eaa90d4f';
 
 const applyStyles = `
@@ -342,7 +341,7 @@ export default function ApplyForm() {
 
   useEffect(() => {
     if (!isFormSubmitted || typeof window === 'undefined') return;
-    const url = new URL(CALENDLY_REDIRECT);
+    const url = new URL(CALENDLY_URL);
     url.searchParams.set('name', formData.name);
     url.searchParams.set('email', formData.email);
     url.searchParams.set('a1', formData.description);
