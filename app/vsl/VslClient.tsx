@@ -1223,6 +1223,17 @@ export default function VslClient() {
           </div>
         </div>
 
+        <div className="vsl-cta-block vsl-fade">
+          <AuditButton
+            text="Réserver mon appel gratuit de 20 min"
+            width={380}
+            height={58}
+            fontSize={16}
+            onClick={scrollToForm}
+          />
+          <p className="vsl-cta-subtext">En cliquant, tu remplis 4 questions rapides. On vérifie ensemble si ton profil et ton timing matchent avec l&apos;offre. Si oui, tu choisis ton créneau.</p>
+        </div>
+
         <hr className="vsl-divider" />
 
         {/* PAIN POINTS */}
