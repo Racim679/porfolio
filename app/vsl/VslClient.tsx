@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useEffect, useState, useRef } from 'react';
 import Image from 'next/image';
@@ -10,13 +10,13 @@ const CALENDLY_URL = 'https://calendly.com/buffedbean/30min';
 const N8N_WEBHOOK = 'https://n8n.srv933307.hstgr.cloud/webhook/77ccd585-25f2-4fa5-bdee-6313eaa90d4f';
 
 const DISCOVERY_ITEMS = [
-  { emoji: '??', short: 'Analyser ton activit� en profondeur', full: 'Analyser ton activit� en profondeur ? Identifier comment tu g�n�res de la valeur, tes flux de travail actuels et tes leviers de croissance.' },
-  { emoji: '??', short: 'D�tecter les opportunit�s d\'automatisation', full: 'D�tecter les opportunit�s d\'automatisation et d\'optimisation ? Rep�rer les t�ches r�p�titives, les processus manuels ou les pertes de temps que l\'IA peut fluidifier.' },
-  { emoji: '??', short: 'Faire le point sur ta strat�gie d\'acquisition', full: 'Faire le point sur ta strat�gie d\'acquisition et d\'op�ration ? Comprendre comment tu attires, convertis et g�res tes clients ? et comment l\'automatisation peut acc�l�rer chaque �tape.' },
-  { emoji: '??', short: 'Te donner un plan d\'action clair', full: 'Te donner un plan d\'action clair et personnalis� ? Un plan concret pour int�grer l\'IA dans ton business, gagner en productivit�, r�duire la friction et scaler plus vite.' },
+  { emoji: '??', short: 'Analyser ton activite en profondeur', full: 'Analyser ton activite en profondeur ? Identifier comment tu generes de la valeur, tes flux de travail actuels et tes leviers de croissance.' },
+  { emoji: '??', short: 'Detecter les opportunites d\'automatisation', full: 'Detecter les opportunites d\'automatisation et d\'optimisation ? Reperer les taches repetitives, les processus manuels ou les pertes de temps que l\'IA peut fluidifier.' },
+  { emoji: '??', short: 'Faire le point sur ta strategie d\'acquisition', full: 'Faire le point sur ta strategie d\'acquisition et d\'operation ? Comprendre comment tu attires, convertis et geres tes clients ? et comment l\'automatisation peut accelerer chaque etape.' },
+  { emoji: '??', short: 'Te donner un plan d\'action clair', full: 'Te donner un plan d\'action clair et personnalise ? Un plan concret pour integrer l\'IA dans ton business, gagner en productivite, reduire la friction et scaler plus vite.' },
 ];
 
-const SECTOR_OPTIONS = ['Immobilier', 'Coaching / Formation', 'Services B2B', 'B�timent / Artisanat', 'Restauration', 'Bien �tre / Sant�', 'Autre'];
+const SECTOR_OPTIONS = ['Immobilier', 'Coaching / Formation', 'Services B2B', 'Batiment / Artisanat', 'Restauration', 'Bien etre / Sante', 'Autre'];
 
 const css = `
   .vsl-root *,
@@ -572,7 +572,7 @@ const css = `
 
   .vsl-guarantee strong { color: var(--white); }
 
-  /* ??? T�MOIGNAGES ??? */
+  /* ??? TEMOIGNAGES ??? */
   .vsl-testimonials-section {
     max-width: 860px;
     margin: 0 auto;
@@ -1165,8 +1165,8 @@ export default function VslClient() {
     try {
       const res = await fetch(N8N_WEBHOOK, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) });
       if (res.ok) setIsFormSubmitted(true);
-      else alert('Une erreur est survenue. Veuillez r�essayer.');
-    } catch { alert('Une erreur est survenue. Veuillez r�essayer.'); }
+      else alert('Une erreur est survenue. Veuillez reessayer.');
+    } catch { alert('Une erreur est survenue. Veuillez reessayer.'); }
     finally { setIsSubmitting(false); }
   };
 
@@ -1203,13 +1203,13 @@ export default function VslClient() {
       <div className="vsl-root">
 
         {/* VIDEO */}
-        <p className="vsl-pre-headline">Pour les freelances &amp; ind�pendants ambitieux</p>
+        <p className="vsl-pre-headline">Pour les freelances &amp; independants ambitieux</p>
         <div className="vsl-video-section vsl-fade">
           <div className="vsl-video-wrapper">
             {videoEmbedUrl ? (
               <iframe
                 src={videoEmbedUrl}
-                title="VSL ? Syst�me client automatis�"
+                title="VSL ? Systeme client automatise"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
               />
@@ -1218,7 +1218,7 @@ export default function VslClient() {
                 <div className="vsl-play-btn">
                   <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
                 </div>
-                <p>Regarder la vid�o</p>
+                <p>Regarder la video</p>
               </div>
             )}
           </div>
@@ -1226,41 +1226,41 @@ export default function VslClient() {
 
         <div className="vsl-cta-block vsl-fade">
           <AuditButton
-            text="Réserver mon appel stratégique"
+            text="Reserver mon appel gratuit de 20 min"
             width={380}
             height={58}
             fontSize={16}
             onClick={scrollToForm}
           />
-          <p className="vsl-cta-subtext">En cliquant, tu remplis 4 questions rapides. On v�rifie ensemble si ton profil et ton timing matchent avec l&apos;offre. Si oui, tu choisis ton cr�neau.</p>
+          <p className="vsl-cta-subtext">En cliquant, tu remplis 4 questions rapides. On verifie ensemble si ton profil et ton timing matchent avec l&apos;offre. Si oui, tu choisis ton creneau.</p>
         </div>
 
         <hr className="vsl-divider" />
 
         {/* PAIN POINTS */}
         <section className="vsl-pain-section">
-          <p className="vsl-section-label vsl-fade">Le probl�me</p>
+          <p className="vsl-section-label vsl-fade">Le probleme</p>
           <h2 className="vsl-fade">Tu reconnais ces situations ?</h2>
           <div className="vsl-pain-grid">
             <div className="vsl-pain-item vsl-fade">
               <span className="vsl-pain-icon">??</span>
-              <h3>Revenus irr�guliers</h3>
-              <p>Des mois � 6K, des mois � 0. L&apos;incertitude financi�re t&apos;�puise et te force � accepter n&apos;importe quel client � n&apos;importe quel tarif.</p>
+              <h3>Revenus irreguliers</h3>
+              <p>Des mois a 6K, des mois a 0. L&apos;incertitude financiere t&apos;epuise et te force a accepter n&apos;importe quel client a n&apos;importe quel tarif.</p>
             </div>
             <div className="vsl-pain-item vsl-fade">
               <span className="vsl-pain-icon">?</span>
               <h3>La prospection chronophage</h3>
-              <p>Tu passes 2h par jour sur LinkedIn � envoyer des messages � froid qui restent sans r�ponse. Du temps que tu pourrais facturer.</p>
+              <p>Tu passes 2h par jour sur LinkedIn a envoyer des messages a froid qui restent sans reponse. Du temps que tu pourrais facturer.</p>
             </div>
             <div className="vsl-pain-item vsl-fade">
               <span className="vsl-pain-icon">???</span>
               <h3>Le cycle infernal prospection / livraison</h3>
-              <p>Quand tu as un gros projet en cours, tu ne prospectes plus. Et quand il se termine, tu repars de z�ro. Le cycle infernal du freelance.</p>
+              <p>Quand tu as un gros projet en cours, tu ne prospectes plus. Et quand il se termine, tu repars de zero. Le cycle infernal du freelance.</p>
             </div>
             <div className="vsl-pain-item vsl-fade">
               <span className="vsl-pain-icon">??</span>
               <h3>La concurrence des agences</h3>
-              <p>Les agences ont des �quipes enti�res d�di�es � la prospection et au marketing. Toi, tu fais tout seul avec 24h dans ta journ�e.</p>
+              <p>Les agences ont des equipes entieres dediees a la prospection et au marketing. Toi, tu fais tout seul avec 24h dans ta journee.</p>
             </div>
           </div>
         </section>
@@ -1270,14 +1270,14 @@ export default function VslClient() {
         {/* SOLUTION */}
         <section className="vsl-solution-section">
           <p className="vsl-section-label vsl-fade">La solution</p>
-          <h2 className="vsl-fade">Comment le syst�me<br />travaille pour toi</h2>
+          <h2 className="vsl-fade">Comment le systeme<br />travaille pour toi</h2>
           <div className="vsl-steps-list">
             <div className="vsl-step vsl-fade">
               <div className="vsl-step-num"><span>01</span></div>
               <div className="vsl-step-line" />
               <div className="vsl-step-content">
                 <h3>Attraction en continu</h3>
-                <p>Des contenus optimis�s et des publicit�s cibl�es attirent tes clients id�aux vers toi ? 24h/24, 7j/7, m�me quand tu es en train de livrer un projet.</p>
+                <p>Des contenus optimises et des publicites ciblees attirent tes clients ideaux vers toi ? 24h/24, 7j/7, meme quand tu es en train de livrer un projet.</p>
               </div>
             </div>
             <div className="vsl-step vsl-fade">
@@ -1285,7 +1285,7 @@ export default function VslClient() {
               <div className="vsl-step-line" />
               <div className="vsl-step-content">
                 <h3>Qualification automatique</h3>
-                <p>Chaque prospect entre dans un tunnel qui pose les bonnes questions : budget, d�lai, p�rim�tre. Seuls les projets rentables et s�rieux arrivent jusqu&apos;� toi.</p>
+                <p>Chaque prospect entre dans un tunnel qui pose les bonnes questions : budget, delai, perimetre. Seuls les projets rentables et serieux arrivent jusqu&apos;a toi.</p>
               </div>
             </div>
             <div className="vsl-step vsl-fade">
@@ -1293,14 +1293,14 @@ export default function VslClient() {
               <div className="vsl-step-line" />
               <div className="vsl-step-content">
                 <h3>Nurturing & relances auto</h3>
-                <p>Les prospects pas encore pr�ts sont chauff�s automatiquement ? emails, s�quences, contenu de valeur ? jusqu&apos;au moment o� ils sont pr�ts � signer.</p>
+                <p>Les prospects pas encore prets sont chauffes automatiquement ? emails, sequences, contenu de valeur ? jusqu&apos;au moment ou ils sont prets a signer.</p>
               </div>
             </div>
             <div className="vsl-step vsl-fade">
               <div className="vsl-step-num"><span>04</span></div>
               <div className="vsl-step-content">
                 <h3>Tu livres. Le reste, c&apos;est nous.</h3>
-                <p>Tu n&apos;interviens que pour les appels de closing et les projets confirm�s. Ton pipeline se remplit pendant que tu travailles.</p>
+                <p>Tu n&apos;interviens que pour les appels de closing et les projets confirmes. Ton pipeline se remplit pendant que tu travailles.</p>
               </div>
             </div>
           </div>
@@ -1310,43 +1310,43 @@ export default function VslClient() {
         <section className="vsl-included-section">
           <div className="vsl-included-inner">
             <p className="vsl-section-label vsl-fade">Ce que tu obtiens</p>
-            <h2 className="vsl-fade">Tout ce qui est inclus<br />dans le syst�me</h2>
+            <h2 className="vsl-fade">Tout ce qui est inclus<br />dans le systeme</h2>
             <div className="vsl-included-grid">
               <div className="vsl-included-card vsl-fade">
                 <div className="vsl-card-icon">??</div>
-                <h3>Strat�gie de positionnement</h3>
-                <p>On affine ton offre, ton client cible et ton message pour que tu attires des prospects qualifi�s et payants, pas des curieux.</p>
+                <h3>Strategie de positionnement</h3>
+                <p>On affine ton offre, ton client cible et ton message pour que tu attires des prospects qualifies et payants, pas des curieux.</p>
               </div>
               <div className="vsl-included-card vsl-fade">
                 <div className="vsl-card-icon">??</div>
                 <h3>Tunnel de qualification</h3>
-                <p>Landing page + formulaire intelligent qui filtre les prospects et collecte les informations cl�s avant m�me le premier appel.</p>
+                <p>Landing page + formulaire intelligent qui filtre les prospects et collecte les informations cles avant meme le premier appel.</p>
               </div>
               <div className="vsl-included-card vsl-fade">
                 <div className="vsl-card-icon">??</div>
-                <h3>S�quences de nurturing</h3>
-                <p>Emails et follow-ups automatiques pour maintenir le lien avec les prospects ti�des jusqu&apos;� ce qu&apos;ils soient pr�ts � acheter.</p>
+                <h3>Sequences de nurturing</h3>
+                <p>Emails et follow-ups automatiques pour maintenir le lien avec les prospects tiedes jusqu&apos;a ce qu&apos;ils soient prets a acheter.</p>
               </div>
               <div className="vsl-included-card vsl-fade">
                 <div className="vsl-card-icon">??</div>
                 <h3>Acquisition organique & payante</h3>
-                <p>Strat�gie de contenu LinkedIn + campagnes publicitaires cibl�es pour g�n�rer un flux r�gulier de demandes entrantes.</p>
+                <p>Strategie de contenu LinkedIn + campagnes publicitaires ciblees pour generer un flux regulier de demandes entrantes.</p>
               </div>
               <div className="vsl-included-card vsl-fade">
                 <div className="vsl-card-icon">??</div>
-                <h3>Tableau de bord simplifi�</h3>
-                <p>Un dashboard clair : nombre de leads, taux de conversion, co�t par client. Tu sais exactement ce qui fonctionne.</p>
+                <h3>Tableau de bord simplifie</h3>
+                <p>Un dashboard clair : nombre de leads, taux de conversion, cout par client. Tu sais exactement ce qui fonctionne.</p>
               </div>
               <div className="vsl-included-card vsl-fade">
                 <div className="vsl-card-icon">??</div>
                 <h3>Accompagnement 30 jours</h3>
-                <p>Acc�s direct pendant les 30 premiers jours pour ajuster, optimiser et s&apos;assurer que le syst�me tourne � plein r�gime.</p>
+                <p>Acces direct pendant les 30 premiers jours pour ajuster, optimiser et s&apos;assurer que le systeme tourne a plein regime.</p>
               </div>
             </div>
           </div>
         </section>
 
-        {/* FORMULAIRE DE R�SERVATION */}
+        {/* FORMULAIRE DE RESERVATION */}
         <section id="form" ref={formRef} className="vsl-form-section">
           <div className="vsl-form-inner" style={{ flexDirection: isMobile ? 'column' : 'row' }}>
             {!isFormSubmitted ? (
@@ -1358,7 +1358,7 @@ export default function VslClient() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.5 }}
                 >
-                  <h2 className="vsl-form-title">Renseignement pour l&apos;appel de d�couverte</h2>
+                  <h2 className="vsl-form-title">Renseignement pour l&apos;appel de decouverte</h2>
                   <p className="vsl-form-subtitle">Durant cet appel, nous allons :</p>
                   <div className="vsl-form-info-box">
                     {DISCOVERY_ITEMS.map((item, i) => (
@@ -1382,7 +1382,7 @@ export default function VslClient() {
                     <label className="vsl-form-label">Nom *</label>
                     <input className="vsl-form-input" type="text" name="name" value={formData.name} onChange={handleFormChange} required />
 
-                    <label className="vsl-form-label">Adresse �lectronique *</label>
+                    <label className="vsl-form-label">Adresse electronique *</label>
                     <input className="vsl-form-input" type="email" name="email" value={formData.email} onChange={handleFormChange} placeholder="adresse@place.holder" required />
 
                     {showAdditionalFields && (
@@ -1391,10 +1391,10 @@ export default function VslClient() {
                         animate={{ opacity: 1, height: 'auto' }}
                         transition={{ duration: 0.4, ease: 'easeOut' }}
                       >
-                        <label className="vsl-form-label">D�crivez au mieux ce que vous attendez de nous *</label>
+                        <label className="vsl-form-label">Decrivez au mieux ce que vous attendez de nous *</label>
                         <textarea className="vsl-form-textarea" name="description" value={formData.description} onChange={handleFormChange} required />
 
-                        <label className="vsl-form-label">Quel est votre secteur d&apos;activit� ? *</label>
+                        <label className="vsl-form-label">Quel est votre secteur d&apos;activite ? *</label>
                         <div className="vsl-form-sector-grid">
                           {SECTOR_OPTIONS.map((opt) => (
                             <label key={opt} className={`vsl-form-sector-label ${formData.sector.includes(opt) ? 'checked' : ''}`}>
@@ -1405,11 +1405,11 @@ export default function VslClient() {
                         </div>
 
                         <label className="vsl-form-label">Quel est ton chiffre d&apos;affaires ? *</label>
-                        <textarea className="vsl-form-textarea short" name="revenue" value={formData.revenue} onChange={handleFormChange} placeholder="D�crivez votre CA..." required />
+                        <textarea className="vsl-form-textarea short" name="revenue" value={formData.revenue} onChange={handleFormChange} placeholder="Decrivez votre CA..." required />
 
-                        <label className="vsl-form-label">Es-tu s�r � 100% d&apos;�tre disponible � l&apos;heure que tu as choisie ? *</label>
+                        <label className="vsl-form-label">Es-tu sur a 100% d&apos;etre disponible a l&apos;heure que tu as choisie ? *</label>
                         <div className="vsl-form-radio-group">
-                          {['Oui je serai pr�sent', 'Non je ne suis pas s�r'].map((opt) => (
+                          {['Oui je serai present', 'Non je ne suis pas sur'].map((opt) => (
                             <label key={opt} className={`vsl-form-radio-label ${formData.available === opt ? 'checked' : ''}`}>
                               <input type="radio" name="available" value={opt} checked={formData.available === opt} onChange={handleFormChange} required />
                               {opt}
@@ -1440,13 +1440,13 @@ export default function VslClient() {
                     transition={{ duration: 0.5, delay: 0.2 }}
                   >
                     <div className="vsl-form-teaser-icon">??</div>
-                    <h3>Votre cr�neau vous attend</h3>
-                    <p>Merci de remplir le formulaire avant de choisir votre cr�neau horaire.</p>
+                    <h3>Votre creneau vous attend</h3>
+                    <p>Merci de remplir le formulaire avant de choisir votre creneau horaire.</p>
                   </motion.div>
                 </div>
               </>
             ) : (
-              /* Succ�s */
+              /* Succes */
               <motion.div
                 className="vsl-form-success"
                 initial={{ opacity: 0, scale: 0.95 }}
@@ -1456,7 +1456,7 @@ export default function VslClient() {
                 <div className="vsl-form-success-icon">?</div>
                 <h2>Parfait !</h2>
                 <p>
-                  Vos informations ont �t� enregistr�es avec succ�s.<br /><br />
+                  Vos informations ont ete enregistrees avec succes.<br /><br />
                   <strong style={{ color: '#5B8BC1', fontSize: 20 }}>
                     Redirection dans {countdown} seconde{countdown > 1 ? 's' : ''}...
                   </strong>
@@ -1472,9 +1472,9 @@ export default function VslClient() {
         {/* FOUNDER OFFER */}
         <section className="vsl-founder-section">
           <div className="vsl-founder-box vsl-fade">
-            <h2>Offre r�serv�e aux<br />5 premiers ind�pendants</h2>
+            <h2>Offre reservee aux<br />5 premiers independants</h2>
             <p>
-              Je d�marre avec un groupe restreint de freelances pour d�ployer ce syst�me, l&apos;affiner et construire des r�sultats r�els ensemble. En �change de ta confiance, tu b�n�ficies d&apos;un tarif fondateur et d&apos;un acc�s prioritaire � toutes les am�liorations futures.
+              Je demarre avec un groupe restreint de freelances pour deployer ce systeme, l&apos;affiner et construire des resultats reels ensemble. En echange de ta confiance, tu beneficies d&apos;un tarif fondateur et d&apos;un acces prioritaire a toutes les ameliorations futures.
             </p>
             <div className="vsl-spots-counter">
               <div className="vsl-spots-dot" />
@@ -1482,7 +1482,7 @@ export default function VslClient() {
             </div>
             <div style={{ marginTop: 24 }}>
               <AuditButton
-                text="Réserver mon appel stratégique"
+                text="Reserver mon appel gratuit"
                 width={300}
                 height={54}
                 fontSize={15}
@@ -1490,7 +1490,7 @@ export default function VslClient() {
               />
             </div>
             <div className="vsl-guarantee">
-              <strong>Garantie 30 jours.</strong> Si tu n&apos;as pas re�u au moins 5 leads qualifi�s dans les 30 jours suivant le lancement du syst�me, je te rembourse int�gralement. Aucune question pos�e.
+              <strong>Garantie 30 jours.</strong> Si tu n&apos;as pas recu au moins 5 leads qualifies dans les 30 jours suivant le lancement du systeme, je te rembourse integralement. Aucune question posee.
             </div>
           </div>
         </section>
@@ -1499,44 +1499,44 @@ export default function VslClient() {
 
         {/* FAQ */}
         <section className="vsl-faq-section">
-          <h2 className="vsl-fade">Questions fr�quentes</h2>
+          <h2 className="vsl-fade">Questions frequentes</h2>
 
           {[
             {
               q: "Je n'ai pas le temps en ce moment",
-              a: "On peut avancer par �tapes. L'appel dure 20 min ? juste pour voir si ton profil et ton timing matchent. Si c'est pas le bon moment, on en reparle plus tard, sans engagement.",
+              a: "On peut avancer par etapes. L'appel dure 20 min ? juste pour voir si ton profil et ton timing matchent. Si c'est pas le bon moment, on en reparle plus tard, sans engagement.",
             },
             {
               q: "C'est cher / je n'ai pas le budget",
-              a: "Garantie 30 jours : si tu n'as pas re�u au moins 5 leads qualifi�s, remboursement int�gral. L'objectif est que le ROI couvre l'investissement d�s le premier mois. Le budget pub peut rester modeste (150?300?/mois) au d�marrage.",
+              a: "Garantie 30 jours : si tu n'as pas recu au moins 5 leads qualifies, remboursement integral. L'objectif est que le ROI couvre l'investissement des le premier mois. Le budget pub peut rester modeste (150?300?/mois) au demarrage.",
             },
             {
-              q: "J'ai d�j� essay� des trucs qui n'ont pas march�",
-              a: "La diff�rence ici, c'est la structure : pas juste du contenu ou de la pub, mais un tunnel (capture + qualification + nurturing) qui filtre et chauffe les prospects. On connecte tout en un syst�me coh�rent.",
+              q: "J'ai deja essaye des trucs qui n'ont pas marche",
+              a: "La difference ici, c'est la structure : pas juste du contenu ou de la pub, mais un tunnel (capture + qualification + nurturing) qui filtre et chauffe les prospects. On connecte tout en un systeme coherent.",
             },
             {
               q: "Comment je sais que c'est pas du flan ?",
-              a: "T�moignages sur la page, garantie 30 jours par �crit, et tout le processus est d�taill� dans la vid�o. Tu peux regarder avant de t'engager.",
+              a: "Temoignages sur la page, garantie 30 jours par ecrit, et tout le processus est detaille dans la video. Tu peux regarder avant de t'engager.",
             },
             {
-              q: "Je d�bute en freelance, est-ce que �a marche pour moi ?",
-              a: "Ce syst�me est con�u pour les ind�pendants qui ont d�j� une offre d�finie et quelques clients, et qui veulent stabiliser et scaler leurs revenus. Si tu d�butes compl�tement, on en parle lors de l'appel.",
+              q: "Je debute en freelance, est-ce que ca marche pour moi ?",
+              a: "Ce systeme est concu pour les independants qui ont deja une offre definie et quelques clients, et qui veulent stabiliser et scaler leurs revenus. Si tu debutes completement, on en parle lors de l'appel.",
             },
             {
-              q: "Combien de temps avant de voir les premiers r�sultats ?",
-              a: "Le syst�me est configur� en 7 � 10 jours. Les premiers prospects qualifi�s arrivent g�n�ralement dans les 2 � 3 premi�res semaines selon ton march� et ton budget.",
+              q: "Combien de temps avant de voir les premiers resultats ?",
+              a: "Le systeme est configure en 7 a 10 jours. Les premiers prospects qualifies arrivent generalement dans les 2 a 3 premieres semaines selon ton marche et ton budget.",
             },
             {
-              q: "J'ai d�j� essay� LinkedIn sans r�sultats, pourquoi �a serait diff�rent ?",
-              a: "La diff�rence, c'est la structure. Poster du contenu sans syst�me de capture et de nurturing derri�re, �a ne convertit pas. On connecte chaque point de contact � un pipeline automatis�.",
+              q: "J'ai deja essaye LinkedIn sans resultats, pourquoi ca serait different ?",
+              a: "La difference, c'est la structure. Poster du contenu sans systeme de capture et de nurturing derriere, ca ne convertit pas. On connecte chaque point de contact a un pipeline automatise.",
             },
             {
-              q: "Quel budget pub faut-il pr�voir ?",
-              a: "On peut d�marrer avec des budgets modestes (150-300?/mois) et les augmenter progressivement selon le retour sur investissement. L'objectif est que le co�t d'acquisition soit couvert par les premiers contrats.",
+              q: "Quel budget pub faut-il prevoir ?",
+              a: "On peut demarrer avec des budgets modestes (150-300?/mois) et les augmenter progressivement selon le retour sur investissement. L'objectif est que le cout d'acquisition soit couvert par les premiers contrats.",
             },
             {
-              q: "Et si �a ne fonctionne pas pour moi ?",
-              a: "La garantie 30 jours est l� pour �a. Si tu n'es pas satisfait des r�sultats dans le premier mois, je rembourse int�gralement. Tu ne prends aucun risque financier.",
+              q: "Et si ca ne fonctionne pas pour moi ?",
+              a: "La garantie 30 jours est la pour ca. Si tu n'es pas satisfait des resultats dans le premier mois, je rembourse integralement. Tu ne prends aucun risque financier.",
             },
           ].map(({ q, a }, i) => (
             <div key={i} className="vsl-faq-item vsl-fade" onClick={toggleFaq}>
@@ -1551,13 +1551,13 @@ export default function VslClient() {
 
         {/* FOOTER */}
         <footer className="vsl-footer">
-          � 2026 ? Mentions l�gales � Politique de confidentialit�
+          © 2026 ? Mentions legales · Politique de confidentialite
         </footer>
 
         {/* STICKY CTA (mobile, after 300px scroll) */}
         <div className={`vsl-sticky-cta ${stickyCtaVisible ? 'visible' : ''}`} aria-hidden="true">
           <AuditButton
-            text="Réserver mon appel stratégique"
+            text="Reserver mon appel gratuit"
             height={48}
             fontSize={15}
             onClick={scrollToForm}
@@ -1569,5 +1569,4 @@ export default function VslClient() {
     </>
   );
 }
-
 
