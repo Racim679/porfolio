@@ -1226,11 +1226,12 @@ export default function VslClient() {
 
         <div className="vsl-cta-block vsl-fade">
           <AuditButton
-            text="Reserver mon appel gratuit de 20 min"
-            width={380}
-            height={58}
-            fontSize={16}
+            text="Reserver mon appel strategique"
+            width={320}
+            height={54}
+            fontSize={13}
             onClick={scrollToForm}
+            style={{ maxWidth: '100%' }}
           />
           <p className="vsl-cta-subtext">En cliquant, tu remplis 4 questions rapides. On verifie ensemble si ton profil et ton timing matchent avec l&apos;offre. Si oui, tu choisis ton creneau.</p>
         </div>
@@ -1551,7 +1552,7 @@ export default function VslClient() {
 
         {/* FOOTER */}
         <footer className="vsl-footer">
-          Â© 2026 ? Mentions legales Â· Politique de confidentialite
+          © 2026 ? Mentions legales · Politique de confidentialite
         </footer>
 
         {/* STICKY CTA (mobile, after 300px scroll) */}
