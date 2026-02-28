@@ -1227,7 +1227,7 @@ export default function VslClient() {
         <div className="vsl-cta-block vsl-fade">
           <AuditButton
             text="Reserver mon appel strategique"
-            height={54}
+            height={56}
             fontSize={13}
             onClick={scrollToForm}
             style={{ width: '100%', maxWidth: 360 }}
@@ -1483,7 +1483,7 @@ export default function VslClient() {
             <div style={{ marginTop: 24 }}>
               <AuditButton
                 text="Reserver mon appel strategique"
-                height={54}
+                height={56}
                 fontSize={13}
                 onClick={scrollToForm}
                 style={{ width: '100%', maxWidth: 360 }}
@@ -1558,7 +1558,7 @@ export default function VslClient() {
         <div className={`vsl-sticky-cta ${stickyCtaVisible ? 'visible' : ''}`} aria-hidden="true">
           <AuditButton
             text="Reserver mon appel strategique"
-            height={48}
+            height={56}
             fontSize={13}
             onClick={scrollToForm}
             style={{ width: '100%', maxWidth: 360 }}
