@@ -1,11 +1,13 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import Image from 'next/image';
+import photoRacim from '../../assets/photo_racim.png';
 
 const css = `
-  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap');
-
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  .vsl-root *,
+  .vsl-root *::before,
+  .vsl-root *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   .vsl-root {
     --black: #0a0a0a;
@@ -18,7 +20,7 @@ const css = `
     --text-muted: #888;
     background: var(--black);
     color: var(--white);
-    font-family: 'DM Sans', sans-serif;
+    font-family: var(--font-dm-sans), sans-serif;
     font-weight: 300;
     line-height: 1.6;
     overflow-x: hidden;
@@ -57,7 +59,7 @@ const css = `
   }
 
   .vsl-hero-headline h1 {
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: var(--font-bebas-neue), sans-serif;
     font-size: clamp(42px, 7vw, 88px);
     line-height: 0.95;
     letter-spacing: 0.02em;
@@ -65,7 +67,7 @@ const css = `
   }
 
   .vsl-hero-headline h1 em {
-    font-family: 'Instrument Serif', serif;
+    font-family: var(--font-instrument-serif), serif;
     font-style: italic;
     color: var(--gold);
   }
@@ -87,6 +89,24 @@ const css = `
     margin: 0 auto;
   }
 
+  .vsl-video-promise {
+    text-align: center;
+    font-size: 15px;
+    color: #aaa;
+    line-height: 1.7;
+    max-width: 640px;
+    margin: 0 auto 24px;
+  }
+
+  .vsl-post-video-text {
+    text-align: center;
+    font-size: 16px;
+    color: var(--white);
+    line-height: 1.7;
+    max-width: 560px;
+    margin: 32px auto 0;
+  }
+
   .vsl-video-wrapper {
     position: relative;
     background: var(--grey);
@@ -98,6 +118,14 @@ const css = `
     align-items: center;
     justify-content: center;
     cursor: pointer;
+  }
+
+  .vsl-video-wrapper iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
   }
 
   .vsl-video-wrapper::before {
@@ -172,7 +200,7 @@ const css = `
     display: inline-block;
     background: var(--red);
     color: #fff;
-    font-family: 'DM Sans', sans-serif;
+    font-family: var(--font-dm-sans), sans-serif;
     font-size: 17px;
     font-weight: 600;
     padding: 20px 44px;
@@ -207,6 +235,44 @@ const css = `
     line-height: 1.5;
   }
 
+  /* ─── QUI SUIS-JE ─── */
+  .vsl-identity-section {
+    max-width: 560px;
+    margin: 0 auto;
+    padding: 48px 20px 40px;
+    text-align: center;
+  }
+
+  .vsl-identity-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .vsl-identity-photo {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--gold);
+  }
+
+  .vsl-identity-name {
+    font-family: var(--font-bebas-neue), sans-serif;
+    font-size: 28px;
+    letter-spacing: 0.02em;
+    color: var(--white);
+    line-height: 1;
+  }
+
+  .vsl-identity-bio {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.7;
+    max-width: 420px;
+  }
+
   /* ─── DIVIDER ─── */
   .vsl-divider {
     border: none;
@@ -233,7 +299,7 @@ const css = `
   }
 
   .vsl-pain-section h2 {
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: var(--font-bebas-neue), sans-serif;
     font-size: clamp(32px, 5vw, 56px);
     line-height: 1;
     margin-bottom: 50px;
@@ -283,7 +349,7 @@ const css = `
   }
 
   .vsl-solution-section h2 {
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: var(--font-bebas-neue), sans-serif;
     font-size: clamp(32px, 5vw, 56px);
     line-height: 1;
     margin-bottom: 50px;
@@ -311,7 +377,7 @@ const css = `
   }
 
   .vsl-step-num span {
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: var(--font-bebas-neue), sans-serif;
     font-size: 52px;
     color: #1e1e1e;
     line-height: 1;
@@ -359,7 +425,7 @@ const css = `
   }
 
   .vsl-included-inner h2 {
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: var(--font-bebas-neue), sans-serif;
     font-size: clamp(32px, 5vw, 56px);
     line-height: 1;
     margin-bottom: 50px;
@@ -441,7 +507,7 @@ const css = `
   }
 
   .vsl-founder-box h2 {
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: var(--font-bebas-neue), sans-serif;
     font-size: 42px;
     margin-bottom: 20px;
     line-height: 1;
@@ -478,6 +544,11 @@ const css = `
     50% { opacity: 0.5; transform: scale(0.8); }
   }
 
+  .vsl-founder-cta {
+    margin-top: 24px;
+    display: inline-block;
+  }
+
   .vsl-guarantee {
     margin-top: 30px;
     padding-top: 30px;
@@ -489,6 +560,67 @@ const css = `
 
   .vsl-guarantee strong { color: var(--white); }
 
+  /* ─── TÉMOIGNAGES ─── */
+  .vsl-testimonials-section {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 70px 20px;
+  }
+
+  .vsl-testimonials-section h2 {
+    font-family: var(--font-bebas-neue), sans-serif;
+    font-size: clamp(32px, 5vw, 56px);
+    line-height: 1;
+    margin-bottom: 40px;
+    text-align: center;
+  }
+
+  .vsl-testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+  }
+
+  .vsl-testimonial-card {
+    border: 1px solid #2a2a2a;
+    padding: 28px;
+    border-radius: 2px;
+    background: var(--grey);
+    position: relative;
+  }
+
+  .vsl-testimonial-card::before {
+    content: '"';
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    font-family: var(--font-instrument-serif), serif;
+    font-size: 48px;
+    color: var(--gold);
+    opacity: 0.4;
+    line-height: 1;
+  }
+
+  .vsl-testimonial-text {
+    font-size: 15px;
+    color: var(--white);
+    line-height: 1.7;
+    margin-bottom: 20px;
+    font-style: italic;
+  }
+
+  .vsl-testimonial-author {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--gold);
+  }
+
+  .vsl-testimonial-role {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
   /* ─── FAQ ─── */
   .vsl-faq-section {
     max-width: 700px;
@@ -497,7 +629,7 @@ const css = `
   }
 
   .vsl-faq-section h2 {
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: var(--font-bebas-neue), sans-serif;
     font-size: 44px;
     margin-bottom: 40px;
   }
@@ -555,14 +687,14 @@ const css = `
   }
 
   .vsl-final-cta h2 {
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: var(--font-bebas-neue), sans-serif;
     font-size: clamp(36px, 6vw, 72px);
     line-height: 1;
     margin-bottom: 20px;
   }
 
   .vsl-final-cta h2 em {
-    font-family: 'Instrument Serif', serif;
+    font-family: var(--font-instrument-serif), serif;
     font-style: italic;
     color: var(--gold);
   }
@@ -613,6 +745,42 @@ const css = `
   }
   .vsl-fade.visible { opacity: 1; transform: none; }
 
+  /* ─── STICKY CTA BAR (mobile) ─── */
+  .vsl-sticky-cta {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    padding: 14px 20px;
+    background: var(--black);
+    border-top: 1px solid #2a2a2a;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 -4px 24px rgba(0,0,0,0.4);
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+  }
+
+  .vsl-sticky-cta.visible {
+    transform: translateY(0);
+  }
+
+  .vsl-sticky-cta .vsl-cta-btn {
+    width: 100%;
+    max-width: 320px;
+    text-align: center;
+  }
+
+  @media (max-width: 768px) {
+    .vsl-sticky-cta { display: flex; }
+  }
+
+  @media (min-width: 769px) {
+    .vsl-sticky-cta { display: none !important; }
+  }
+
   @media (max-width: 600px) {
     .vsl-step { grid-template-columns: 50px 1fr; }
     .vsl-step-num span { font-size: 36px; }
@@ -621,7 +789,13 @@ const css = `
   }
 `;
 
+const STICKY_CTA_SCROLL_THRESHOLD = 300;
+// Optional: set NEXT_PUBLIC_VSL_VIDEO_URL (YouTube/Vimeo embed URL) to show the VSL video instead of placeholder
+const videoEmbedUrl = process.env.NEXT_PUBLIC_VSL_VIDEO_URL;
+
 export default function VslClient() {
+  const [stickyCtaVisible, setStickyCtaVisible] = useState(false);
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add('visible'); }),
@@ -629,6 +803,13 @@ export default function VslClient() {
     );
     document.querySelectorAll('.vsl-fade').forEach((el) => observer.observe(el));
     return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const onScroll = () => setStickyCtaVisible(window.scrollY > STICKY_CTA_SCROLL_THRESHOLD);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   function toggleFaq(e: React.MouseEvent<HTMLDivElement>) {
@@ -664,25 +845,51 @@ export default function VslClient() {
 
         {/* VIDEO */}
         <div className="vsl-video-section vsl-fade">
+          <p className="vsl-video-promise">
+            Dans cette vidéo : la promesse, les 4 étapes du système, les objections qu&apos;on me pose tout le temps, et des résultats clients. ~15–20 min.
+          </p>
           <div className="vsl-video-wrapper">
-            <div className="vsl-video-placeholder">
-              <div className="vsl-play-btn">
-                <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
+            {videoEmbedUrl ? (
+              <iframe
+                src={videoEmbedUrl}
+                title="VSL — Système client automatisé"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            ) : (
+              <div className="vsl-video-placeholder">
+                <div className="vsl-play-btn">
+                  <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
+                </div>
+                <p>Regarder la vidéo</p>
               </div>
-              <p>Regarde cette vidéo en entier — 4 minutes</p>
-            </div>
+            )}
           </div>
           <div className="vsl-video-badge">
             <span>Aucune obligation</span>
             <span>100% gratuit à regarder</span>
             <span>Résultats concrets</span>
           </div>
+          <p className="vsl-post-video-text">
+            Tu as vu comment le système attire, qualifie et chauffe tes prospects. Si tu veux qu&apos;on l&apos;applique à ton cas, réserve l&apos;appel ci-dessous.
+          </p>
         </div>
+
+        {/* QUI SUIS-JE */}
+        <section className="vsl-identity-section vsl-fade">
+          <div className="vsl-identity-inner">
+            <Image src={photoRacim} alt="" width={96} height={96} className="vsl-identity-photo" />
+            <p className="vsl-identity-name">Si Smail Racim</p>
+            <p className="vsl-identity-bio">
+              Ingénieur &amp; freelance. J&apos;ai mis en place des systèmes d&apos;acquisition pour des indépendants et des petites structures. Je lance cette offre pour accompagner un petit nombre d&apos;indépendants avec la même rigueur.
+            </p>
+          </div>
+        </section>
 
         {/* PRIMARY CTA */}
         <div className="vsl-cta-block vsl-fade">
-          <a href="#" className="vsl-cta-btn">→ Réserver mon appel gratuit de 20 min</a>
-          <p className="vsl-cta-subtext">Sans engagement · On vérifie ensemble si ton profil est éligible · 5 places restantes</p>
+          <a href="/vsl/apply" className="vsl-cta-btn">→ Réserver mon appel gratuit de 20 min</a>
+          <p className="vsl-cta-subtext">En cliquant, tu remplis 4 questions rapides. On vérifie ensemble si ton profil et ton timing matchent avec l&apos;offre. Si oui, tu choisis ton créneau.</p>
         </div>
 
         <hr className="vsl-divider" />
@@ -704,7 +911,7 @@ export default function VslClient() {
             </div>
             <div className="vsl-pain-item vsl-fade">
               <span className="vsl-pain-icon">🕳️</span>
-              <h3>Le pipeline feast or famine</h3>
+              <h3>Le cycle infernal prospection / livraison</h3>
               <p>Quand tu as un gros projet en cours, tu ne prospectes plus. Et quand il se termine, tu repars de zéro. Le cycle infernal du freelance.</p>
             </div>
             <div className="vsl-pain-item vsl-fade">
@@ -796,6 +1003,29 @@ export default function VslClient() {
           </div>
         </section>
 
+        {/* TÉMOIGNAGES */}
+        <section className="vsl-testimonials-section">
+          <h2 className="vsl-fade">Ils ont mis le système en place</h2>
+          <div className="vsl-testimonials-grid">
+            <div className="vsl-testimonial-card vsl-fade">
+              <p className="vsl-testimonial-text">
+                Avant je passais mes soirées à prospecter. Aujourd&apos;hui les leads arrivent tout seuls et je ne prends que les appels de closing. Chiffre d&apos;affaires en hausse, stress en baisse.
+              </p>
+              <p className="vsl-testimonial-author">— Thomas M.</p>
+              <p className="vsl-testimonial-role">Consultant indépendant, secteur tech</p>
+            </div>
+            <div className="vsl-testimonial-card vsl-fade">
+              <p className="vsl-testimonial-text">
+                Le tunnel de qualification m&apos;a changé la vie : plus de perte de temps avec des prospects pas prêts. Je reçois uniquement des gens sérieux avec un budget et un projet clair.
+              </p>
+              <p className="vsl-testimonial-author">— Sarah L.</p>
+              <p className="vsl-testimonial-role">Designer freelance</p>
+            </div>
+          </div>
+        </section>
+
+        <hr className="vsl-divider" />
+
         {/* FOUNDER OFFER */}
         <section className="vsl-founder-section">
           <div className="vsl-founder-box vsl-fade">
@@ -805,12 +1035,11 @@ export default function VslClient() {
             </p>
             <div className="vsl-spots-counter">
               <div className="vsl-spots-dot" />
-              <span>3 places disponibles ce mois-ci</span>
+              <span>5 places disponibles ce mois-ci</span>
             </div>
-            <br />
-            <a href="#" className="vsl-cta-btn">→ Réserver mon appel gratuit</a>
+            <a href="/vsl/apply" className="vsl-cta-btn vsl-founder-cta">→ Réserver mon appel gratuit</a>
             <div className="vsl-guarantee">
-              <strong>Garantie 30 jours.</strong> Si tu n&apos;es pas satisfait des premiers résultats dans les 30 jours suivant le lancement, je te rembourse intégralement. Aucune question posée.
+              <strong>Garantie 30 jours.</strong> Si tu n&apos;as pas reçu au moins 5 leads qualifiés dans les 30 jours suivant le lancement du système, je te rembourse intégralement. Aucune question posée.
             </div>
           </div>
         </section>
@@ -822,6 +1051,22 @@ export default function VslClient() {
           <h2 className="vsl-fade">Questions fréquentes</h2>
 
           {[
+            {
+              q: "Je n'ai pas le temps en ce moment",
+              a: "On peut avancer par étapes. L'appel dure 20 min — juste pour voir si ton profil et ton timing matchent. Si c'est pas le bon moment, on en reparle plus tard, sans engagement.",
+            },
+            {
+              q: "C'est cher / je n'ai pas le budget",
+              a: "Garantie 30 jours : si tu n'as pas reçu au moins 5 leads qualifiés, remboursement intégral. L'objectif est que le ROI couvre l'investissement dès le premier mois. Le budget pub peut rester modeste (150–300€/mois) au démarrage.",
+            },
+            {
+              q: "J'ai déjà essayé des trucs qui n'ont pas marché",
+              a: "La différence ici, c'est la structure : pas juste du contenu ou de la pub, mais un tunnel (capture + qualification + nurturing) qui filtre et chauffe les prospects. On connecte tout en un système cohérent.",
+            },
+            {
+              q: "Comment je sais que c'est pas du flan ?",
+              a: "Témoignages sur la page, garantie 30 jours par écrit, et tout le processus est détaillé dans la vidéo. Tu peux regarder avant de t'engager.",
+            },
             {
               q: "Je débute en freelance, est-ce que ça marche pour moi ?",
               a: "Ce système est conçu pour les indépendants qui ont déjà une offre définie et quelques clients, et qui veulent stabiliser et scaler leurs revenus. Si tu débutes complètement, on en parle lors de l'appel.",
@@ -861,7 +1106,7 @@ export default function VslClient() {
           <p className="vsl-fade">
             Un appel de 20 minutes. On analyse ta situation, ton offre, ton marché. Et on te montre exactement comment le système s&apos;appliquerait à ton activité.
           </p>
-          <a href="#" className="vsl-cta-btn vsl-fade">→ Réserver mon appel stratégique gratuit</a>
+          <a href="/vsl/apply" className="vsl-cta-btn vsl-fade">→ Réserver mon appel stratégique gratuit</a>
           <div className="vsl-trust-row vsl-fade">
             <span className="vsl-trust-item">Aucun engagement</span>
             <span className="vsl-trust-item">Garantie 30 jours</span>
@@ -871,8 +1116,13 @@ export default function VslClient() {
 
         {/* FOOTER */}
         <footer className="vsl-footer">
-          © 2025 — Mentions légales · Politique de confidentialité
+          © 2026 — Mentions légales · Politique de confidentialité
         </footer>
+
+        {/* STICKY CTA (mobile, after 300px scroll) */}
+        <div className={`vsl-sticky-cta ${stickyCtaVisible ? 'visible' : ''}`} aria-hidden="true">
+          <a href="/vsl/apply" className="vsl-cta-btn">→ Réserver mon appel gratuit</a>
+        </div>
 
       </div>
     </>
