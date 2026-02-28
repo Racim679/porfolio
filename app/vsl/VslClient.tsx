@@ -752,7 +752,7 @@ const css = `
     background: #fff;
     border-radius: 16px;
     overflow: hidden;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    border: 1px solid var(--grey-mid);
   }
 
   @media (min-width: 1024px) {
@@ -1217,15 +1217,8 @@ export default function VslClient() {
           </h1>
         </div>
 
-        <p className="vsl-hero-subhead vsl-fade">
-          Un système tout-en-un qui capte, qualifie et convertit tes prospects automatiquement — pour que tu passes tes journées à facturer, pas à prospecter sur LinkedIn.
-        </p>
-
         {/* VIDEO */}
         <div className="vsl-video-section vsl-fade">
-          <p className="vsl-video-promise">
-            Dans cette vidéo : la promesse, les 4 étapes du système, les objections qu&apos;on me pose tout le temps, et des résultats clients. ~15–20 min.
-          </p>
           <div className="vsl-video-wrapper">
             {videoEmbedUrl ? (
               <iframe
@@ -1243,14 +1236,6 @@ export default function VslClient() {
               </div>
             )}
           </div>
-          <div className="vsl-video-badge">
-            <span>Aucune obligation</span>
-            <span>100% gratuit à regarder</span>
-            <span>Résultats concrets</span>
-          </div>
-          <p className="vsl-post-video-text">
-            Tu as vu comment le système attire, qualifie et chauffe tes prospects. Si tu veux qu&apos;on l&apos;applique à ton cas, réserve l&apos;appel ci-dessous.
-          </p>
         </div>
 
         {/* QUI SUIS-JE */}
@@ -1381,101 +1366,6 @@ export default function VslClient() {
           </div>
         </section>
 
-        {/* TÉMOIGNAGES */}
-        <section className="vsl-testimonials-section">
-          <h2 className="vsl-fade">Ils ont mis le système en place</h2>
-          <div className="vsl-testimonials-grid">
-            <div className="vsl-testimonial-card vsl-fade">
-              <p className="vsl-testimonial-text">
-                Avant je passais mes soirées à prospecter. Aujourd&apos;hui les leads arrivent tout seuls et je ne prends que les appels de closing. Chiffre d&apos;affaires en hausse, stress en baisse.
-              </p>
-              <p className="vsl-testimonial-author">— Thomas M.</p>
-              <p className="vsl-testimonial-role">Consultant indépendant, secteur tech</p>
-            </div>
-            <div className="vsl-testimonial-card vsl-fade">
-              <p className="vsl-testimonial-text">
-                Le tunnel de qualification m&apos;a changé la vie : plus de perte de temps avec des prospects pas prêts. Je reçois uniquement des gens sérieux avec un budget et un projet clair.
-              </p>
-              <p className="vsl-testimonial-author">— Sarah L.</p>
-              <p className="vsl-testimonial-role">Designer freelance</p>
-            </div>
-          </div>
-        </section>
-
-        <hr className="vsl-divider" />
-
-        {/* FOUNDER OFFER */}
-        <section className="vsl-founder-section">
-          <div className="vsl-founder-box vsl-fade">
-            <h2>Offre réservée aux<br />5 premiers indépendants</h2>
-            <p>
-              Je démarre avec un groupe restreint de freelances pour déployer ce système, l&apos;affiner et construire des résultats réels ensemble. En échange de ta confiance, tu bénéficies d&apos;un tarif fondateur et d&apos;un accès prioritaire à toutes les améliorations futures.
-            </p>
-            <div className="vsl-spots-counter">
-              <div className="vsl-spots-dot" />
-              <span>5 places disponibles ce mois-ci</span>
-            </div>
-            <a href="#form" onClick={scrollToForm} className="vsl-cta-btn vsl-founder-cta">→ Réserver mon appel gratuit</a>
-            <div className="vsl-guarantee">
-              <strong>Garantie 30 jours.</strong> Si tu n&apos;as pas reçu au moins 5 leads qualifiés dans les 30 jours suivant le lancement du système, je te rembourse intégralement. Aucune question posée.
-            </div>
-          </div>
-        </section>
-
-        <hr className="vsl-divider" />
-
-        {/* FAQ */}
-        <section className="vsl-faq-section">
-          <h2 className="vsl-fade">Questions fréquentes</h2>
-
-          {[
-            {
-              q: "Je n'ai pas le temps en ce moment",
-              a: "On peut avancer par étapes. L'appel dure 20 min — juste pour voir si ton profil et ton timing matchent. Si c'est pas le bon moment, on en reparle plus tard, sans engagement.",
-            },
-            {
-              q: "C'est cher / je n'ai pas le budget",
-              a: "Garantie 30 jours : si tu n'as pas reçu au moins 5 leads qualifiés, remboursement intégral. L'objectif est que le ROI couvre l'investissement dès le premier mois. Le budget pub peut rester modeste (150–300€/mois) au démarrage.",
-            },
-            {
-              q: "J'ai déjà essayé des trucs qui n'ont pas marché",
-              a: "La différence ici, c'est la structure : pas juste du contenu ou de la pub, mais un tunnel (capture + qualification + nurturing) qui filtre et chauffe les prospects. On connecte tout en un système cohérent.",
-            },
-            {
-              q: "Comment je sais que c'est pas du flan ?",
-              a: "Témoignages sur la page, garantie 30 jours par écrit, et tout le processus est détaillé dans la vidéo. Tu peux regarder avant de t'engager.",
-            },
-            {
-              q: "Je débute en freelance, est-ce que ça marche pour moi ?",
-              a: "Ce système est conçu pour les indépendants qui ont déjà une offre définie et quelques clients, et qui veulent stabiliser et scaler leurs revenus. Si tu débutes complètement, on en parle lors de l'appel.",
-            },
-            {
-              q: "Combien de temps avant de voir les premiers résultats ?",
-              a: "Le système est configuré en 7 à 10 jours. Les premiers prospects qualifiés arrivent généralement dans les 2 à 3 premières semaines selon ton marché et ton budget.",
-            },
-            {
-              q: "J'ai déjà essayé LinkedIn sans résultats, pourquoi ça serait différent ?",
-              a: "La différence, c'est la structure. Poster du contenu sans système de capture et de nurturing derrière, ça ne convertit pas. On connecte chaque point de contact à un pipeline automatisé.",
-            },
-            {
-              q: "Quel budget pub faut-il prévoir ?",
-              a: "On peut démarrer avec des budgets modestes (150-300€/mois) et les augmenter progressivement selon le retour sur investissement. L'objectif est que le coût d'acquisition soit couvert par les premiers contrats.",
-            },
-            {
-              q: "Et si ça ne fonctionne pas pour moi ?",
-              a: "La garantie 30 jours est là pour ça. Si tu n'es pas satisfait des résultats dans le premier mois, je rembourse intégralement. Tu ne prends aucun risque financier.",
-            },
-          ].map(({ q, a }, i) => (
-            <div key={i} className="vsl-faq-item vsl-fade" onClick={toggleFaq}>
-              <div className="vsl-faq-question">
-                {q}
-                <div className="vsl-faq-toggle">+</div>
-              </div>
-              <div className="vsl-faq-answer">{a}</div>
-            </div>
-          ))}
-        </section>
-
         {/* FORMULAIRE DE RÉSERVATION */}
         <section id="form" ref={formRef} className="vsl-form-section">
           <div className="vsl-form-inner" style={{ flexDirection: isMobile ? 'column' : 'row' }}>
@@ -1595,6 +1485,80 @@ export default function VslClient() {
               </motion.div>
             )}
           </div>
+        </section>
+
+        <hr className="vsl-divider" />
+
+        {/* FOUNDER OFFER */}
+        <section className="vsl-founder-section">
+          <div className="vsl-founder-box vsl-fade">
+            <h2>Offre réservée aux<br />5 premiers indépendants</h2>
+            <p>
+              Je démarre avec un groupe restreint de freelances pour déployer ce système, l&apos;affiner et construire des résultats réels ensemble. En échange de ta confiance, tu bénéficies d&apos;un tarif fondateur et d&apos;un accès prioritaire à toutes les améliorations futures.
+            </p>
+            <div className="vsl-spots-counter">
+              <div className="vsl-spots-dot" />
+              <span>5 places disponibles ce mois-ci</span>
+            </div>
+            <a href="#form" onClick={scrollToForm} className="vsl-cta-btn vsl-founder-cta">→ Réserver mon appel gratuit</a>
+            <div className="vsl-guarantee">
+              <strong>Garantie 30 jours.</strong> Si tu n&apos;as pas reçu au moins 5 leads qualifiés dans les 30 jours suivant le lancement du système, je te rembourse intégralement. Aucune question posée.
+            </div>
+          </div>
+        </section>
+
+        <hr className="vsl-divider" />
+
+        {/* FAQ */}
+        <section className="vsl-faq-section">
+          <h2 className="vsl-fade">Questions fréquentes</h2>
+
+          {[
+            {
+              q: "Je n'ai pas le temps en ce moment",
+              a: "On peut avancer par étapes. L'appel dure 20 min — juste pour voir si ton profil et ton timing matchent. Si c'est pas le bon moment, on en reparle plus tard, sans engagement.",
+            },
+            {
+              q: "C'est cher / je n'ai pas le budget",
+              a: "Garantie 30 jours : si tu n'as pas reçu au moins 5 leads qualifiés, remboursement intégral. L'objectif est que le ROI couvre l'investissement dès le premier mois. Le budget pub peut rester modeste (150–300€/mois) au démarrage.",
+            },
+            {
+              q: "J'ai déjà essayé des trucs qui n'ont pas marché",
+              a: "La différence ici, c'est la structure : pas juste du contenu ou de la pub, mais un tunnel (capture + qualification + nurturing) qui filtre et chauffe les prospects. On connecte tout en un système cohérent.",
+            },
+            {
+              q: "Comment je sais que c'est pas du flan ?",
+              a: "Témoignages sur la page, garantie 30 jours par écrit, et tout le processus est détaillé dans la vidéo. Tu peux regarder avant de t'engager.",
+            },
+            {
+              q: "Je débute en freelance, est-ce que ça marche pour moi ?",
+              a: "Ce système est conçu pour les indépendants qui ont déjà une offre définie et quelques clients, et qui veulent stabiliser et scaler leurs revenus. Si tu débutes complètement, on en parle lors de l'appel.",
+            },
+            {
+              q: "Combien de temps avant de voir les premiers résultats ?",
+              a: "Le système est configuré en 7 à 10 jours. Les premiers prospects qualifiés arrivent généralement dans les 2 à 3 premières semaines selon ton marché et ton budget.",
+            },
+            {
+              q: "J'ai déjà essayé LinkedIn sans résultats, pourquoi ça serait différent ?",
+              a: "La différence, c'est la structure. Poster du contenu sans système de capture et de nurturing derrière, ça ne convertit pas. On connecte chaque point de contact à un pipeline automatisé.",
+            },
+            {
+              q: "Quel budget pub faut-il prévoir ?",
+              a: "On peut démarrer avec des budgets modestes (150-300€/mois) et les augmenter progressivement selon le retour sur investissement. L'objectif est que le coût d'acquisition soit couvert par les premiers contrats.",
+            },
+            {
+              q: "Et si ça ne fonctionne pas pour moi ?",
+              a: "La garantie 30 jours est là pour ça. Si tu n'es pas satisfait des résultats dans le premier mois, je rembourse intégralement. Tu ne prends aucun risque financier.",
+            },
+          ].map(({ q, a }, i) => (
+            <div key={i} className="vsl-faq-item vsl-fade" onClick={toggleFaq}>
+              <div className="vsl-faq-question">
+                {q}
+                <div className="vsl-faq-toggle">+</div>
+              </div>
+              <div className="vsl-faq-answer">{a}</div>
+            </div>
+          ))}
         </section>
 
         {/* FOOTER */}
