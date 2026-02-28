@@ -1202,11 +1202,6 @@ export default function VslClient() {
       <style>{css}</style>
       <div className="vsl-root">
 
-        {/* TOPBAR */}
-        <div className="vsl-topbar">
-          🔴 Places limitées — Seulement 5 indépendants acceptés ce mois-ci <span>|</span> Offre Fondateur active
-        </div>
-
         {/* HERO */}
         <p className="vsl-pre-headline">Pour les freelances &amp; indépendants ambitieux</p>
 
