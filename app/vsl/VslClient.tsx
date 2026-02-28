@@ -73,7 +73,7 @@ const css = `
 
   .vsl-hero-headline h1 {
     font-family: var(--font-bebas-neue), sans-serif;
-    font-size: clamp(42px, 7vw, 88px);
+    font-size: clamp(28px, 4.5vw, 58px);
     line-height: 0.95;
     letter-spacing: 0.02em;
     color: var(--white);
