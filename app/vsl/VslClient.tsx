@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import photoRacim from '../../assets/photo_racim.png';
+import AuditButton from '../../components/AuditButton';
 
 const CALENDLY_URL = 'https://calendly.com/buffedbean/30min';
 const N8N_WEBHOOK = 'https://n8n.srv933307.hstgr.cloud/webhook/77ccd585-25f2-4fa5-bdee-6313eaa90d4f';
@@ -1169,8 +1170,7 @@ export default function VslClient() {
     finally { setIsSubmitting(false); }
   };
 
-  const scrollToForm = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
+  const scrollToForm = () => {
     formRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
@@ -1251,7 +1251,13 @@ export default function VslClient() {
 
         {/* PRIMARY CTA */}
         <div className="vsl-cta-block vsl-fade">
-          <a href="#form" onClick={scrollToForm} className="vsl-cta-btn">→ Réserver mon appel gratuit de 20 min</a>
+          <AuditButton
+            text="Réserver mon appel gratuit de 20 min"
+            width={380}
+            height={58}
+            fontSize={16}
+            onClick={scrollToForm}
+          />
           <p className="vsl-cta-subtext">En cliquant, tu remplis 4 questions rapides. On vérifie ensemble si ton profil et ton timing matchent avec l&apos;offre. Si oui, tu choisis ton créneau.</p>
         </div>
 
@@ -1500,7 +1506,15 @@ export default function VslClient() {
               <div className="vsl-spots-dot" />
               <span>5 places disponibles ce mois-ci</span>
             </div>
-            <a href="#form" onClick={scrollToForm} className="vsl-cta-btn vsl-founder-cta">→ Réserver mon appel gratuit</a>
+            <div style={{ marginTop: 24 }}>
+              <AuditButton
+                text="Réserver mon appel gratuit"
+                width={300}
+                height={54}
+                fontSize={15}
+                onClick={scrollToForm}
+              />
+            </div>
             <div className="vsl-guarantee">
               <strong>Garantie 30 jours.</strong> Si tu n&apos;as pas reçu au moins 5 leads qualifiés dans les 30 jours suivant le lancement du système, je te rembourse intégralement. Aucune question posée.
             </div>
@@ -1568,7 +1582,13 @@ export default function VslClient() {
 
         {/* STICKY CTA (mobile, after 300px scroll) */}
         <div className={`vsl-sticky-cta ${stickyCtaVisible ? 'visible' : ''}`} aria-hidden="true">
-          <a href="#form" onClick={scrollToForm} className="vsl-cta-btn">→ Réserver mon appel gratuit</a>
+          <AuditButton
+            text="Réserver mon appel gratuit"
+            height={48}
+            fontSize={15}
+            onClick={scrollToForm}
+            style={{ width: '100%', maxWidth: 320 }}
+          />
         </div>
 
       </div>
