@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from 'react';
 import Image from 'next/image';
 import Script from 'next/script';
 import { motion, useInView } from 'framer-motion';
+import { useLenis } from 'lenis/react';
 import photoRacim from '../../assets/photo_racim.png';
 import AuditButton from '../../components/AuditButton';
 
@@ -1175,6 +1176,7 @@ const videoEmbedUrl = process.env.NEXT_PUBLIC_VSL_VIDEO_URL;
 const YT_PLAYER_CONTAINER_ID = 'vsl-yt-player';
 
 export default function VslClient() {
+  const lenis = useLenis();
   const [stickyCtaVisible, setStickyCtaVisible] = useState(false);
   const formRef = useRef<HTMLElement>(null);
   const solutionSectionRef = useRef<HTMLElement>(null);
@@ -1242,7 +1244,13 @@ export default function VslClient() {
   };
 
   const scrollToForm = () => {
-    formRef.current?.scrollIntoView({ behavior: 'smooth' });
+    const el = formRef.current;
+    if (!el) return;
+    if (lenis) {
+      lenis.scrollTo(el, { offset: 0, duration: 1.2 });
+    } else {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   useEffect(() => {
