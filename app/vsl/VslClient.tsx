@@ -97,7 +97,7 @@ const css = `
 
   /* ??? VIDEO ??? */
   .vsl-video-section {
-    padding: 50px 20px;
+    padding: 50px 20px 20px;
     max-width: 860px;
     margin: 0 auto;
   }
@@ -204,7 +204,7 @@ const css = `
   /* ??? CTA ??? */
   .vsl-cta-block {
     text-align: center;
-    padding: 20px 20px 60px;
+    padding: 12px 20px 60px;
     max-width: 600px;
     margin: 0 auto;
   }
