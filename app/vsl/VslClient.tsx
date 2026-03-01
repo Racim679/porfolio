@@ -114,6 +114,19 @@ const css = `
     color: var(--gold);
   }
 
+  .vsl-hero-underline {
+    position: relative;
+    display: inline-block;
+  }
+  .vsl-hero-underline svg {
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 100%;
+    height: 12px;
+    overflow: visible;
+  }
+
   .vsl-hero-subhead {
     text-align: center;
     max-width: 620px;
@@ -1280,8 +1293,8 @@ export default function VslClient() {
 
         <SectionTitleReveal className="vsl-hero-headline">
           <h1>
-            Arrete de courir<br />apres les clients.<br />
-            <em>Laisse le systeme<br />travailler.</em>
+            Arrete de courir apres les clients.<br />
+            <em>Laisse le systeme<br /><span className="vsl-hero-underline">travailler.<svg viewBox="0 0 240 15" preserveAspectRatio="none" style={{ overflow: 'visible' }}><motion.path d="M 5 13 C 60 10, 120 4, 235 7" stroke="var(--gold)" strokeWidth="8" fill="none" strokeLinecap="round" pathLength={1} strokeDasharray={1} initial={{ strokeDashoffset: 1 }} animate={{ strokeDashoffset: 0 }} transition={{ delay: 0.6, duration: 1, ease: 'easeInOut' }} /></svg></span></em>
           </h1>
         </SectionTitleReveal>
 
