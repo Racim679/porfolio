@@ -241,12 +241,6 @@ const css = `
   .vsl-cta-btn:hover { transform: translateY(-2px); background: #1d4ed8; }
   .vsl-cta-btn:hover::after { left: 150%; }
 
-  .vsl-cta-subtext {
-    font-size: 13px;
-    color: var(--text-muted);
-    margin-top: 14px;
-    line-height: 1.5;
-  }
 
   /* ??? QUI SUIS-JE ??? */
   .vsl-identity-section {
@@ -428,7 +422,6 @@ const css = `
   .vsl-included-section {
     background: var(--grey);
     border-top: 1px solid var(--grey-mid);
-    border-bottom: 1px solid #1e1e1e;
     padding: 70px 20px;
   }
 
@@ -499,7 +492,7 @@ const css = `
 
   .vsl-founder-box {
     border: 1px solid var(--gold);
-    padding: 48px 40px;
+    padding: 48px 40px 32px;
     position: relative;
     background: #fff;
   }
@@ -562,8 +555,8 @@ const css = `
   }
 
   .vsl-guarantee {
-    margin-top: 30px;
-    padding-top: 30px;
+    margin-top: 20px;
+    padding-top: 20px;
     border-top: 1px solid var(--grey-mid);
     font-size: 13px;
     color: var(--text-muted);
@@ -1101,7 +1094,7 @@ const css = `
     .vsl-step { grid-template-columns: 50px 1fr; }
     .vsl-step-num span { font-size: 36px; }
     .vsl-step-line { left: 50px; }
-    .vsl-founder-box { padding: 40px 24px; }
+    .vsl-founder-box { padding: 40px 24px 28px; }
   }
 `;
 
@@ -1242,7 +1235,6 @@ export default function VslClient() {
               style={{ width: '100%', height: '100%' }}
             />
           </div>
-          <p className="vsl-cta-subtext">En cliquant, tu remplis 4 questions rapides. On verifie ensemble si ton profil et ton timing matchent avec l&apos;offre. Si oui, tu choisis ton creneau.</p>
         </div>
 
         <hr className="vsl-divider" />
@@ -1460,7 +1452,7 @@ export default function VslClient() {
               <div className="vsl-spots-dot" />
               <span>5 places disponibles ce mois-ci</span>
             </div>
-            <div style={{ marginTop: 24, width: '100%', maxWidth: 360, height: 56 }}>
+            <div style={{ marginTop: 24, width: '100%', maxWidth: 360, height: 56, marginLeft: 'auto', marginRight: 'auto' }}>
               <AuditButton
                 text="Je reserve mon appel strategique"
                 fontSize={13}
