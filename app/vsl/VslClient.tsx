@@ -1234,7 +1234,7 @@ export default function VslClient() {
         </div>
 
         <div className="vsl-cta-block vsl-fade">
-          <div style={{ width: '100%', maxWidth: 360, height: 56 }}>
+          <div style={{ width: '100%', maxWidth: 360, height: 56, margin: '0 auto' }}>
             <AuditButton
               text="Je reserve mon appel strategique"
               fontSize={13}
