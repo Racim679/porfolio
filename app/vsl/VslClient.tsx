@@ -1202,8 +1202,17 @@ export default function VslClient() {
       <style>{css}</style>
       <div className="vsl-root">
 
-        {/* VIDEO */}
+        {/* HERO */}
         <p className="vsl-pre-headline">Pour les freelances &amp; independants ambitieux</p>
+
+        <div className="vsl-hero-headline vsl-fade">
+          <h1>
+            Arrete de courir<br />apres les clients.<br />
+            <em>Laisse le systeme<br />travailler.</em>
+          </h1>
+        </div>
+
+        {/* VIDEO */}
         <div className="vsl-video-section vsl-fade">
           <div className="vsl-video-wrapper">
             {videoEmbedUrl ? (
