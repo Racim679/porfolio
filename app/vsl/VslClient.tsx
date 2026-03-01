@@ -1179,6 +1179,7 @@ export default function VslClient() {
   const formRef = useRef<HTMLElement>(null);
   const solutionSectionRef = useRef<HTMLElement>(null);
   const includedSectionRef = useRef<HTMLElement>(null);
+  const ctaBelowVideoRef = useRef<HTMLDivElement>(null);
   const ytPlayerRef = useRef<{ unMute: () => void; setVolume: (n: number) => void } | null>(null);
   const [videoMuted, setVideoMuted] = useState(true);
   const youtubeVideoId = typeof videoEmbedUrl === 'string' ? getYoutubeVideoId(videoEmbedUrl) : null;
@@ -1276,15 +1277,18 @@ export default function VslClient() {
   useEffect(() => {
     const solution = solutionSectionRef.current;
     const included = includedSectionRef.current;
-    if (!solution || !included) return;
+    const ctaBelowVideo = ctaBelowVideoRef.current;
+    if (!solution || !included || !ctaBelowVideo) return;
     let solutionInView = false;
     let includedInView = false;
-    const updateVisible = () => setStickyCtaVisible(solutionInView || includedInView);
+    let ctaBelowVideoInView = false;
+    const updateVisible = () => setStickyCtaVisible((solutionInView || includedInView) && !ctaBelowVideoInView);
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
           if (e.target === solution) solutionInView = e.isIntersecting;
           if (e.target === included) includedInView = e.isIntersecting;
+          if (e.target === ctaBelowVideo) ctaBelowVideoInView = e.isIntersecting;
         });
         updateVisible();
       },
@@ -1292,6 +1296,7 @@ export default function VslClient() {
     );
     observer.observe(solution);
     observer.observe(included);
+    observer.observe(ctaBelowVideo);
     return () => observer.disconnect();
   }, []);
 
@@ -1363,7 +1368,7 @@ export default function VslClient() {
           </div>
         </div>
 
-        <div className="vsl-cta-block vsl-fade">
+        <div ref={ctaBelowVideoRef} className="vsl-cta-block vsl-fade">
           <div style={{ width: '100%', maxWidth: 360, height: 56, margin: '0 auto' }}>
             <AuditButton
               text="Je reserve mon appel strategique"
