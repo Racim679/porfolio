@@ -1170,7 +1170,6 @@ const css = `
   }
 `;
 
-const STICKY_CTA_SCROLL_THRESHOLD = 300;
 // Optional: set NEXT_PUBLIC_VSL_VIDEO_URL (YouTube/Vimeo embed URL) to show the VSL video instead of placeholder
 const videoEmbedUrl = process.env.NEXT_PUBLIC_VSL_VIDEO_URL;
 const YT_PLAYER_CONTAINER_ID = 'vsl-yt-player';
@@ -1178,6 +1177,8 @@ const YT_PLAYER_CONTAINER_ID = 'vsl-yt-player';
 export default function VslClient() {
   const [stickyCtaVisible, setStickyCtaVisible] = useState(false);
   const formRef = useRef<HTMLElement>(null);
+  const solutionSectionRef = useRef<HTMLElement>(null);
+  const includedSectionRef = useRef<HTMLElement>(null);
   const ytPlayerRef = useRef<{ unMute: () => void; setVolume: (n: number) => void } | null>(null);
   const [videoMuted, setVideoMuted] = useState(true);
   const youtubeVideoId = typeof videoEmbedUrl === 'string' ? getYoutubeVideoId(videoEmbedUrl) : null;
@@ -1273,10 +1274,25 @@ export default function VslClient() {
   }, []);
 
   useEffect(() => {
-    const onScroll = () => setStickyCtaVisible(window.scrollY > STICKY_CTA_SCROLL_THRESHOLD);
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
+    const solution = solutionSectionRef.current;
+    const included = includedSectionRef.current;
+    if (!solution || !included) return;
+    let solutionInView = false;
+    let includedInView = false;
+    const updateVisible = () => setStickyCtaVisible(solutionInView || includedInView);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.target === solution) solutionInView = e.isIntersecting;
+          if (e.target === included) includedInView = e.isIntersecting;
+        });
+        updateVisible();
+      },
+      { threshold: 0.05, rootMargin: '0px' }
+    );
+    observer.observe(solution);
+    observer.observe(included);
+    return () => observer.disconnect();
   }, []);
 
   function toggleFaq(e: React.MouseEvent<HTMLDivElement>) {
@@ -1361,7 +1377,7 @@ export default function VslClient() {
         <hr className="vsl-divider" />
 
         {/* SOLUTION */}
-        <section className="vsl-solution-section">
+        <section ref={solutionSectionRef} className="vsl-solution-section">
           <SectionTitleReveal>
             <p className="vsl-section-label">La solution</p>
             <h2>Comment le systeme<br />travaille pour toi</h2>
@@ -1402,7 +1418,7 @@ export default function VslClient() {
         </section>
 
         {/* INCLUDED */}
-        <section className="vsl-included-section">
+        <section ref={includedSectionRef} className="vsl-included-section">
           <div className="vsl-included-inner">
             <SectionTitleReveal>
               <p className="vsl-section-label">Ce que tu obtiens</p>
