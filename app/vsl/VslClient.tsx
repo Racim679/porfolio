@@ -1247,36 +1247,6 @@ export default function VslClient() {
 
         <hr className="vsl-divider" />
 
-        {/* PAIN POINTS */}
-        <section className="vsl-pain-section">
-          <p className="vsl-section-label vsl-fade">Le probleme</p>
-          <h2 className="vsl-fade">Tu reconnais ces situations ?</h2>
-          <div className="vsl-pain-grid">
-            <div className="vsl-pain-item vsl-fade">
-              <span className="vsl-pain-icon">??</span>
-              <h3>Revenus irreguliers</h3>
-              <p>Des mois a 6K, des mois a 0. L&apos;incertitude financiere t&apos;epuise et te force a accepter n&apos;importe quel client a n&apos;importe quel tarif.</p>
-            </div>
-            <div className="vsl-pain-item vsl-fade">
-              <span className="vsl-pain-icon">?</span>
-              <h3>La prospection chronophage</h3>
-              <p>Tu passes 2h par jour sur LinkedIn a envoyer des messages a froid qui restent sans reponse. Du temps que tu pourrais facturer.</p>
-            </div>
-            <div className="vsl-pain-item vsl-fade">
-              <span className="vsl-pain-icon">???</span>
-              <h3>Le cycle infernal prospection / livraison</h3>
-              <p>Quand tu as un gros projet en cours, tu ne prospectes plus. Et quand il se termine, tu repars de zero. Le cycle infernal du freelance.</p>
-            </div>
-            <div className="vsl-pain-item vsl-fade">
-              <span className="vsl-pain-icon">??</span>
-              <h3>La concurrence des agences</h3>
-              <p>Les agences ont des equipes entieres dediees a la prospection et au marketing. Toi, tu fais tout seul avec 24h dans ta journee.</p>
-            </div>
-          </div>
-        </section>
-
-        <hr className="vsl-divider" />
-
         {/* SOLUTION */}
         <section className="vsl-solution-section">
           <p className="vsl-section-label vsl-fade">La solution</p>
