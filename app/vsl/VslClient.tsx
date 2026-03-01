@@ -120,7 +120,7 @@ const css = `
   }
   .vsl-hero-underline svg {
     position: absolute;
-    bottom: -4px;
+    bottom: -10px;
     left: 0;
     width: 100%;
     height: 12px;
