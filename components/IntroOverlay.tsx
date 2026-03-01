@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { useLenis } from 'lenis/react';
 
@@ -10,6 +11,9 @@ const OVERLAY_TEXT_PHASE_MS = 1800; // durée totale de la phase texte (1,8 s) a
 const SLIDE_UP_DURATION_S = 0.5;
 
 export default function IntroOverlay() {
+  const pathname = usePathname();
+  const skipOverlay = pathname?.startsWith('/vsl') ?? false;
+
   const [wordIndex, setWordIndex] = useState(0);
   const [isExiting, setIsExiting] = useState(false);
   const [isDone, setIsDone] = useState(false);
@@ -45,7 +49,7 @@ export default function IntroOverlay() {
   // Bloquer le scroll pendant l'overlay : Lenis gère le scroll, il faut lenis.stop()
   useEffect(() => {
     if (!lenis) return;
-    if (!isDone) {
+    if (!isDone && !skipOverlay) {
       lenis.stop();
       document.body.style.overflow = 'hidden';
     } else {
@@ -56,9 +60,9 @@ export default function IntroOverlay() {
       lenis.start();
       document.body.style.overflow = '';
     };
-  }, [isDone, lenis]);
+  }, [isDone, lenis, skipOverlay]);
 
-  if (isDone) return null;
+  if (skipOverlay || isDone) return null;
 
   return (
     <motion.div
