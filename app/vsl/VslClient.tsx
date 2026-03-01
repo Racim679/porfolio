@@ -2,9 +2,21 @@
 
 import { useEffect, useState, useRef } from 'react';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
+import Script from 'next/script';
+import { motion, useInView } from 'framer-motion';
 import photoRacim from '../../assets/photo_racim.png';
 import AuditButton from '../../components/AuditButton';
+
+function getYoutubeVideoId(url: string): string | null {
+  if (!url) return null;
+  try {
+    const u = new URL(url);
+    if (u.hostname.includes('youtube.com') && u.pathname === '/embed/') return u.pathname.split('/').filter(Boolean).pop() || null;
+    if (u.hostname.includes('youtube.com') && u.pathname === '/watch') return u.searchParams.get('v');
+    if (u.hostname.includes('youtu.be')) return u.pathname.slice(1).split('/')[0] || null;
+  } catch { /* ignore */ }
+  return null;
+}
 
 const CALENDLY_URL = 'https://calendly.com/buffedbean/30min';
 const N8N_WEBHOOK = 'https://n8n.srv933307.hstgr.cloud/webhook/77ccd585-25f2-4fa5-bdee-6313eaa90d4f';
@@ -17,6 +29,23 @@ const DISCOVERY_ITEMS = [
 ];
 
 const SECTOR_OPTIONS = ['Immobilier', 'Coaching / Formation', 'Services B2B', 'Batiment / Artisanat', 'Restauration', 'Bien etre / Sante', 'Autre'];
+
+const titleRevealTransition = { duration: 0.55, ease: [0.25, 0.1, 0.25, 1] as const };
+function SectionTitleReveal({ children, className = '' }: { children: React.ReactNode; className?: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true, amount: 0.2 });
+  return (
+    <motion.div
+      ref={ref}
+      className={className}
+      initial={{ filter: 'blur(10px)', opacity: 0, y: 14 }}
+      animate={isInView ? { filter: 'blur(0px)', opacity: 1, y: 0 } : undefined}
+      transition={titleRevealTransition}
+    >
+      {children}
+    </motion.div>
+  );
+}
 
 const css = `
   .vsl-root *,
@@ -130,7 +159,21 @@ const css = `
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
+  }
+
+  .vsl-yt-container {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .vsl-yt-container iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
   }
 
   .vsl-video-wrapper iframe {
@@ -146,7 +189,37 @@ const css = `
     position: absolute;
     inset: 0;
     background: linear-gradient(135deg, #dbeafe 0%, #eff6ff 100%);
+    pointer-events: none;
   }
+
+  .vsl-unmute-btn {
+    position: absolute;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 24px;
+    background: var(--gold);
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.2s;
+    text-decoration: none;
+    font-family: inherit;
+  }
+
+  .vsl-unmute-btn:hover {
+    background: var(--gold-light);
+    transform: translateX(-50%) scale(1.05);
+  }
+
+  .vsl-unmute-btn svg { flex-shrink: 0; }
 
   .vsl-video-placeholder {
     position: relative;
@@ -154,27 +227,10 @@ const css = `
     text-align: center;
   }
 
-  .vsl-play-btn {
-    width: 80px;
-    height: 80px;
-    background: var(--gold);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 20px;
-    transition: transform 0.2s, background 0.2s;
-  }
-
-  .vsl-play-btn:hover { transform: scale(1.1); background: var(--gold-light); }
-
-  .vsl-play-btn svg { width: 28px; fill: #fff; margin-left: 4px; }
-
   .vsl-video-placeholder p {
     font-size: 14px;
     color: var(--text-muted);
     letter-spacing: 0.05em;
-    text-transform: uppercase;
   }
 
   .vsl-video-badge {
@@ -1101,10 +1157,14 @@ const css = `
 const STICKY_CTA_SCROLL_THRESHOLD = 300;
 // Optional: set NEXT_PUBLIC_VSL_VIDEO_URL (YouTube/Vimeo embed URL) to show the VSL video instead of placeholder
 const videoEmbedUrl = process.env.NEXT_PUBLIC_VSL_VIDEO_URL;
+const YT_PLAYER_CONTAINER_ID = 'vsl-yt-player';
 
 export default function VslClient() {
   const [stickyCtaVisible, setStickyCtaVisible] = useState(false);
   const formRef = useRef<HTMLElement>(null);
+  const ytPlayerRef = useRef<{ unMute: () => void; setVolume: (n: number) => void } | null>(null);
+  const [videoMuted, setVideoMuted] = useState(true);
+  const youtubeVideoId = typeof videoEmbedUrl === 'string' ? getYoutubeVideoId(videoEmbedUrl) : null;
 
   // Form state
   const [formData, setFormData] = useState({ name: '', email: '', description: '', sector: [] as string[], revenue: '', available: '' });
@@ -1168,6 +1228,26 @@ export default function VslClient() {
   };
 
   useEffect(() => {
+    if (!youtubeVideoId) return;
+    const win = typeof window !== 'undefined' ? (window as any) : undefined;
+    if (!win) return;
+    const createPlayer = () => {
+      const YT = win.YT;
+      if (!YT || !YT.Player) return;
+      const el = document.getElementById(YT_PLAYER_CONTAINER_ID);
+      if (!el || el.querySelector('iframe')) return;
+      new YT.Player(YT_PLAYER_CONTAINER_ID, {
+        videoId: youtubeVideoId,
+        playerVars: { autoplay: 1, mute: 1 },
+        events: { onReady: (e: { target: { unMute: () => void; setVolume: (n: number) => void } }) => { ytPlayerRef.current = e.target; } },
+      });
+    };
+    win.onYouTubeIframeAPIReady = createPlayer;
+    if (win.YT && win.YT.Player) createPlayer();
+    return () => { delete win.onYouTubeIframeAPIReady; };
+  }, [youtubeVideoId]);
+
+  useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add('visible'); }),
       { threshold: 0.12 }
@@ -1198,29 +1278,54 @@ export default function VslClient() {
         {/* HERO */}
         <p className="vsl-pre-headline">Pour les freelances &amp; independants ambitieux</p>
 
-        <div className="vsl-hero-headline vsl-fade">
+        <SectionTitleReveal className="vsl-hero-headline">
           <h1>
             Arrete de courir<br />apres les clients.<br />
             <em>Laisse le systeme<br />travailler.</em>
           </h1>
-        </div>
+        </SectionTitleReveal>
 
         {/* VIDEO */}
         <div className="vsl-video-section vsl-fade">
           <div className="vsl-video-wrapper">
-            {videoEmbedUrl ? (
-              <iframe
-                src={videoEmbedUrl}
-                title="VSL ? Systeme client automatise"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
+            {youtubeVideoId ? (
+              <>
+                <Script src="https://www.youtube.com/iframe_api" strategy="afterInteractive" />
+                <div id={YT_PLAYER_CONTAINER_ID} className="vsl-yt-container" />
+                {videoMuted && (
+                  <button
+                    type="button"
+                    className="vsl-unmute-btn"
+                    onClick={() => {
+                      if (ytPlayerRef.current) {
+                        ytPlayerRef.current.unMute();
+                        ytPlayerRef.current.setVolume(100);
+                        setVideoMuted(false);
+                      }
+                    }}
+                    aria-label="Activer le son"
+                  >
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M11 5L6 9H2v6h4l5 4V5z" /><path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07" /></svg>
+                    <span>Activer le son</span>
+                  </button>
+                )}
+              </>
+            ) : videoEmbedUrl ? (
+              <>
+                <iframe
+                  src={`${videoEmbedUrl}${videoEmbedUrl.includes('?') ? '&' : '?'}autoplay=1&muted=1`}
+                  title="VSL - Systeme client automatise"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+                <a href={videoEmbedUrl} target="_blank" rel="noopener noreferrer" className="vsl-unmute-btn">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M11 5L6 9H2v6h4l5 4V5z" /><path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07" /></svg>
+                  <span>Activer le son (ouvrir la video)</span>
+                </a>
+              </>
             ) : (
               <div className="vsl-video-placeholder">
-                <div className="vsl-play-btn">
-                  <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
-                </div>
-                <p>Regarder la video</p>
+                <p>Video non configuree (NEXT_PUBLIC_VSL_VIDEO_URL)</p>
               </div>
             )}
           </div>
@@ -1241,8 +1346,10 @@ export default function VslClient() {
 
         {/* SOLUTION */}
         <section className="vsl-solution-section">
-          <p className="vsl-section-label vsl-fade">La solution</p>
-          <h2 className="vsl-fade">Comment le systeme<br />travaille pour toi</h2>
+          <SectionTitleReveal>
+            <p className="vsl-section-label">La solution</p>
+            <h2>Comment le systeme<br />travaille pour toi</h2>
+          </SectionTitleReveal>
           <div className="vsl-steps-list">
             <div className="vsl-step vsl-fade">
               <div className="vsl-step-num"><span>01</span></div>
@@ -1281,8 +1388,10 @@ export default function VslClient() {
         {/* INCLUDED */}
         <section className="vsl-included-section">
           <div className="vsl-included-inner">
-            <p className="vsl-section-label vsl-fade">Ce que tu obtiens</p>
-            <h2 className="vsl-fade">Tout ce qui est inclus<br />dans le systeme</h2>
+            <SectionTitleReveal>
+              <p className="vsl-section-label">Ce que tu obtiens</p>
+              <h2>Tout ce qui est inclus<br />dans le systeme</h2>
+            </SectionTitleReveal>
             <div className="vsl-included-grid">
               <div className="vsl-included-card vsl-fade">
                 <div className="vsl-card-icon">??</div>
@@ -1330,7 +1439,9 @@ export default function VslClient() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.5 }}
                 >
-                  <h2 className="vsl-form-title">Renseignement pour l&apos;appel de decouverte</h2>
+                  <SectionTitleReveal>
+                    <h2 className="vsl-form-title">Renseignement pour l&apos;appel de decouverte</h2>
+                  </SectionTitleReveal>
                   <p className="vsl-form-subtitle">Durant cet appel, nous allons :</p>
                   <div className="vsl-form-info-box">
                     {DISCOVERY_ITEMS.map((item, i) => (
@@ -1444,7 +1555,9 @@ export default function VslClient() {
         {/* FOUNDER OFFER */}
         <section className="vsl-founder-section">
           <div className="vsl-founder-box vsl-fade">
-            <h2>Offre reservee aux<br />5 premiers independants</h2>
+            <SectionTitleReveal>
+              <h2>Offre reservee aux<br />5 premiers independants</h2>
+            </SectionTitleReveal>
             <p>
               Je demarre avec un groupe restreint de freelances pour deployer ce systeme, l&apos;affiner et construire des resultats reels ensemble. En echange de ta confiance, tu beneficies d&apos;un tarif fondateur et d&apos;un acces prioritaire a toutes les ameliorations futures.
             </p>
@@ -1470,7 +1583,9 @@ export default function VslClient() {
 
         {/* FAQ */}
         <section className="vsl-faq-section">
-          <h2 className="vsl-fade">Questions frequentes</h2>
+          <SectionTitleReveal>
+            <h2>Questions frequentes</h2>
+          </SectionTitleReveal>
 
           {[
             {
