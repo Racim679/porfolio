@@ -126,6 +126,9 @@ const css = `
     height: 12px;
     overflow: visible;
   }
+  @media (max-width: 768px) {
+    .vsl-hero-underline path { stroke-width: 3.2; }
+  }
 
   .vsl-hero-subhead {
     text-align: center;
